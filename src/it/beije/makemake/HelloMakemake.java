@@ -8,5 +8,4 @@ public class HelloMakemake {
 				"Ha un satellite conosciuto, S/2015 (136472) 1, la cui scoperta è stata resa nota nell'aprile del 2016[10]. La temperatura estremamente bassa (circa 30 K) che si registra sulla sua superficie fa sì che essa sia ricoperta da ghiacci di metano, etano e probabilmente azoto.[11] Il suo nome richiama la figura di Makemake, divinità della creazione secondo la mitologia pasquense."
 		);
 	}
-
 }
