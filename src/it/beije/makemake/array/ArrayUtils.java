@@ -1,7 +1,6 @@
 package it.beije.makemake.array;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -39,13 +38,13 @@ public class ArrayUtils {
 
     public static void main(String[] args) {
         int[] a = new int[]{3, 9, 22, 15, 24, 7, 1};
-//        System.out.println(max(a));
-//        System.out.println(min(a));
-//        System.out.println(contains(15, new Integer[]{3, 6, 2, 15}));
-//        System.out.println(contains(4, new Integer[]{3, 6, 2, 15}));
+        System.out.println(max(a));
+        System.out.println(min(a));
+        System.out.println(contains(15, new Integer[]{3, 6, 2, 15}));
+        System.out.println(contains(4, new Integer[]{3, 6, 2, 15}));
         String[] s = new String[] {"ciao", "cane", "carota"};
-//        System.out.println(contains("cane", s));
-//        System.out.println(contains("zanzara", s));
+        System.out.println(contains("cane", s));
+        System.out.println(contains("zanzara", s));
         System.out.println(isCrescente(a));
         System.out.println(isCrescente(a));
         int[] a2 = new int[]{3, 3, 6, 2, 6, 7, 5, 5, 5, 1, 3, 3, 5, 5, 5};

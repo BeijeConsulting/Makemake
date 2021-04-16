@@ -36,10 +36,10 @@ public class EserciziCicli {
     }
 
     public static void main(String[] args) {
-//        stampaTriangolo();
-//        stampaTriangolo2();
+        stampaTriangolo();
+        stampaTriangolo2();
         stampaFiguraNumeri();
-//        fibonacci(10);
+        fibonacci(10);
         fibonacci2(10);
     }
 

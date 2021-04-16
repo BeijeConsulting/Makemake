@@ -1,7 +1,7 @@
 package it.beije.makemake.stringexercises;
-
 import java.util.Arrays;
 import java.util.List;
+
 public class StringUtils {
 
 
@@ -12,7 +12,7 @@ public class StringUtils {
 
     }
     private static boolean isVocale(char letter){
-        return  VOWELS.contains(letter) ;
+        return VOWELS.contains(letter) ;
     }
     public static void soloVocali(String sentence) {
         for (int i=0; i < sentence.length(); i++){
@@ -21,8 +21,6 @@ public class StringUtils {
             }
         }
     }
-
-
 
 }
 
