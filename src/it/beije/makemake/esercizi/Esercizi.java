@@ -1,12 +1,9 @@
 package it.beije.makemake.esercizi;
 
-public class SoloVocali {
+public class Esercizi {
 	
 	private String s;
-	public SoloVocali() {
-	
-	}
-	
+
 	public void  getVoc(String stringa) {
 		char a;
 		s=stringa.toLowerCase();
@@ -41,6 +38,18 @@ public class SoloVocali {
 		
 
 	
+	}
+	
+	public void getMiuscolo(String...strings ) {
+		for(int i=0;i<strings.length;i++) {
+			char x =strings[i].charAt(0);
+			Character c = new Character(x);
+
+			if(c.isUpperCase(x)==true) {
+				System.out.println(c);
+			}
+		}
+		
 	}
 
 }
