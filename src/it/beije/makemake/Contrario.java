@@ -8,8 +8,7 @@ public class Contrario {
 		for(int i=s.length()-1; i>=0; i--)
 		{
 				inv += s.charAt(i);
-		}
-		
+		}	
 		System.out.println("Stringa invertita: "+inv);
 		
 	}
