@@ -9,12 +9,11 @@ public class stampaMaiuscole {
 		String[] s = {"Uno", "Due", "Tre", "quattro"};
 		String c="";
 
-		for (int i = 0; i < s.length; i++) {
+		for (int i = 0; i < s.length; i++)
 			if (s[i].charAt(0) >= 65 && s[i].charAt(0) <= 90)
-				c+=s[i]+" ";
-		}
-
-		System.out.println(c);
+				
+		
+		System.out.println(s[i]);
 	}
 
 }
