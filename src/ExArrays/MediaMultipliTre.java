@@ -10,7 +10,6 @@ public class MediaMultipliTre {
 	}
 	
 	public static int meanMultThree(int[] array) {
-		int[] mult = new int[array.length];
 		int j=0;
 		int sum=0;
 		int res=0;
