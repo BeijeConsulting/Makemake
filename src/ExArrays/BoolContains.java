@@ -1,4 +1,5 @@
 package ExArrays;
+import java.util.Arrays;
 
 public class BoolContains {
 	public static void main(String[] args) {
