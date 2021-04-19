@@ -38,10 +38,10 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ nome : ").append(nome).append(", ")
-				.append("cognome : ").append(cognome).append(", ")
-				.append("telefono : ").append(telefono).append(", ")
-				.append("email : ").append(email).append(" }");
+				.append("Nome : ").append(nome).append(", ")
+				.append("Cognome : ").append(cognome).append(", ")
+				.append("Telefono : ").append(telefono).append(", ")
+				.append("Email : ").append(email).append(" ");
 		
 		return builder.toString();
 	}
