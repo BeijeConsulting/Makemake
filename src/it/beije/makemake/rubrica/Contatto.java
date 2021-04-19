@@ -7,7 +7,17 @@ public class Contatto {
 	private String telefono;
 	private String email;
 	
+	public Contatto() {
+	}
 	
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+	}
+
 	public String getNome() {
 		return nome;
 	}
