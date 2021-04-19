@@ -1,5 +1,7 @@
 package it.beije.makemake.Try;
+
 import java.util.Arrays;
+
 import java.util.Scanner;
 public class ArrayTry {
 
