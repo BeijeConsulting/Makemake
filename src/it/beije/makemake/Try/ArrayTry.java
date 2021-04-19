@@ -74,7 +74,6 @@ public class ArrayTry {
 		return ret;
 	}
 	
-	
 	public static boolean isCrescente(int[] vett) {
 		boolean ret=true;
 		
@@ -117,9 +116,16 @@ public class ArrayTry {
 	
 	public static void StampaZigZag(int[]vett) {
 		int max=vett.length;
-		for(int i=0;i<vett.length;i++) {
+		for(int i=0;i<(vett.length/2)
+				;i++) {
 			System.out.println(""+ vett[i] );
 			System.out.println("" + vett[max-i-1]);
 		}
+		
+		if(max%2!=0) {
+			System.out.println(""+ vett[(max/2)]);
+		}
 	}
+	
+	
 }
