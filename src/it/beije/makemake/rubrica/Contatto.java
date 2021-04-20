@@ -45,4 +45,14 @@ public class Contatto {
 		
 		return builder.toString();
 	}
+	
+	public boolean equals(Contatto c1, Contatto c2) {
+		if(c1.nome==c2.nome)
+			if(c1.cognome==c2.nome)
+				if(c1.email==c2.email)
+					if(c1.telefono==c2.telefono)
+					return true;
+		
+		return false;
+	}
 }

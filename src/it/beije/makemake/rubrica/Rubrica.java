@@ -8,17 +8,29 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class Rubrica {
 	static List<Contatto> contatti=new ArrayList<Contatto>();
 	
 	public static void main(String[] args ) throws Exception{
-		
+		Scanner tastiera=new Scanner(System.in);
+		System.out.println("In base a cosa vuoi cercare ?");
+		String attributo=tastiera.nextLine().toLowerCase();
+		System.out.println("Inserisci " + attributo + " : ");
+		String p=tastiera.nextLine();		
 		caricaRubrica(contatti,"C:\\Users\\Padawan02\\Desktop\\rubrica1.csv");
 		//mergeRubriche("C:\\Users\\Padawan02\\Desktop\\rubrica1.csv","C:\\Users\\Padawan02\\Desktop\\rubrica2.csv","C:\\Users\\Padawan02\\Desktop\\rubrica_nuova.txt");
 		//nameOrder(contatti);
-		cognomeOrder(contatti);
+		//cognomeOrder(contatti);
+		Contatto c=cercaContatto(contatti,attributo,p);
+		System.out.println(c.toString());
+		
+		cercaDuplicati(contatti);
+		
+		
+		
 	}
 	
 		
@@ -38,9 +50,9 @@ public class Rubrica {
 			contatti.add(contatto);
 		}
 		
-		//for(Contatto c : contatti) {
-		//	System.out.println(c.toString());
-		//}
+		for(Contatto c : contatti) {
+			System.out.println(c.toString());
+		}
 		
 		bufferedReader.close();
 	}
@@ -88,8 +100,48 @@ public class Rubrica {
 		}
 	}
 	
-	public static void cercaContatto(List<Contatto> contatti, String attributo) {
+	public static Contatto cercaContatto(List<Contatto> contatti, String attributo,String p) {
+		switch(attributo) {
+		case "nome" : 
+			for(Contatto c : contatti) {
+				if(c.getNome().equalsIgnoreCase(p)){
+					return c;
+				}
+			}
+			break;
+		case "cognome" : 
+			for(Contatto c : contatti) {
+				if(c.getCognome().equalsIgnoreCase(p)) {
+					return c;				}
+			}
+			break;
+		case "email" : 
+			for(Contatto c : contatti) {
+				if(c.getEmail().equalsIgnoreCase(p)) {
+					return c;				}
+			}
+			break;
+
+		}
+		
+	return null;
+	}
+	
+	public static void cercaDuplicati(List<Contatto> contatti) {
+		int num=0;
+		for(int i =0 ; i<contatti.size(); i++) {
+			Contatto c= contatti.get(i);
+			for(int j=i+1 ; j<contatti.size(); j++) {
+				if(c.getNome().equalsIgnoreCase(contatti.get(j).getNome())) 
+					if(c.getCognome().equalsIgnoreCase(contatti.get(j).getCognome()))
+						if(c.getTelefono().equalsIgnoreCase(contatti.get(j).getTelefono()))
+							if(c.getEmail().equalsIgnoreCase(contatti.get(j).getEmail()))
+								num++;
+
+		}
 		
 		
+	}
+		System.out.println("Ci sono " + num + " contatti duplicati ");
 	}
 }
