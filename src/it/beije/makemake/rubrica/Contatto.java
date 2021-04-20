@@ -8,6 +8,13 @@ public class Contatto {
 	private String email;
 	
 	
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -44,5 +51,13 @@ public class Contatto {
 				.append("email : ").append(email).append(" }");
 		
 		return builder.toString();
+	}
+	
+	public boolean equals(Contatto con) {
+		
+		return getNome().equals(con.getNome()) &&
+				getCognome().equals(con.getCognome()) &&
+				getTelefono().equals(con.getTelefono()) &&
+				getEmail().equals(getEmail());
 	}
 }

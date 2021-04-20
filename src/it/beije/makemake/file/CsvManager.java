@@ -76,7 +76,7 @@ public class CsvManager {
 			String row = bufferedReader.readLine();
 			//System.out.println(row);
 			String[] rowParts = row.split(";");
-			Contatto contatto = new Contatto();
+			Contatto contatto = new Contatto("","","","");
 			contatto.setNome(rowParts[0]);
 			contatto.setCognome(rowParts[1]);
 			contatto.setTelefono(rowParts[2]);
