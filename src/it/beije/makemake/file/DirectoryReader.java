@@ -22,10 +22,14 @@ public class DirectoryReader {
 		path = "C:/Users/Padawan11/Desktop/"+fileName+".txt";
 		File destFile = new File(path);
 		FileWriter writer = new FileWriter(destFile);
-		analyzer(writer, file, " ");
+		analyzer(writer, file, "");
 		writer.flush();
-		
 		writer.close();
+		System.out.println("Top ho finito, Vuoi che ti apra il file oppure te lo apri tu?y/n");
+		String answer = in.next();
+		if(answer.equals("y"))
+			Manager.readFile(destFile);
+		
 	}
 	
 	public static void analyzer(FileWriter writer, File directory, String indentation) throws Exception{
