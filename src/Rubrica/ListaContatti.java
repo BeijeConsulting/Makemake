@@ -1,11 +1,12 @@
 package Rubrica;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ListaContatti {
 	
 	//Attributi
-	private ArrayList<Contatto> lista;
+	private ArrayList<Contatto> lista = new ArrayList<Contatto>();
 	
 	//metodi
 	public ArrayList<Contatto> getLista() {
@@ -33,6 +34,15 @@ public class ListaContatti {
 		}
 		
 		return esiste;
+	}
+	@Override
+	public String toString() {
+		String s = "ListaContatti [" +"\n";
+		for (int i = 0; i < lista.size(); i++) {
+		 s+= "\t\t "+lista.get(i).toString()+"\n";
+		}
+		s+="\t\t]";
+		return s ;
 	}
 	
 }

@@ -11,7 +11,7 @@ public class GestioneRubrica {
 	public static void main(String[] args) {
 		String riga;
 		
-		String percorsoFile="C:\\\\Users\\\\Padawan05\\\\Desktop\\\\FileJava\\\\";
+		String percorsoFile="C:\\Users\\Padawan05\\Desktop\\FileJava\\";
 		String fileDaLeggere= "rubrica1.csv";
 		String fileDaScrivere="rubricaMOD.txt";
 		ListaContatti rub1= new ListaContatti();
@@ -23,9 +23,10 @@ public class GestioneRubrica {
 				String[] contatto = riga.split(";");
 				rub1.caricaLista(contatto[0],contatto[1],contatto[2],contatto[3]);
 			}
-			 for (int i = 0; i < rub1.getLista().size(); i++) {
-				scrittore.println(rub1.getLista().get(i).toString());
-			}
+			 
+				scrittore.println(rub1.toString());
+				System.out.println("fatto");
+			
 			//chiusura
 			lettore.close();
 			scrittore.close();
