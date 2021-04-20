@@ -1,5 +1,6 @@
 package samuele.affuso;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class EserciziArray {
 
@@ -11,7 +12,7 @@ public class EserciziArray {
 		Object [] Array2 = new Object[] {1,2,3,4,5,6};
 		System.out.println("il max dell'array è " + massimo(Array1) + " e si trova in posizione " + indiceMassimo(Array1));
 		
-		System.out.println("il max dell'array è " + minimo(Array1) + " e si trova in posizione " + indiceMinimo(Array1));
+		System.out.println("il minimo dell'array è " + minimo(Array1) + " e si trova in posizione " + indiceMinimo(Array1));
 		
 		System.out.println("E' contenuto nell'array di partenza? " + contains(3,Array1));
 		System.out.println("E' contenuto nell'array di partenza? " + contains(3,Array2));
@@ -19,8 +20,8 @@ public class EserciziArray {
 		System.out.println("Crescente? no");
 		System.out.println(isCrescente(Array1));
 		
-		System.out.println("Crescente? si");
-		// System.out.println(isCrescente(Array12));
+		System.out.println("Crescente?");
+		System.out.println(isCrescente(Array12));
 		
 		
 		
@@ -36,6 +37,9 @@ public class EserciziArray {
 		
 		System.out.println("\nla media dell'array è "+media(Array123));
 		
+		String [] parole = {"prova" , "prova1", "prova1!" };
+		String inserisci = "Inserito";
+		System.out.println(Arrays.toString(addString( inserisci , parole)));
 	
 
 	}
@@ -159,13 +163,13 @@ public class EserciziArray {
 		return media;
 
 }
-	public static String addString (String s, String a[]) {
-		String[] b = new String [a.length + 1];
-		
-		
-		
-		return s;
-		
-	}
+	public static String [] addString ( String s , String [] a) {
+		String [] b = new  String [a.length + 1];
+		for ( int i=0 ; i<a.length ; i++) {
+			b[i]= a[i];
+			}
+		b[a.length] = s;
+		return b;
+		}
 	
 	}

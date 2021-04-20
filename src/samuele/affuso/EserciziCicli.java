@@ -15,6 +15,10 @@ public class EserciziCicli {
 		System.out.println("stampa tabellina");
 		tabellina(2);
 		
+		System.out.println();
+
+		
+		
 		//asterisci decrescenti
 		System.out.println();
 
@@ -33,11 +37,29 @@ public class EserciziCicli {
 				System.out.print("#");}
 			System.out.println();
 			}
-		//es6
 		
+		
+		
+		
+		//es6
+		stampaFiguraNumeri();
 	}
 		public static void tabellina(int n) {
 			for(int i = 0; i <= 10;i++)
 				System.out.print(n*i +", ");
 		}
+		
+		public static void stampaFiguraNumeri() {
+		        for (int i = 0; i < 6; i++) {
+		            for (int j = 0; j < i + 1; j++) {
+		                System.out.print(j+1);
+		            }
+		            System.out.print("     ");
+		            for (int j = 6-i; j >= 1; j--) {
+		                System.out.print(j);
+		            }
+		            System.out.println();
+		        }
+		    }
+
 }

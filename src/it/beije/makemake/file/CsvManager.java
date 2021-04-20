@@ -6,13 +6,45 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import it.beije.makemake.rubrica.Contatto;
 
 public class CsvManager {
 	
+public static void main(String[] args) throws Exception {
+	
+		
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/Users/Padawan07/Desktop/rubrica/rubrica.txt"));
+		bufferedReader.readLine();
+		
+		while (bufferedReader.ready()) {
+			String row = bufferedReader.readLine();
+			String[] rowParts = row.split(";");
+			Contatto contatto = new Contatto();
+			contatto.setNome(rowParts[0]);
+			contatto.setCognome(rowParts[1]);
+			contatto.setTelefono(rowParts[2]);
+			contatto.setEmail(rowParts[3]);
+			contatti.add(contatto);
+		}
+		
+		bufferedReader.close();
+		
+		System.out.println("Quanti contatti ci sono? \ncontatti : " + contatti.size());
+		//	appendInRubrica(contatti, "C:/Users/Padawan07/Desktop/rubrica/rubrica_makemake.txt");
+		System.out.println("----------------");
+		duplicateContacs(contatti);
+		System.out.println("----------------");
+		System.out.println("cerca contatto con numero di ttelfono = 3433432444");
+		System.out.println(searchContact(contatti, "","","3433432444",""));
+	}
+
 	public static void cloneTxtFile(File orig, File clone) throws Exception {
 		if (!orig.exists()) {
 			System.out.println("File origine non trovato!!");
@@ -27,7 +59,6 @@ public class CsvManager {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		FileWriter fileWriter = new FileWriter(clone);
 		while (fileReader.ready()) {
-			//fileWriter.write(fileReader.read());
 			fileWriter.write(bufferedReader.readLine());
 		}
 		fileWriter.close();
@@ -51,68 +82,34 @@ public class CsvManager {
 		writer.close();
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void duplicateContacs(List<Contatto> contatti ) {
+		List<Contatto> duplicato = new ArrayList<Contatto>();
 		
-		File f = new File("C:/temp/new_prova.txt");
-		System.out.println("file exists ? " + f.exists());
-		System.out.println("file isFile ? " + f.isFile());
-		System.out.println("file isDirectory ? " + f.isDirectory());
-		
-//		System.out.println("-------------------\n");
-//		
-//		FileReader fileReader = new FileReader(f);
-//		int c = fileReader.read();
-//		while (c >= 0) {
-//			System.out.print((char) c);
-//			c = fileReader.read();
-//		}
-
-		System.out.println("-------------------\n");
-		
-		List<Contatto> contatti = new ArrayList<Contatto>();
-		BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/temp/prova.txt"));
-		//BufferedReader bufferedReader = new BufferedReader(fileReader);
-		while (bufferedReader.ready()) {
-			String row = bufferedReader.readLine();
-			//System.out.println(row);
-			String[] rowParts = row.split(";");
-			Contatto contatto = new Contatto();
-			contatto.setNome(rowParts[0]);
-			contatto.setCognome(rowParts[1]);
-			contatto.setTelefono(rowParts[2]);
-			contatto.setEmail(rowParts[3]);
-			contatti.add(contatto);
-			System.out.println("nome : " + rowParts[0]);
-			System.out.println("cognome : " + rowParts[1]);
-			System.out.println("telefono : " + rowParts[2]);
-			System.out.println("email : " + rowParts[3]);
-			System.out.println("---------");
-			
-//			StringTokenizer tokenizer = new StringTokenizer(row, ";");
-//			System.out.println("nome : " + tokenizer.nextToken());
-//			System.out.println("cognome : " + tokenizer.nextToken());
-//			System.out.println("telefono : " + tokenizer.nextToken());
-//			System.out.println("email : " + tokenizer.nextToken());
-//			System.out.println("-------------------");
+		for(int i = 0; i< contatti.size(); i++) {
+			for(int j= i+1; j <contatti.size(); j++ )
+				if(contatti.get(i).toString().equals(contatti.get(j).toString())) {
+					
+						duplicato.add(contatti.get(i));
+				}
+					
+			}
+		for (int i = 0; i < duplicato.size(); i++) {
+			System.out.println(duplicato.toString() + " è un duplicato");
+			}		
 		}
-		
-		bufferedReader.close();
-		System.out.println("contatti : " + contatti.size());
-		
-		appendInRubrica(contatti, "C:/temp/rubrica_makemake.txt");
-		
-		
-//		FileWriter fileWriter = new FileWriter(f);
-//		FileWriter fileWriter = new FileWriter(f, true);
-//		fileWriter.write("ciao Makemake1\n");
-//		fileWriter.flush();
-//		fileWriter.write("ciao Makemake2");
-//		fileWriter.close();
-//		fileWriter.write("ciao Makemake3");
-		
-		
-//		cloneTxtFile(new File("C:/temp/prova675.txt"), new File("C:/temp/new_prova.txt"));
-		
-	}
 
+	
+	
+	public static String searchContact(List<Contatto> contatti, String nome, String cognome, String telefono, String email) {
+		for(int i = 0; i < contatti.size();i++) {
+			if (contatti.get(i).getNome().equals(nome) || contatti.get(i).getCognome().equals(cognome) || contatti.get(i).getTelefono().equals(telefono) || contatti.get(i).getEmail().equals(email) )
+				return contatti.get(i).toString();
+		}
+		return "Il contatto non è presente nella lista";
+
+	}
+	
+	public static void sortContact(List<Contatto> contatti) {
+		//contatti.sort();
+	}
 }
