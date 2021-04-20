@@ -1,4 +1,4 @@
-package it.beije.makemake.terzaSettimana.lunedi.Rubrica;
+package it.beije.makemake.terzaSettimana.lunedi.rubrica;
 
 public class Contatto {
 	private String nome;

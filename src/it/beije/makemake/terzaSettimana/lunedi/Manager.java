@@ -2,6 +2,8 @@ package it.beije.makemake.terzaSettimana.lunedi;
 import it.beije.makemake.rubrica.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class Manager {
@@ -61,6 +63,17 @@ public class Manager {
 		
 		
 	}
+	public static void readFile(File file) {
+		if( !(file.exists() || file.isFile())) {
+			System.out.println("Hai cannato qualcosa");
+			return ;
+		}
+			
+	
+		//1 METODO PER LEGGERE DA FILE
+		FileReader fileReader = new FileReader(file);
+	}
+	
 	
 	public static ArrayList<Contatto> convertRubricaToList(File file) throws Exception{
 		FileReader fileReader = new FileReader(file);
@@ -86,9 +99,25 @@ public class Manager {
 		}
 	}
 
-	public static void orderRubricaNome(File file) {
+	public static void orderRubricaNome(File file) throws Exception{
 		ArrayList<Contatto> contatti = convertRubricaToList(file);
+		ArrayList<Contatto> newContatti = new ArrayList<>();
 		
-		ArrayList<String> nomi = 
+		ArrayList<String> nomi = new ArrayList<>();
+		for(Contatto c : contatti) {
+			nomi.add(c.getNome());		
+		}
+		
+		Collections.sort(nomi);
+		OUTER_LOOP:for(String str : nomi) {
+					 for(Contatto c : contatti) {
+						if(c.getNome().equals(str)) {
+							newContatti.add(c);
+							contatti.remove(c);
+							continue OUTER_LOOP;
+						}
+					}
+				}
+		//adesso devo salvare la nuova newContatti.
 	}
 }

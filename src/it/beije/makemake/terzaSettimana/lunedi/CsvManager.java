@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.terzaSettimana.lunedi.Rubrica.Contatto;
+import it.beije.makemake.terzaSettimana.lunedi.rubrica.Contatto;
 /**
  * Scaletta generale:
  * 	1-Creao un oggetto File(filePath);
