@@ -1,79 +1,40 @@
-package it.beije.makemake.terzaSettimana.lunedi;
-import it.beije.makemake.rubrica.*;
+package it.beije.makemake.file;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import it.beije.makemake.file.rubrica.*;
+
 public class Manager {
 	public static void main(String[] arg) throws Exception{
 		File file = new File("C:/Users/Padawan11/Desktop/rubrica1.csv");
+		ArrayList<Contatto> contatti = new ArrayList<>();
 		
-		if( !(file.exists() || file.isFile()))
-				System.out.println("Hai cannato qualcosa");
-		
-		//1 METODO PER LEGGERE DA FILE
-		FileReader fileReader = new FileReader(file);
-		
-		int c = fileReader.read();
-		
-		while(c >= 0) {
-			System.out.print((char) c);
-			c = fileReader.read();
-		}
-		fileReader.close();
-		System.out.println("-----------------------------");
-		
-		//2 METODO 
-		fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		while(bufferedReader.ready()) {
-			System.out.println(bufferedReader.readLine());
-		}
-		bufferedReader.close();
-		
-		System.out.println("--------------------------------");
-		
-		//COME SEMPARARE I VALORI DELLE RIGHE IN INGRESSO
 
-		fileReader = new FileReader(file);
-		bufferedReader = new BufferedReader(fileReader);
-		List<Contatto> contatti = new ArrayList<>();
-		
-		while(bufferedReader.ready()) {
-			String line = bufferedReader.readLine();
-			String values[] = line.split(";");
-			contatti.add(new Contatto(values[0], values[1], values[2], values[3]));
-		}
-		bufferedReader.close();
-		
-//		FileWriter fileWriter = new FileWriter(file, true);
-//		fileWriter.write("\n");
-//		for(Contatto cont : contatti) {
-//			fileWriter.write(cont.getNome()+";"+cont.getCognome()+";"
-//							+cont.getTelefono()+";"+cont.getEmail()+";\n");
-//		}
-//		fileWriter.close();
-		
 		contatti = convertRubricaToList(file);
 		
-		searchForDuplicates((ArrayList<Contatto>)contatti);
-		
+		searchForDuplicates(contatti);
+		orderRubricaNome(file);
 		
 	}
-	public static void readFile(File file) {
+	public static void readFile(File file) throws Exception{
 		if( !(file.exists() || file.isFile())) {
 			System.out.println("Hai cannato qualcosa");
 			return ;
 		}
 			
 	
-		//1 METODO PER LEGGERE DA FILE
+		
 		FileReader fileReader = new FileReader(file);
+		BufferedReader bufferedReader = new BufferedReader(fileReader);
+		
+		while(bufferedReader.ready()) {
+			System.out.println(bufferedReader.readLine());
+		}
+		bufferedReader.close();
 	}
-	
 	
 	public static ArrayList<Contatto> convertRubricaToList(File file) throws Exception{
 		FileReader fileReader = new FileReader(file);
@@ -86,7 +47,9 @@ public class Manager {
 			contatti.add(new Contatto(values[0], values[1], values[2], values[3]));
 		}
 		bufferedReader.close();
-		
+		//tolgo la prima riga che è inutile in quanto contiene solo
+		//il NOME, COGNOME, TELEGONO, EMAIL
+		contatti.remove(0);
 		return contatti;
 	}
 	
@@ -118,6 +81,8 @@ public class Manager {
 						}
 					}
 				}
-		//adesso devo salvare la nuova newContatti.
+		for(Contatto c : newContatti) {
+			System.out.println(c);
+		}
 	}
 }

@@ -1,14 +1,14 @@
-package it.beije.makemake.terzaSettimana.lunedi;
+package it.beije.makemake.file.rubrica;
 
 
 import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.terzaSettimana.lunedi.rubrica.Contatto;
 /**
  * Scaletta generale:
  * 	1-Creao un oggetto File(filePath);
@@ -95,7 +95,7 @@ public class CsvManager {
 			String line = bufferedReader.readLine();
 			System.out.println(line);
 			String[] separatedValues = line.split(";");
-			Contatto cont = new Contatto(separatedValues[0], separatedValues[1], separatedValues[2]);
+			Contatto cont = new Contatto(separatedValues[0], separatedValues[1], separatedValues[2], "");
 			lista.add(cont);
 
 		}

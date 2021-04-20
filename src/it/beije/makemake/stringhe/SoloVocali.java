@@ -1,4 +1,4 @@
-package it.beije.makemake.secondasettimana.venerdi;
+package it.beije.makemake.stringhe;
 
 import java.util.Scanner;
 

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.file.rubrica.Contatto;
+import it.beije.makemake.file.rubrica.*;
 
 public class CsvManager {
 	

@@ -1,4 +1,4 @@
-package it.beije.makemake.rubrica;
+package it.beije.makemake.file.rubrica;
 
 public class Contatto {
 

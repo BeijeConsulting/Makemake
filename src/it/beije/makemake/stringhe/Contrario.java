@@ -1,4 +1,4 @@
-package it.beije.makemake.secondasettimana.venerdi;
+package it.beije.makemake.stringhe;
 
 public class Contrario {
 	public static void main(String arg[]) {
