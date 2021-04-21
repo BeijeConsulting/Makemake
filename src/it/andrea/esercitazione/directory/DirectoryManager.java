@@ -1,4 +1,4 @@
-package it.andrea.esercitazioneDirectory;
+package it.andrea.esercitazione.directory;
 
 import java.io.BufferedWriter;
 import java.io.File;

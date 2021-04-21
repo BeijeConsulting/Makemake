@@ -1,4 +1,4 @@
-package it.andrea.esercitazione0416;
+package it.andrea.esercitazione.giorno0416;
 
 public class LoopsExercises {
 	// Scrivere un programma che stampi a video i primi dieci numeri interi

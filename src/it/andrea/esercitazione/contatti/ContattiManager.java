@@ -1,4 +1,4 @@
-package it.andrea.esercitazionecontatti;
+package it.andrea.esercitazione.contatti;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

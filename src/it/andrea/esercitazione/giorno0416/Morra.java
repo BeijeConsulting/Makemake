@@ -1,4 +1,4 @@
-package it.andrea.esercitazione0416;
+package it.andrea.esercitazione.giorno0416;
 
 import java.util.Scanner;
 

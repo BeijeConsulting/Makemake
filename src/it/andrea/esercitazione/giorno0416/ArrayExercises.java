@@ -1,4 +1,4 @@
-package it.andrea.esercitazione0416;
+package it.andrea.esercitazione.giorno0416;
 
 public class ArrayExercises {
 	// Trovare il massimo elemento in un array (o il minimo)
