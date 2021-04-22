@@ -6,6 +6,10 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -28,6 +32,7 @@ public class ManagreXML{
 		
 		//creo un istanza del file xml da cui voglio leggere
 		File file = new File("C:/Users/Padawan11/Desktop/rubrica.xml");
+		File destFile = new File("C:/Users/Padawan11/Desktop/rubrica1.xml");
 		ArrayList<Contatto> rubrica = null;
 		//mi estrapola tutti i tag del file e li mette nella classe document
 		Document document = builder.parse(file);
@@ -38,6 +43,7 @@ public class ManagreXML{
 
 	
 		rubrica = retriveContacts(root);
+		buildXmlDocument(destFile, rubrica);
 		System.out.println(rubrica);
 		
 	}
@@ -88,5 +94,49 @@ public class ManagreXML{
 		
 		return rubrica;
 		
+	}
+	
+	public static void buildXmlDocument(File destFile, ArrayList<Contatto> contatti) throws Exception {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.newDocument();
+		
+		Element rootTag = document.createElement("rubrica");
+		
+		for(Contatto cont : contatti) {
+			Element contatto = document.createElement("contatto");
+			
+			Element nome = document.createElement("nome");
+			Element cognome = document.createElement("cognome");
+			Element telefono = document.createElement("telefono");
+			Element email = document.createElement("email");
+			
+			nome.setTextContent(cont.getNome());
+			cognome.setTextContent(cont.getCognome());
+			telefono.setTextContent(cont.getTelefono());
+			email.setTextContent(cont.getEmail());
+			
+			contatto.appendChild(nome);
+			contatto.appendChild(cognome);
+			contatto.appendChild(telefono);
+			contatto.appendChild(email);
+			
+			rootTag.appendChild(contatto);
+		}
+		
+		document.appendChild(rootTag);
+		
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		//mi trasforma il document in un DOM
+		DOMSource source = new DOMSource(document);
+		
+		//ADESSO IN BASE A DOVE VOGLIO MOSTRARE L XML
+		//POSSO SCEGLIERE TRA FILE E SYSOUT
+		StreamResult streamVersoFile = new StreamResult(destFile);
+		StreamResult streamVersoOut = new StreamResult(System.out);
+		
+		transformer.transform(source, streamVersoFile);
+		transformer.transform(source, streamVersoOut);
 	}
 }
