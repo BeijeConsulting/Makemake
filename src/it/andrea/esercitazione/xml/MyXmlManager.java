@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -55,7 +54,7 @@ public class MyXmlManager {
 		if (f.exists()) {
 			printFile(f);
 			System.out.println("\n-------------------\n\n");
-			
+
 			ContattiManager.printContactList(retrieveContactList(f));
 		}
 	}
