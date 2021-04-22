@@ -14,12 +14,14 @@ public class Test {
         AddressBook addressBook = AddressBook.createFromCSV(
                 "C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\src\\it\\beije\\makemake\\addressBook\\test\\address_book.csv",
                 ";", false);
-        System.out.println(addressBook.toString());
+//        System.out.println(addressBook.toString());
 
 
         //testing address book merge
         addressBook.merge("C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\src\\it\\beije\\makemake\\addressBook\\test\\address_book2.csv",
                 ";", false);
+
+        addressBook.sort();
 
 
         //testing AddressBook toFile
@@ -33,5 +35,11 @@ public class Test {
              result) {
             System.out.println(c);
         }
+
+
+        //testing AddressBook from XML
+
+        AddressBook addressBook2 = AddressBook.createFromXML("C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\rubrica.xml");
+        System.out.println(addressBook);
     }
 }

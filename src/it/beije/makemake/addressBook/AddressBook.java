@@ -1,5 +1,14 @@
 package it.beije.makemake.addressBook;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +40,62 @@ public class AddressBook {
         return addressBook;
     }
 
+    public static AddressBook createFromXML(String path) throws Exception {
+
+        AddressBook result = new AddressBook();
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = factory.newDocumentBuilder();
+
+        Document document = documentBuilder.parse(new File(path));
+        Element addressBook = document.getDocumentElement();
+        NodeList contacts = addressBook.getElementsByTagName("contatto");
+
+        for (int i = 0; i < contacts.getLength(); i++) {
+            Element contact = (Element)contacts.item(i);
+
+            Element name = (Element)contact.getElementsByTagName("nome").item(0);
+            Element surname = (Element)contact.getElementsByTagName("cognome").item(0);
+            Element phone = (Element)contact.getElementsByTagName("telefono").item(0);
+            Element mail = (Element)contact.getElementsByTagName("mail").item(0);
+
+            Contact c1;
+            if (mail != null) {
+                c1 = new Contact(name.getTextContent(),
+                        surname.getTextContent(),
+                        phone.getTextContent(),
+                        mail.getTextContent());
+            } else {
+                c1 = new Contact(name.getTextContent(),
+                        surname.getTextContent(),
+                        phone.getTextContent());
+            }
+
+            result.contactList.add(c1);
+
+        }
+
+        return result;
+
+    }
+
+    public void toXMLFile(String destPath) throws Exception {
+        FileWriter fileWriter = new FileWriter(destPath);
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.newDocument();
+
+
+
+    }
+
     @Override
     public String toString() {
-        return format(" ");
+        StringBuilder sb = new StringBuilder();
+        for (Contact contact :
+                contactList) {
+            sb.append(contact.toString());
+        }
+        return sb.toString();
     }
 
     public String format(String delim) {
@@ -102,5 +164,7 @@ public class AddressBook {
         Contact c = new Contact(name);
         return search(c);
     }
+
+
 
 }

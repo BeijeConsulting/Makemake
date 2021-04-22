@@ -2,11 +2,11 @@ package it.beije.makemake.addressBook;
 
 public class Contact implements Comparable<Contact> {
 
-    private String name;
-    private String surname;
-    private String phone;
-    private String mail;
-    private String address;
+    private String name = "";
+    private String surname = "";
+    private String phone = "";
+    private String mail = "";
+    private String address = "";
 
     public String getName() {
         return name;
@@ -65,11 +65,18 @@ public class Contact implements Comparable<Contact> {
     }
 
     public Contact(String name) {
-        this(name, "", "", "", "");
+        this.name = name;
     }
 
     public Contact(String name, String surname) {
-        this(name, surname, "", "", "");
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public Contact(String name, String surname, String phone) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
     }
 
 
@@ -89,6 +96,7 @@ public class Contact implements Comparable<Contact> {
         return new Contact(name, surname, phone, mail, address);
     }
 
+
     private static String removeQuotes(String field) {
         return field.substring(1, field.length()-1);
     }
@@ -106,20 +114,48 @@ public class Contact implements Comparable<Contact> {
 
     @Override
     public String toString() {
-        return format(" ");
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name: " + name);
+        sb.append(" Surname: " + surname);
+        sb.append(" Phone: " + phone);
+        sb.append(" Mail: " + mail);
+        sb.append(" Address: " + address);
+        sb.append("\n");
+        return sb.toString();
     }
 
 
+//    @Override
+//    public int compareTo(Contact o) {
+//        if (this.name.compareTo(o.name) != 0) {
+//            return this.name.compareTo(o.name);
+//        } else {
+//            if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
+//                return this.surname.compareTo(o.surname);
+//            }
+//        }
+//        return 0;
+//    }
+
     @Override
     public int compareTo(Contact o) {
-        if (this.name.compareTo(o.name) != 0) {
-            return this.name.compareTo(o.name);
-        } else {
-            if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
-                return this.surname.compareTo(o.surname);
-            }
+        int r = 0;
+        if (!this.name.isEmpty() && !o.name.isEmpty()) {
+            r += this.name.compareTo(o.name);
         }
-        return 0;
+        if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
+            r += this.surname.compareTo(o.surname);
+        }
+        if (!this.phone.isEmpty() && !o.phone.isEmpty()) {
+            r += this.phone.compareTo(o.phone);
+        }
+        if (!this.mail.isEmpty() && !o.mail.isEmpty()) {
+            r += this.mail.compareTo(o.mail);
+        }
+        if (!this.address.isEmpty() && !o.address.isEmpty()) {
+            r += this.address.compareTo(o.address);
+        }
+        return r;
     }
 
 
