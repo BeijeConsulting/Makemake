@@ -95,6 +95,7 @@ public class Rubrica {
 	
 	public static void cognomeOrder(List<Contatto> contatti) {
 		Collections.sort(contatti,(c1,c2)->c1.getCognome().compareTo(c2.getCognome()));
+		
 		for(Contatto c : contatti) {
 			System.out.println(c.toString());
 		}
@@ -137,7 +138,6 @@ public class Rubrica {
 						if(c.getTelefono().equalsIgnoreCase(contatti.get(j).getTelefono()))
 							if(c.getEmail().equalsIgnoreCase(contatti.get(j).getEmail()))
 								num++;
-
 		}
 		
 		

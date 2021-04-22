@@ -74,6 +74,7 @@ public class CsvManager {
 		//BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while (bufferedReader.ready()) {
 			String row = bufferedReader.readLine();
+			
 			//System.out.println(row);
 			String[] rowParts = row.split(";");
 			Contatto contatto = new Contatto();
