@@ -2,14 +2,15 @@ package it.beije.makemake.rubrica;
 
 public class Contatto {
 
+	private Integer eta;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
-	
+
 	public Contatto() {
 	}
-	
+
 	public Contatto(String nome, String cognome, String telefono, String email) {
 		super();
 		this.nome = nome;
@@ -18,34 +19,46 @@ public class Contatto {
 		this.email = email;
 	}
 
+	public Integer getEta() {
+		return eta;
+	}
+
+	public void setEta(Integer eta) {
+		this.eta = eta;
+	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
+
 	public String getCognome() {
 		return cognome;
 	}
+
 	public void setCognome(String cognome) {
 		this.cognome = cognome;
 	}
-	
+
 	public String getTelefono() {
 		return telefono;
 	}
+
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -65,6 +78,11 @@ public class Contatto {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
+		if (eta == null) {
+			if (other.eta != null)
+				return false;
+		} else if (!eta.equals(other.eta))
+			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -80,12 +98,7 @@ public class Contatto {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder()
-				.append("{ nome : ").append(nome).append(", ")
-				.append("cognome : ").append(cognome).append(", ")
-				.append("telefono : ").append(telefono).append(", ")
-				.append("email : ").append(email).append(" }");
-		
-		return builder.toString();
+		return "Contatto [eta=" + eta + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono
+				+ ", email=" + email + "]";
 	}
 }
