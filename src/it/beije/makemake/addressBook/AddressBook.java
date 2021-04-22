@@ -83,4 +83,24 @@ public class AddressBook {
         return this;
     }
 
+    public List<Contact> search(Contact contact) {
+        List<Contact> result = new ArrayList<>();
+        sort();
+        int i = Collections.binarySearch(contactList, contact);
+        if (i < 0)
+            return result;
+        int k = i;
+        while(k >= 0 && contactList.get(k).compareTo(contact)==0)
+            result.add(contactList.get(k--));
+        k = i+1;
+        while(k < contactList.size() && contactList.get(k).compareTo(contact)==0)
+            result.add(contactList.get(k++));
+        return result;
+    }
+
+    public List<Contact> search(String name) {
+        Contact c = new Contact(name);
+        return search(c);
+    }
+
 }

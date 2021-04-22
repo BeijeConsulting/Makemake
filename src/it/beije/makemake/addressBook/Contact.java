@@ -48,7 +48,7 @@ public class Contact implements Comparable<Contact> {
         this.mail = mail;
     }
 
-    private Contact(String name, String surname, String phone, String mail, String address) {
+    public Contact(String name, String surname, String phone, String mail, String address) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
@@ -56,12 +56,20 @@ public class Contact implements Comparable<Contact> {
         this.address = address;
     }
 
-    private Contact(String name, String surname, String phone, String mail) {
+    public Contact(String name, String surname, String phone, String mail) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.mail = mail;
         this.address = "";
+    }
+
+    public Contact(String name) {
+        this(name, "", "", "", "");
+    }
+
+    public Contact(String name, String surname) {
+        this(name, surname, "", "", "");
     }
 
 
@@ -104,9 +112,28 @@ public class Contact implements Comparable<Contact> {
 
     @Override
     public int compareTo(Contact o) {
-        if (this.name.compareTo(o.name) != 0)
+        if (this.name.compareTo(o.name) != 0) {
             return this.name.compareTo(o.name);
-        else
-            return this.surname.compareTo(o.surname);
+        } else {
+            if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
+                return this.surname.compareTo(o.surname);
+            }
+        }
+        return 0;
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Contact) {
+            Contact c = (Contact)obj;
+            return name.equals(c.name)
+                    || surname.equals(c.surname)
+                    || address.equals(c.address)
+                    || mail.equals(c.mail)
+                    || phone.equals(c.phone);
+        }
+        return false;
     }
 }
