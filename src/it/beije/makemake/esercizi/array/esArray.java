@@ -1,7 +1,5 @@
 package it.beije.makemake.esercizi.array;
 
-import java.util.ArrayList;
-
 public class esArray {
 
 	public static int ultimo(int[] x) {
@@ -41,7 +39,7 @@ public class esArray {
 	public static boolean isCrescente(int [] x) {
 		boolean c = false;
 	LOOP:for(int i=0; i<x.length-1; i++) {
-			for(int j=1; j<=x.length-1; j++) {
+			for(int j=1; j<=x.length-1;) {
 				if(x[i]<x[j]) {
 					c=true;
 				continue LOOP;

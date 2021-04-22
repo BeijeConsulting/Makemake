@@ -6,8 +6,28 @@ public class Contatto {
 	private String cognome;
 	private String telefono;
 	private String email;
+	private Integer eta;
 	
+	public Contatto() {
+	}
 	
+	public Contatto(String nome, String cognome, String telefono, String email, Integer eta) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+		this.eta=eta;
+	}
+
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+	}
+
 	public String getNome() {
 		return nome;
 	}
@@ -35,14 +55,60 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
+	public Integer getEta() {
+		return eta;
+	}
+	public void setEta(Integer eta) {
+		this.eta = eta;
+	}
 	
+	
+	
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Contatto other = (Contatto) obj;
+		if (cognome == null) {
+			if (other.cognome != null)
+				return false;
+		} else if (!cognome.equals(other.cognome))
+			return false;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (eta == null) {
+			if (other.eta != null)
+				return false;
+		} else if (!eta.equals(other.eta))
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder()
-				.append("{ nome : ").append(nome).append(", ")
-				.append("cognome : ").append(cognome).append(", ")
-				.append("telefono : ").append(telefono).append(", ")
-				.append("email : ").append(email).append(" }");
+		return "Contatto [nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email=" + email
+				+ ", eta=" + eta + "]";
+	
+
 		
-		return builder.toString();
 	}
 }
