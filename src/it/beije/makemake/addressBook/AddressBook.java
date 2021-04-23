@@ -9,6 +9,10 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,7 +27,6 @@ public class AddressBook {
         return contactList;
     }
 
-    private AddressBook() {}
 
     public static AddressBook createFromCSV(String path, String delim, boolean useQuotes) throws Exception {
         AddressBook addressBook = new AddressBook();
@@ -40,13 +43,17 @@ public class AddressBook {
         return addressBook;
     }
 
-    public static AddressBook createFromXML(String path) throws Exception {
+    public static AddressBook createFromXML(String path) throws ParserConfigurationException, FileNotFoundException, SAXException, IOException {
 
         AddressBook result = new AddressBook();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = factory.newDocumentBuilder();
 
-        Document document = documentBuilder.parse(new File(path));
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Il file specificato non esiste!");
+        }
+        Document document = documentBuilder.parse(file);
         Element addressBook = document.getDocumentElement();
         NodeList contacts = addressBook.getElementsByTagName("contatto");
 
@@ -84,7 +91,21 @@ public class AddressBook {
         DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
         Document document = documentBuilder.newDocument();
 
+        Element root = document.createElement("contatti");
+        for (Contact contact :
+                contactList) {
+            Element contactElement = contact.getXMLElement(document);
+            root.appendChild(contactElement);
+        }
+        document.appendChild(root);
 
+        TransformerFactory transformerFactory = TransformerFactory.newInstance();
+        Transformer transformer = transformerFactory.newTransformer();
+        DOMSource domSource = new DOMSource(document);
+
+        StreamResult result = new StreamResult(new File(destPath));
+
+        transformer.transform(domSource, result);
 
     }
 
@@ -127,6 +148,12 @@ public class AddressBook {
         return this;
     }
 
+    public AddressBook addContact(String[] fields) {
+        Contact c = new Contact(fields);
+        addContact(c);
+        return this;
+    }
+
     public AddressBook merge(AddressBook addressBook) {
         for (Contact c :
                 addressBook.contactList) {
@@ -164,6 +191,15 @@ public class AddressBook {
         Contact c = new Contact(name);
         return search(c);
     }
+
+    public boolean remove(Contact c) {
+        return contactList.remove(c);
+    }
+
+
+
+
+
 
 
 

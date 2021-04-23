@@ -1,5 +1,12 @@
 package it.beije.makemake.addressBook;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.Locale;
+
 public class Contact implements Comparable<Contact> {
 
     private String name = "";
@@ -7,6 +14,14 @@ public class Contact implements Comparable<Contact> {
     private String phone = "";
     private String mail = "";
     private String address = "";
+
+    public Contact(String[] fields) {
+        name = fields[0] == null ? "" : fields[0];
+        surname = fields[0] == null ? "" : fields[1];
+        phone = fields[0] == null ? "" : fields[2];
+        mail = fields[0] == null ? "" : fields[3];
+        address = fields[0] == null ? "" : fields[4];
+    }
 
     public String getName() {
         return name;
@@ -61,7 +76,6 @@ public class Contact implements Comparable<Contact> {
         this.surname = surname;
         this.phone = phone;
         this.mail = mail;
-        this.address = "";
     }
 
     public Contact(String name) {
@@ -124,38 +138,45 @@ public class Contact implements Comparable<Contact> {
         return sb.toString();
     }
 
-
-//    @Override
-//    public int compareTo(Contact o) {
-//        if (this.name.compareTo(o.name) != 0) {
-//            return this.name.compareTo(o.name);
-//        } else {
-//            if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
-//                return this.surname.compareTo(o.surname);
-//            }
-//        }
-//        return 0;
-//    }
-
     @Override
     public int compareTo(Contact o) {
         int r = 0;
         if (!this.name.isEmpty() && !o.name.isEmpty()) {
-            r += this.name.compareTo(o.name);
+            r += this.name.toLowerCase(Locale.ROOT).compareTo(o.name.toLowerCase(Locale.ROOT));
         }
         if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
-            r += this.surname.compareTo(o.surname);
+            r += this.surname.toLowerCase(Locale.ROOT).compareTo(o.surname.toLowerCase(Locale.ROOT));
         }
         if (!this.phone.isEmpty() && !o.phone.isEmpty()) {
-            r += this.phone.compareTo(o.phone);
+            r += this.phone.toLowerCase(Locale.ROOT).compareTo(o.phone.toLowerCase(Locale.ROOT));
         }
         if (!this.mail.isEmpty() && !o.mail.isEmpty()) {
-            r += this.mail.compareTo(o.mail);
+            r += this.mail.toLowerCase(Locale.ROOT).compareTo(o.mail.toLowerCase(Locale.ROOT));
         }
         if (!this.address.isEmpty() && !o.address.isEmpty()) {
-            r += this.address.compareTo(o.address);
+            r += this.address.toLowerCase(Locale.ROOT).compareTo(o.address.toLowerCase(Locale.ROOT));
         }
         return r;
+    }
+
+    public Element getXMLElement(Document document) throws Exception {
+        Element contact = document.createElement("contatto");
+        Element name = document.createElement("nome");
+        Element surname = document.createElement("cognome");
+        Element phone = document.createElement("telefono");
+        Element mail = document.createElement("mail");
+        Element address = document.createElement("indirizzo");
+        name.setTextContent(this.name);
+        surname.setTextContent(this.surname);
+        phone.setTextContent(this.phone);
+        mail.setTextContent(this.mail);
+        address.setTextContent(this.address);
+        contact.appendChild(name);
+        contact.appendChild(surname);
+        contact.appendChild(phone);
+        contact.appendChild(mail);
+        contact.appendChild(address);
+        return contact;
     }
 
 
@@ -164,11 +185,7 @@ public class Contact implements Comparable<Contact> {
     public boolean equals(Object obj) {
         if (obj instanceof Contact) {
             Contact c = (Contact)obj;
-            return name.equals(c.name)
-                    || surname.equals(c.surname)
-                    || address.equals(c.address)
-                    || mail.equals(c.mail)
-                    || phone.equals(c.phone);
+            return this.compareTo(c) == 0;
         }
         return false;
     }
