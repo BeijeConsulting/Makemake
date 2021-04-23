@@ -14,7 +14,6 @@ public class CsvManager {
 	public static List<Contatto> leggiCsv(String percorso) throws Exception {
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		BufferedReader bufferedReader = new BufferedReader(new FileReader(percorso));
-		bufferedReader.readLine();
 
 		while (bufferedReader.ready()) {
 			String row = bufferedReader.readLine();

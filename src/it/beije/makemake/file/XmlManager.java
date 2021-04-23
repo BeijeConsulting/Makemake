@@ -20,7 +20,20 @@ import it.beije.makemake.rubrica.Contatto;
 
 public class XmlManager extends CsvManager {
 	
-	public static List<Contatto> leggiXmlInArray(File f) throws Exception {
+	public static void main(String[] args)  throws Exception {
+		
+		File f = new File("C:\\Users\\Padawan07\\Desktop\\rubrica\\rubrica.xml");
+		System.out.println("file exists ? " + f.exists());
+
+		System.out.print("\n-------------------\n");
+		
+		//Tutti i contatti in un array
+		List<Contatto> listacontatti = leggiXmlInArray(f);
+		scriviInXml(listacontatti, "C:\\Users\\Padawan07\\Desktop\\rubrica\\rubrica1.xml");
+		
+		
+	}
+	public static List leggiXmlInArray(File f) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 		
@@ -42,18 +55,11 @@ public class XmlManager extends CsvManager {
 			Element telefono = (Element) contatto.getElementsByTagName("telefono").item(0);
 			Element email = (Element) contatto.getElementsByTagName("email").item(0);
 			
-			
-			Contatto cont = new Contatto(null, null, null, null);
-			if(cognome!=null)
-				cont.setCognome(cognome.getTextContent());
-			if(telefono!=null)
-				cont.setTelefono(telefono.getTextContent());
-			if(nome!=null)
-				cont.setNome(nome.getTextContent());
-			if(email!=null)
-				cont.setEmail(email.getTextContent());
-			
-				
+			String cognome1 = cognome.getTextContent();
+			String nome1 = nome.getTextContent();
+			String email1 = email.getTextContent();
+			String telefono1 = cognome.getTextContent();
+			Contatto cont = new Contatto(nome1, cognome1, telefono1, email1);	
 			listacontatti.add(cont);
 			//System.out.println(cont.toString());
 			

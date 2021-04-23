@@ -13,30 +13,39 @@ import it.beije.makemake.file.XmlManager;
 public class GestisciRubrica {
 
 	public static String file = "C:/Users/Padawan07/Desktop/rubrica/rubrica.txt";
+	
 	public static void main(String[] args) throws Exception {
+		
 		Scanner in = new Scanner(System.in);
 		boolean flag = false;
+		
 		System.out.println("RUBRICA:");
 		List<Contatto> contatti = CsvManager.leggiCsv(file);
-		// stampaContatti(contatti);
-		System.out.println("Cosa vuoi fare? " + "\n 1) Aggiungere contatto" + "\n 2) Rimuovere contatto"
-				+ "\n 3) Cercare contatto" + "\n 4) Visualizzare contatti duplicati");
-
+		stampaContatti(contatti);
+		
 		do {
+			stampaMenu();
 			String s = in.nextLine();
 			flag = true;
 			switch (s) {
 			case "1":
 				contatti.add(leggiContatto(in));
-				aggiungiContatto(contatti, file);
+				System.out.println(contatti.size());
+				scriviListaInCsv(contatti, file);
 				flag = false;
 				break;
 			case "2":
+				contatti.remove(leggiContatto(in));
+				scriviListaInCsv(contatti, file);
+				flag = false;
 
 				break;
 			case "3":
+				
+				System.out.println(searchContact(contatti, leggiContatto(in)));
 				break;
 			case "4":
+				// da sistemare 
 				duplicateContact(contatti);
 				break;
 
@@ -46,8 +55,12 @@ public class GestisciRubrica {
 		} while (flag);
 
 	}
+public static void stampaMenu() {
+	System.out.println("\n\n\nCosa vuoi fare? " + "\n 1) Aggiungere contatto" + "\n 2) Rimuovere contatto"
+			+ "\n 3) Cercare contatto" + "\n 4) Visualizzare contatti duplicati\n\n\n");
 
-	private static Contatto leggiContatto(Scanner in) {
+}
+	public static Contatto leggiContatto(Scanner in) {
 		System.out.println("Nome?");
 		String Nome = in.nextLine();
 		System.out.println("Cognome?");
@@ -60,19 +73,18 @@ public class GestisciRubrica {
 		return contatto;
 	}
 
-	public static void aggiungiContatto(List<Contatto> contatti, String pathFile) throws Exception {
+	public static void scriviListaInCsv(List<Contatto> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile));
-		for (Contatto contatto : contatti) {
-			writer.write(contatto.getNome());
+		for(int i = 0; i < contatti.size(); i++) {
+			writer.write(contatti.get(i).getNome());
 			writer.write(';');
-			writer.write(contatto.getCognome());
+			writer.write(contatti.get(i).getCognome());
 			writer.write(';');
-			writer.write(contatto.getTelefono());
+			writer.write(contatti.get(i).getTelefono());
 			writer.write(';');
-			writer.write(contatto.getEmail());
+			writer.write(contatti.get(i).getEmail());
 			writer.write('\n');
 		}
-
 		writer.flush();
 		writer.close();
 	}
@@ -94,21 +106,14 @@ public class GestisciRubrica {
 				duplicati.add(contatti.get(i));
 		}
 		for (int i = 0; i < duplicati.size(); i++) {
-//			for (int j = i + 1; j < duplicati.size(); j++) {
-//				if(duplicati.get(i).equals(duplicati.get(j)))
-//					duplicati.remove(i);
-//				
-//			}
-
 			System.out.println(duplicati.get(i).toString() + " è un duplicato");
 		}
 	}
 
-	public static String searchContact(List<Contatto> contatti, String nome, String cognome, String telefono,
-			String email) {
+	public static String searchContact(List<Contatto> contatti, Contatto c) {
 		for (int i = 0; i < contatti.size(); i++) {
-			if (contatti.get(i).getNome().equals(nome) || contatti.get(i).getCognome().equals(cognome)
-					|| contatti.get(i).getTelefono().equals(telefono) || contatti.get(i).getEmail().equals(email))
+			if (contatti.get(i).getNome().equals(c.getNome()) || contatti.get(i).getCognome().equals(c.getCognome())
+					|| contatti.get(i).getTelefono().equals(c.getTelefono()) || contatti.get(i).getEmail().equals(c.getEmail()))
 				return contatti.get(i).toString();
 		}
 		return "Il contatto non è presente nella lista";
