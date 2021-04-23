@@ -8,6 +8,12 @@ public class Contatto {
 	private String email;
 	
 	
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+	}
 	public String getNome() {
 		return nome;
 	}
@@ -38,11 +44,20 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ nome : ").append(nome).append(", ")
-				.append("cognome : ").append(cognome).append(", ")
-				.append("telefono : ").append(telefono).append(", ")
-				.append("email : ").append(email).append(" }");
+				.append("Nome : ").append(nome).append(", ")
+				.append("Cognome : ").append(cognome).append(", ")
+				.append("Telefono : ").append(telefono).append(", ")
+				.append("E-mail : ").append(email).append("");
 		
 		return builder.toString();
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Contatto) {
+			Contatto c = (Contatto) obj;
+			return nome.equals(c.nome) && cognome.equals(c.cognome) && telefono.equals(c.telefono) && email.equals(c.email);
+		}
+		return false;
+		}
+	
 }

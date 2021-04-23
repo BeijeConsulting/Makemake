@@ -1,45 +1,26 @@
 package it.beije.makemake.file;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public class XmlManager {
+import it.beije.makemake.rubrica.Contatto;
+
+public class XmlManager extends CsvManager {
 	
-	public static void getChildElements(Element element) {
-      NodeList nodeList = element.getChildNodes();
-      System.out.println("nodeList " + nodeList.getLength());
-      for (int i = 0; i < nodeList.getLength(); i++) {
-      	Node node = nodeList.item(i);
-      	if (node instanceof Element) {
-      		System.out.println("elemento " + ((Element)node).getTagName());
-      	} else {
-      		System.out.println("NO Element");
-      	}
-      }
-	}
-
-	public static void main(String[] args) throws Exception {
-		
-		File f = new File("C:/temp/rubrica.xml");
-		System.out.println("file exists ? " + f.exists());
-		FileReader fileReader = new FileReader(f);
-		while (fileReader.ready()) {
-			System.out.print((char)fileReader.read());
-		}
-		fileReader.close();
-
-		System.out.println("\n-------------------\n\n");
-		
+	public static List<Contatto> leggiXmlInArray(File f) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
 		
@@ -48,26 +29,73 @@ public class XmlManager {
         Document document = builder.parse(f);
         
         Element rubrica = document.getDocumentElement();
-		System.out.println("getChildNodes : " + rubrica.getChildNodes().getLength());
 		NodeList contatti = rubrica.getElementsByTagName("contatto");
-		System.out.println("getElementsByTagName : " + contatti.getLength());
-		//getChildElements(rubrica);
 		
 		Element contatto = null;
+		List<Contatto> listacontatti = new ArrayList<Contatto>();
+		
 		for (int i = 0; i < contatti.getLength(); i++) {
 			contatto = (Element) contatti.item(i);
-			//System.out.println("getChildNodes : " + contatto.getChildNodes().getLength());
 			
 			Element nome = (Element) contatto.getElementsByTagName("nome").item(0);
 			Element cognome = (Element) contatto.getElementsByTagName("cognome").item(0);
 			Element telefono = (Element) contatto.getElementsByTagName("telefono").item(0);
+			Element email = (Element) contatto.getElementsByTagName("email").item(0);
 			
-			System.out.println("eta : " + contatto.getAttribute("eta"));
-			System.out.println("nome : " + nome.getTextContent());
-			System.out.println("cognome : " + cognome.getTextContent());
-			System.out.println("telefono : " + telefono.getTextContent());
+			
+			Contatto cont = new Contatto(null, null, null, null);
+			if(cognome!=null)
+				cont.setCognome(cognome.getTextContent());
+			if(telefono!=null)
+				cont.setTelefono(telefono.getTextContent());
+			if(nome!=null)
+				cont.setNome(nome.getTextContent());
+			if(email!=null)
+				cont.setEmail(email.getTextContent());
+			
+				
+			listacontatti.add(cont);
+			//System.out.println(cont.toString());
+			
 		}
+		return listacontatti;
 		
 	}
 
+	public static void scriviInXml(List<Contatto> lista, String percorso) throws Exception {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = factory.newDocumentBuilder();
+        Document document = builder.newDocument();
+        Element root = document.createElement("rubrica");
+        
+        for (int i = 0; i < lista.size(); i++) {
+            Element contatto = document.createElement("contatto");
+            Element nome = document.createElement("nome");
+            nome.setTextContent(lista.get(i).getNome());
+            Element cognome = document.createElement("cognome");
+            cognome.setTextContent(lista.get(i).getCognome());
+            Element telefono = document.createElement("telefono");
+            telefono.setTextContent(lista.get(i).getTelefono());
+
+            contatto.appendChild(nome);
+            contatto.appendChild(cognome);
+            contatto.appendChild(telefono);
+            
+            root.appendChild(contatto);
+            
+		}
+        document.appendChild(root);
+		
+        
+		// write the content into xml file
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer = transformerFactory.newTransformer();
+		DOMSource source = new DOMSource(document);
+		
+		StreamResult result = new StreamResult(new File(percorso));
+		transformer.transform(source, result);
+
+		System.out.println("File saved!");
+	}
 }
+
