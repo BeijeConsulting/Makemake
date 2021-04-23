@@ -11,9 +11,9 @@ import java.util.List;
 
 import it.beije.makemake.rubrica.Contatto;
 
-public class ContattiManager {
-	private static final String rubricaDir = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazionecontatti\\csvfiles\\rubrica1.csv";
-	private static final String destDir = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazionecontatti\\csvfiles\\rubrica1copy.csv";
+public class MyCsvManager {
+	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1.csv";
+	public static final String DEST_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1copy.csv";
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di
 	// contatti)
@@ -25,7 +25,7 @@ public class ContattiManager {
 			String nextLine = bufferedReader.readLine();
 			if (!nextLine.isEmpty()) {
 				String[] contactCsv = nextLine.split(";");
-				contactList.add(new Contatto(contactCsv[0], contactCsv[1], contactCsv[2], contactCsv[3]));
+				contactList.add(new Contatto(contactCsv));
 			}
 		}
 		bufferedReader.close();
@@ -38,7 +38,7 @@ public class ContattiManager {
 		FileWriter fileWriter = new FileWriter(dest);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		for (Contatto contatto : contactList) {
-			bufferedWriter.write(toCsv(contatto) + "\n");
+			bufferedWriter.write(contatto.toCsv() + "\n");
 			bufferedWriter.flush();
 		}
 		bufferedWriter.close();
@@ -52,7 +52,7 @@ public class ContattiManager {
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		for (Contatto contatto : mergingList) {
 			if (!destList.contains(contatto)) {
-				bufferedWriter.append(toCsv(contatto) + "\n");
+				bufferedWriter.append(contatto.toCsv() + "\n");
 				bufferedWriter.flush();
 			}
 		}
@@ -66,11 +66,15 @@ public class ContattiManager {
 		writeList(contactList, file);
 	}
 
+	public static List<Contatto> sortByName(List<Contatto> contactList) {
+		Collections.sort(contactList, (o1, o2) -> o1.getNome().compareTo(o2.getNome()));
+		return contactList;
+	}
+
 	// metodo che cerchi un contatto nella rubrica (per uno qualsiasi degli
 	// attributi)
 
-	public static List<Contatto> searchBy(File file, String attribute, String value) throws Exception {
-		List<Contatto> contactList = getContactList(file);
+	public static List<Contatto> searchBy(List<Contatto> contactList, String attribute, String value) throws Exception {
 		List<Contatto> resultList = new ArrayList<Contatto>();
 		switch (attribute.toLowerCase()) {
 		case "nome":
@@ -122,6 +126,17 @@ public class ContattiManager {
 		return duplicates;
 	}
 
+	public static boolean hasDuplicates(List<Contatto> contactList) {
+		for (Contatto candidate : contactList) {
+			for (Contatto contatto : contactList) {
+				if (candidate != contatto && candidate.equals(contatto)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public static void printContactList(List<Contatto> contactList) {
 		for (Contatto contatto : contactList) {
 			if (!contatto.getNome().equals("NOME")) {
@@ -130,28 +145,32 @@ public class ContattiManager {
 		}
 	}
 
-	public static String toCsv(Contatto contatto) {
-		return contatto.getNome() + ";" + contatto.getCognome() + ";" + contatto.getTelefono() + ";"
-				+ contatto.getEmail();
+	public static boolean containsNoOptional(Contatto contatto, List<Contatto> contactList) {
+		for (Contatto contact : contactList) {
+			if (contatto.equalsNoOptional(contact)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public static void main(String[] args) throws Exception {
-		File origFile = new File(rubricaDir);
-		File copyFile = new File(destDir);
-//		READ FROM FILE
-		printContactList(getContactList(origFile));
-//		COPY ON SECOND FILE:
-		writeList(getContactList(origFile), copyFile);
-		printContactList(getContactList(copyFile));
-//		MERGE FILES:
-		mergeFiles(copyFile, origFile);
-		printContactList(getContactList(copyFile));
-//		SORT FILE:
-		sortByName(copyFile);
-		printContactList(getContactList(copyFile));
-//		FIND BY VALUE:
-		printContactList(searchBy(copyFile, "nome", "mario"));
-//		FIND DUPLICATES:
-		printContactList(findDuplicates(getContactList(copyFile)));
-	}
+//	public static void main(String[] args) throws Exception {
+//		File origFile = new File(RUBRICA_DIR);
+//		File copyFile = new File(DEST_DIR);
+////		READ FROM FILE
+//		printContactList(getContactList(origFile));
+////		COPY ON SECOND FILE:
+//		writeList(getContactList(origFile), copyFile);
+//		printContactList(getContactList(copyFile));
+////		MERGE FILES:
+//		mergeFiles(copyFile, origFile);
+//		printContactList(getContactList(copyFile));
+////		SORT FILE:
+//		sortByName(copyFile);
+//		printContactList(getContactList(copyFile));
+////		FIND BY VALUE:
+//		printContactList(searchBy(copyFile, "nome", "mario"));
+////		FIND DUPLICATES:
+//		printContactList(findDuplicates(getContactList(copyFile)));
+//	}
 }

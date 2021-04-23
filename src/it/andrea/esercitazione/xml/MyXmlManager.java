@@ -16,12 +16,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.andrea.esercitazione.contatti.ContattiManager;
+import it.andrea.esercitazione.contatti.MyCsvManager;
 import it.beije.makemake.rubrica.Contatto;
 
 public class MyXmlManager {
 	public final static String XML_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/xml/xmlfiles/rubrica.xml";
 	public final static String NEW_XML_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/xml/xmlfiles/new_rubrica.xml";
+	public final static String CSV_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/contatti/csvfiles/rubrica1.csv";
+	public final static String NEW_CSV_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/contatti/csvfiles/new_rubrica.csv";
 
 	public static void printFile(File f) throws Exception {
 		FileReader fileReader = new FileReader(f);
@@ -55,39 +57,24 @@ public class MyXmlManager {
 		return contactList;
 	}
 
+	public static Element convertToXml(Object object) throws Exception {
+		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder builder = factory.newDocumentBuilder();
+		Document document = builder.newDocument();
+
+		Element objectElement = document.createElement(object.getClass().getName().toLowerCase());
+
+		return objectElement;
+	}
+
 	public static void writeXmlFile(List<Contatto> contactList) throws Exception {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document document = builder.newDocument();
 
 		Element root = document.createElement("contatti");
-		for (Contatto contact : contactList) {
-			Element contatto = document.createElement("contatto");
-			if (contact.getEta() != null) {
-				contatto.setAttribute("eta", Integer.toString(contact.getEta()));
-			}
-			if (contact.getNome() != null) {
-				Element nome = document.createElement("nome");
-				nome.setTextContent(contact.getNome());
-				contatto.appendChild(nome);
-			}
-			if (contact.getCognome() != null) {
-				Element cognome = document.createElement("cognome");
-				cognome.setTextContent(contact.getCognome());
-				contatto.appendChild(cognome);
-			}
-			if (contact.getTelefono() != null) {
-				Element telefono = document.createElement("telefono");
-				telefono.setTextContent(contact.getTelefono());
-				contatto.appendChild(telefono);
-			}
-			if (contact.getEmail() != null) {
-				Element email = document.createElement("email");
-				email.setTextContent(contact.getEmail());
-				contatto.appendChild(email);
-			}
-
-			root.appendChild(contatto);
+		for (Contatto contatto : contactList) {
+			root.appendChild(contatto.toXmlElement());
 		}
 		document.appendChild(root);
 
@@ -111,7 +98,7 @@ public class MyXmlManager {
 			printFile(f);
 			System.out.println("\n-------------------\n\n");
 
-			ContattiManager.printContactList(retrieveContactList(f));
+			MyCsvManager.printContactList(retrieveContactList(f));
 
 			writeXmlFile(retrieveContactList(f));
 		}
