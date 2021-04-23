@@ -32,7 +32,7 @@ public class ManagerXml {
         Element nome = null;
         Element cognome = null;
         Element telefono = null;
-        Element email = null;
+        //Element email = null;
 
 		for (int i = 0; i < contatti.getLength(); i++) {
 			contatto = (Element) contatti.item(i);
@@ -42,7 +42,7 @@ public class ManagerXml {
 			nome = (Element) contatto.getElementsByTagName("nome").item(0);
 			cognome = (Element) contatto.getElementsByTagName("cognome").item(0);
 			telefono = (Element) contatto.getElementsByTagName("telefono").item(0);
-			email =(Element) contatto.getElementsByTagName("email").item(0);
+			//email =(Element) contatto.getElementsByTagName("email").item(0);
 			
 			c.setNome(nome.getTextContent());
 			c.setCognome(cognome.getTextContent());
