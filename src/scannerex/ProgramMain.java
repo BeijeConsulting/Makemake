@@ -67,8 +67,8 @@ public class ProgramMain {
 					sovrascrivi(nuovo, f);
 				}
 				else 			appendInRubrica(nuovo, f);
-			
 			}
+			else appendInRubrica(nuovo, f);
 			exit_pool = false;
 			break;
 			
