@@ -9,9 +9,10 @@ import java.util.Scanner;
 public class RubricaScanner {
 
 	static List<Contatto> contatti = new ArrayList<>();
+	static Scanner tastiera = new Scanner(System.in);
 
 	public static void main(String[] args) throws Exception {
-		Scanner tastiera = new Scanner(System.in);
+
 		boolean ciclo = true;
 		System.out.println("Inserisci il nome del file da cui caricare la rubrica");
 		String path = tastiera.nextLine();
@@ -122,8 +123,18 @@ public class RubricaScanner {
 	}
 
 	public static void search(String name) {
+
 		Rubrica.nameOrder(contatti);
 		List<Contatto> c = Rubrica.cercaContatto(contatti, "nome", name);
+		if (c.size() == 0) {
+			System.out.println("Il contatto che stai cercando non e' presente vuoi inserirlo?");
+			String scelta = tastiera.nextLine();
+			if (scelta.equalsIgnoreCase("si")) {
+				System.out.println("Inserisci : Nome,cognome,telefono,email(opzionale)");
+				String contact = tastiera.nextLine();
+				newContact(contact);
+			}
+		}
 		stampaContatti(c);
 	}
 
@@ -134,7 +145,6 @@ public class RubricaScanner {
 		boolean flag = false;
 		int index = 0;
 		myC = Rubrica.cercaContatto(myC, "cognome", dati[1]);
-	
 
 		for (int i = 0; i < contatti.size(); i++) {
 			if (contatti.get(i).equals(contatti.get(i), myC.get(0))) {
@@ -175,13 +185,16 @@ public class RubricaScanner {
 	public static void salvaModifiche(String path) throws Exception {
 		FileWriter writer = new FileWriter(new File(path));
 		for (Contatto contatto : contatti) {
-			writer.write(contatto.getCognome());
-			writer.write(';');
 			writer.write(contatto.getNome());
+			writer.write(';');
+			writer.write(contatto.getCognome());
 			writer.write(';');
 			writer.write(contatto.getTelefono());
 			writer.write(';');
-			writer.write(contatto.getEmail());
+			if (contatto.getEmail() != null) {
+				writer.write(contatto.getEmail());
+			}
+
 			writer.write('\n');
 		}
 
