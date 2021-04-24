@@ -44,14 +44,14 @@ public class MyXmlManager {
 		Element contatto;
 		for (int i = 0; i < contatti.getLength(); i++) {
 			contatto = (Element) contatti.item(i);
-
 			Element nome = (Element) contatto.getElementsByTagName("nome").item(0);
 			Element cognome = (Element) contatto.getElementsByTagName("cognome").item(0);
 			Element telefono = (Element) contatto.getElementsByTagName("telefono").item(0);
 			Element email = (Element) contatto.getElementsByTagName("email").item(0);
-			Element eta = (Element) contatto.getElementsByTagName("eta").item(0);
-			contactList.add(new Contatto(nome.getTextContent(), cognome.getTextContent(), telefono.getTextContent(),
-					email == null ? null : email.getTextContent(), Integer.valueOf(contatto.getAttribute("eta"))));
+			Contatto contact = new Contatto(nome.getTextContent(), cognome.getTextContent(), telefono.getTextContent(),
+					email == null ? null : email.getTextContent());
+			contact.setEta(Integer.valueOf(contatto.getAttribute("eta")));
+			contactList.add(contact);
 		}
 		return contactList;
 	}
