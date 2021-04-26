@@ -76,12 +76,13 @@ public class ProgramMain {
 			System.out.println("Uno stregone non è mai in ritardo nè in"
 					+ "anticipo! (cit Gandalf)");
 			
-			System.out.println("Inserisci Nome e Cognome del contatto da eliminare:");
+			System.out.println("Inserisci Cognome e Nome del contatto da eliminare:");
 			Scanner src1 = new Scanner(System.in);
 			Scanner src2 = new Scanner(System.in);
-			String namessrc = src1.next()+src2.next();
+			String namessrc = src1.nextLine()+src2.nextLine();
 			
 			search4Del(namessrc, f);
+			exit_pool = false;
 			break;
 		case "exit":
 			System.out.println("Uscito!");
