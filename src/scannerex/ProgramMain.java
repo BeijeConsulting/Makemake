@@ -32,16 +32,16 @@ public class ProgramMain {
 			}
 			else {
 				exit_pool = false;
-				System.out.println("Che c**** mi hai chiamato a fare?");
+				System.out.println("Che mi hai chiamato a fare?");
 				break CICLO;
 			}
 		}
 		System.out.println("Scegli un'opzione dal nostro menù "
-				+ "o digita 'fanculo' per uscire");
+				+ "o digita 'exit' per uscire");
 		System.out.println("-----------Menù----------");
 		System.out.println("Digita '1' per aggiungere un nuovo contatto");
 		System.out.println("Digita '2' per rimuovere un contatto       ");
-		System.out.println("Digita '3' per fare che c**** ti pare      ");
+		System.out.println("Digita '3' per fare che ti pare      ");
 		System.out.println("Digita 'exit' per uscire                   ");
 			
 		switch(x.nextLine()) {
@@ -118,8 +118,8 @@ public class ProgramMain {
 			String row = bufferedReader.readLine();
 			String[] rowParts = row.split(";");
 			Contatto contatto = new Contatto();
-			contatto.setNome(rowParts[1]);
 			contatto.setCognome(rowParts[0]);
+			contatto.setNome(rowParts[1]);
 			contatto.setTelefono(rowParts[2]);
 			contatto.setEmail(rowParts[3]);
 			contatti.add(contatto);
@@ -150,7 +150,7 @@ public class ProgramMain {
 	public static String[] nameextr(List<Contatto> contatti, String[] names) {
 		int i=0;
 		for (Contatto contatto : contatti) {		
-			names[i] = contatto.getNome()+contatto.getCognome();
+			names[i] = contatto.getCognome()+contatto.getNome();
 			i++;
 		}
 		return names;
@@ -167,8 +167,8 @@ public class ProgramMain {
 			String row = bufferedReader.readLine();
 			String[] rowParts = row.split(";");
 			Contatto contatto = new Contatto();
-			contatto.setNome(rowParts[1]);
 			contatto.setCognome(rowParts[0]);
+			contatto.setNome(rowParts[1]);
 			contatto.setTelefono(rowParts[2]);
 			contatto.setEmail(rowParts[3]);
 			contatti.add(contatto);
@@ -185,11 +185,9 @@ public class ProgramMain {
 		names = nameextr(contatti, names);
 		
 		for (int i=0; i<names.length; i++) {
-			for (int j=i+1; j<names.length; j++) {
-				if(names[i].equals(names[j])) {
+				if(names[i].equals(nuovo.getCognome()+nuovo.getNome())) {
 					idx = i;
 				}			
-			}
 		}
 		
 		//sostituisco
