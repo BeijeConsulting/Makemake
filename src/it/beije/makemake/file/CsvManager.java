@@ -76,12 +76,12 @@ public class CsvManager {
 			String row = bufferedReader.readLine();
 			//System.out.println(row);
 			String[] rowParts = row.split(";");
-			Contatto contatto = new Contatto();
-			contatto.setNome(rowParts[0]);
-			contatto.setCognome(rowParts[1]);
-			contatto.setTelefono(rowParts[2]);
-			contatto.setEmail(rowParts[3]);
-			contatti.add(contatto);
+//			Contatto contatto = new Contatto();
+//			contatto.setNome(rowParts[0]);
+//			contatto.setCognome(rowParts[1]);
+//			contatto.setTelefono(rowParts[2]);
+//			contatto.setEmail(rowParts[3]);
+//			contatti.add(contatto);
 			System.out.println("nome : " + rowParts[0]);
 			System.out.println("cognome : " + rowParts[1]);
 			System.out.println("telefono : " + rowParts[2]);

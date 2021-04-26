@@ -45,4 +45,11 @@ public class Contatto {
 		
 		return builder.toString();
 	}
+	
+	public Contatto(String nome, String cognome, String telefono, String email) {
+		setNome(nome);
+		setCognome(cognome);
+		setTelefono(telefono);
+		setEmail(email);
+	}
 }
