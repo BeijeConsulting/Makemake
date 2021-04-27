@@ -20,11 +20,7 @@ import org.w3c.dom.NodeList;
 import it.beije.makemake.file.rubrica.Contatto;
 
 public class ManagerXML{
-	
-	public static void main(String arg[]) throws Exception{
-		Document doc = openFileToRead("C:\\Users\\Padawan11\\OneDrive\\Desktop\\rubrica.xml");
-		
-	}
+
 	/**
 	  	Metodo che va a rimuovermi i childNodes di un element
 	  	che rappresentano degli a capo
@@ -59,9 +55,7 @@ public class ManagerXML{
 		File file = new File(path);
 		
 		Document document = builder.parse(file);
-		
-		ArrayList<Contatto> c = retriveContactTags(document);
-		printXmlDocument(c);
+	
 		return document;
 		
 	}
@@ -95,10 +89,10 @@ public class ManagerXML{
 		for(int i=0 ; i<contactListTag.getLength(); i++) {
 			contactNode = (Element) contactListTag.item(i);
 			
-			Element tagName = (Element) contactNode.getElementsByTagName("nome");
-			Element tagSurname = (Element) contactNode.getElementsByTagName("cognome");
-			Element tagTelef = (Element) contactNode.getElementsByTagName("telefono");
-			Element tagEmail = (Element) contactNode.getElementsByTagName("email");
+			Element tagName = (Element) contactNode.getElementsByTagName("nome").item(0);
+			Element tagSurname = (Element) contactNode.getElementsByTagName("cognome").item(0);
+			Element tagTelef = (Element) contactNode.getElementsByTagName("telefono").item(0);
+			Element tagEmail = (Element) contactNode.getElementsByTagName("email").item(0);
 			
 			contactList.add(new Contatto( tagName.getTextContent(),
 										  tagSurname.getTextContent(),
@@ -166,7 +160,6 @@ public class ManagerXML{
 			contactList.add(cont);
 			
 			newDocument = createDocument(contactList);
-			printXmlDocument(contactList);
 			openFileToWrite(path, newDocument);
 		
 		}catch(Exception e) {
