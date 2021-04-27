@@ -41,13 +41,12 @@ public class ProgramMain {
 		System.out.println("-----------Menù----------");
 		System.out.println("Digita '1' per aggiungere un nuovo contatto");
 		System.out.println("Digita '2' per rimuovere un contatto       ");
-		System.out.println("Digita '3' per fare che ti pare      ");
 		System.out.println("Digita 'exit' per uscire                   ");
 			
 		switch(x.nextLine()) {
 		
 		case "1":
-			System.out.println("Così hai scelto MORTE! (cit. Saruman)");
+			System.out.println("");
 			
 			Contatto nuovo = new Contatto();
 			System.out.println("Inserisci Cognome");
@@ -73,8 +72,7 @@ public class ProgramMain {
 			break;
 			
 		case "2":
-			System.out.println("Uno stregone non è mai in ritardo nè in"
-					+ "anticipo! (cit Gandalf)");
+			System.out.println("");
 			
 			System.out.println("Inserisci Cognome e Nome del contatto da eliminare:");
 			Scanner src1 = new Scanner(System.in);
