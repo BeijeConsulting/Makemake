@@ -1,20 +1,12 @@
-package it.beije.makemake.rubrica;
+package it.beije.makemake.JDBC;
 
 public class Contatto {
-
 	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
 	
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	
 	public String getNome() {
 		return nome;
@@ -46,12 +38,11 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-
-				.append("[Nome : ").append(nome).append(", ")
+				.append("[id : ").append(id).append(", ")
+				.append("Nome : ").append(nome).append(", ")
 				.append("Cognome : ").append(cognome).append(", ")
 				.append("Telefono : ").append(telefono).append(", ")
 				.append("Email : ").append(email).append("] ");
-
 		
 		return builder.toString();
 	}
@@ -65,4 +56,12 @@ public class Contatto {
 		
 		return false;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 }
+
