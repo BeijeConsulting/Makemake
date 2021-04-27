@@ -16,7 +16,6 @@ public class Contatto {
 	}
 	public Contatto() {}
 
-	
 
 	public int getId() {
 		return id;
@@ -24,6 +23,7 @@ public class Contatto {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public String getNome() {
 		return nome;
 	}
