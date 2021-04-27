@@ -1,4 +1,4 @@
-package it.beije.makemake.rubrica;
+package it.andrea.esercitazione.contatti;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -8,11 +8,13 @@ import org.w3c.dom.Element;
 
 public class Contatto {
 
-	private Integer eta;
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
+
+	private Integer eta;
 
 	public Contatto() {
 	}
@@ -48,6 +50,14 @@ public class Contatto {
 
 	public void setEta(Integer eta) {
 		this.eta = eta;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -145,10 +155,11 @@ public class Contatto {
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Contatto [eta=" + eta + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono
-				+ ", email=" + email + "]";
+		return "Contatto [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email="
+				+ email + "]";
 	}
 
 	public String toCsv() {
