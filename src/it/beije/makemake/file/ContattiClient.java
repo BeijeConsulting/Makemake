@@ -51,14 +51,7 @@ public class ContattiClient {
 
 	}
 	
-	
-//	public static void modificaContatto(File f) throws Exception {
-//		Scanner in=new Scanner(System.in);
-//		if()
-//		
-//	
-
-	public static void cercaContatto(File f) throws Exception {
+	public static List<Contatto> cercaContatto(File f) throws Exception {
 		Scanner in = new Scanner(System.in);
 		List<Contatto> risultato= ContattiManager.getContactList(f);
 		if (f.exists()) {
@@ -72,13 +65,58 @@ public class ContattiClient {
 				System.out.println(risultato);
 			}
 		} else {
-			System.out.println("non esiste questo file");
+			System.out.println("non esiste questo file, arrivederci");
 			} 		
-	
-		System.out.println("arrivederci");
+		return risultato;
 
 	}
 
+	public static Contatto scegliContatto(List<Contatto> contactList) {
+		Scanner in=new Scanner(System.in);
+		if (contactList.size() == 0) {
+			System.out.println("Non ci sono contatti!");
+		} else if (contactList.size() == 1) {
+			return contactList.get(0);
+		} else {
+			System.out.println("Inserisci il numero del contatto su cui intervenire: ");
+			return contactList.get(in.nextInt() - 1);
+		}
+		return null;
+	}
+	
+	public static void modificaContatto(File f) throws Exception {
+	Scanner in=new Scanner(System.in);
+	System.out.println("Selezione il nome del cotatto da cercare");
+	Contatto c= scegliContatto(cercaContatto(f));
+	if(c!= null) {
+		Contatto nuovocont= new Contatto(c);
+		System.out.println(("cosa vuoi modificare? nome, cognome, telefono o email?"));
+		String s=in.nextLine();
+		switch(s) {
+		case "nome":
+			System.out.println("inderisc il nuovo nome: ");
+			nuovocont.setNome(in.nextLine());
+			break;
+		case "cognome":
+			System.out.println("inderisc il nuovo cognome: ");
+			nuovocont.setCognome(in.nextLine());
+			break;
+		case "telefono":
+			System.out.println("inderisc il nuovo telefono: ");
+			nuovocont.setTelefono(in.nextLine());
+			break;
+		case "email":
+			System.out.println("inderisc la nuova email: ");
+			nuovocont.setEmail(in.nextLine());
+			break;
+		}
+		List<Contatto> contactList = ContattiManager.getContactList(f);
+	}
+	}
+	
+			
+
+	
 	public static void main(String[] args) throws Exception {
 		Scanner in = new Scanner(System.in);
 		System.out.println(("quale file vuoi modificare?"));
@@ -100,7 +138,6 @@ public class ContattiClient {
 			switch (c) {
 			case "a"://visualizza la rubrica
 				ContattiManager.printContactList(ContattiManager.sortByName(ContattiManager.getContactList(f)));
-				
 				break;			
 			case "b": // aggiungi un contatto.
 				aggiungiContatto(f);
@@ -109,9 +146,13 @@ public class ContattiClient {
 				cercaContatto(f);
 				break;			
 			case "d":// modificare contatto
-				
+				modificaContatto(f);
 				break;
-			case "e":
+			case "q":
+				break;
+			default:
+				System.out.println("comando non riconosciuto");
+				break;
 			}
 		} while (c.equals("q"));
 		in.close();

@@ -8,7 +8,11 @@ import org.w3c.dom.Element;
 
 public class Contatto {
 
+
 	private Integer eta;
+
+	private int id;
+
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -49,6 +53,14 @@ public class Contatto {
 	public void setEta(Integer eta) {
 		this.eta = eta;
 	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 
 	public String getNome() {
 		return nome;
@@ -147,6 +159,7 @@ public class Contatto {
 
 	@Override
 	public String toString() {
+
 		return "Contatto [eta=" + eta + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono
 				+ ", email=" + email + "]";
 	}
@@ -185,5 +198,14 @@ public class Contatto {
 			contatto.appendChild(email);
 		}
 		return contatto;
+
+//		StringBuilder builder = new StringBuilder()
+//				.append("{ id : ").append(id).append(", ")
+//				.append("nome : ").append(nome).append(", ")
+//				.append("cognome : ").append(cognome).append(", ")
+//				.append("telefono : ").append(telefono).append(", ")
+//				.append("email : ").append(email).append(" }");
+//		
+//		return builder.toString();
 	}
 }
