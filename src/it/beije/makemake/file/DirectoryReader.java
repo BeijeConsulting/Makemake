@@ -1,6 +1,9 @@
 package it.beije.makemake.file;
 
 import java.util.Scanner;
+
+import it.beije.makemake.file.csv.Manager;
+
 import java.io.*;
 
 public class DirectoryReader {

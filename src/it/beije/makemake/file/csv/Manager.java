@@ -1,4 +1,4 @@
-package it.beije.makemake.file;
+package it.beije.makemake.file.csv;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -161,6 +161,14 @@ public class Manager {
 		for(Contatto c : newContatti) {
 			System.out.println(c);
 		}
+	}
+	public static Object openFileToWrite(String path) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	public static void addContact(Object openFileToWrite, Contatto cont) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
