@@ -1,7 +1,8 @@
 package it.beije.makemake.rubrica;
 
 public class Contatto {
-
+	
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -14,6 +15,13 @@ public class Contatto {
 		this.telefono = telefono;
 		this.email = email;
 	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -44,10 +52,11 @@ public class Contatto {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
+				.append("Id : ").append(id).append(", ")
 				.append("Nome : ").append(nome).append(", ")
 				.append("Cognome : ").append(cognome).append(", ")
 				.append("Telefono : ").append(telefono).append(", ")
-				.append("E-mail : ").append(email).append("");
+				.append("E-mail : ").append(email);
 		
 		return builder.toString();
 	}
