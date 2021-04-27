@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import it.beije.makemake.rubrica.Contatto;
-
 public class MyCsvManager {
 	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1.csv";
 	public static final String DEST_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1copy.csv";

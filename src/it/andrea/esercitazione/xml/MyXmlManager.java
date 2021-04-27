@@ -16,8 +16,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import it.andrea.esercitazione.contatti.Contatto;
 import it.andrea.esercitazione.contatti.MyCsvManager;
-import it.beije.makemake.rubrica.Contatto;
 
 public class MyXmlManager {
 	public final static String XML_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/xml/xmlfiles/rubrica.xml";

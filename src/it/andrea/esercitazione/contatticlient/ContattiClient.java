@@ -5,8 +5,8 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.Scanner;
 
+import it.andrea.esercitazione.contatti.Contatto;
 import it.andrea.esercitazione.contatti.MyCsvManager;
-import it.beije.makemake.rubrica.Contatto;
 
 public class ContattiClient {
 	public static void printMenu() {
