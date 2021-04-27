@@ -2,17 +2,28 @@ package it.beije.makemake.file.rubrica;
 
 public class Contatto {
 
+	private int id;
 	private String nome;
 	private String cognome;
 	private String telefono;
 	private String email;
 	
 	
-	public Contatto(String nome, String cognome, String telefono, String email) {
+
+	public Contatto(int id, String nome, String cognome, String telefono, String email) {
+		this.id =id;
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
 		this.email = email;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+
 	}
 	
 	public String getNome() {
@@ -50,7 +61,8 @@ public class Contatto {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
-				.append("{ nome : ").append(nome).append(", ")
+				.append("{ id : ").append(id).append(", ")
+				.append("nome : ").append(nome).append(", ")
 				.append("cognome : ").append(cognome).append(", ")
 				.append("telefono : ").append(telefono).append(", ")
 				.append("email : ").append(email).append(" }");
