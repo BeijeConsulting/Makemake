@@ -65,9 +65,9 @@ public class ProgramMain {
 				if(x.next().equals("y")) {				
 					sovrascrivi(nuovo, f);
 				}
-				else 			appendInRubrica(nuovo, f);
+				else 			appendInRubrica(nuovo, f, true);
 			}
-			else appendInRubrica(nuovo, f);
+			else appendInRubrica(nuovo, f, true);
 			exit_pool = false;
 			break;
 			
@@ -91,8 +91,8 @@ public class ProgramMain {
 }
 
 //appendi in rubrica il nuovo contatto!
-	public static void appendInRubrica(Contatto contatto, File pathFile) throws Exception {
-		FileWriter writer = new FileWriter(pathFile, true);
+	public static void appendInRubrica(Contatto contatto, File pathFile, boolean sigma) throws Exception {
+		FileWriter writer = new FileWriter(pathFile, sigma);
 		writer.write(contatto.getCognome());
 		writer.write(';');
 		writer.write(contatto.getNome());
@@ -158,6 +158,7 @@ public class ProgramMain {
 //  sovrascrivi
 	public static void sovrascrivi(Contatto nuovo, File f) throws Exception {
 		int idx = 0;
+		boolean sigma = false;
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		// Salvo in un arrayList il contenuto della rubrica;
@@ -191,11 +192,15 @@ public class ProgramMain {
 		
 		//sostituisco
 		contatti.set(idx, nuovo);
+		for (Contatto cont : contatti) {
+			appendInRubrica(cont, f, sigma);
+		}		
 	}
 
 // search to delate
 	public static void search4Del(String namessrc, File f) throws Exception{
 		int idx=0;
+		boolean sigma = false;
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		
 		// Salvo in un arrayList il contenuto della rubrica;
@@ -228,7 +233,10 @@ public class ProgramMain {
 		}
 		
 		//elimino
-		contatti.remove(idx);	
+		contatti.remove(idx);
+		for (Contatto cont : contatti) {
+			appendInRubrica(cont, f, sigma);
+		}		
 	}
 }
 
