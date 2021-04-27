@@ -10,11 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.StampedLock;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.file.rubrica.Contatto;
 
 public class JdbcExample {
-	
-	public static void select(Connection connection) {
+		public static void select(Connection connection) {
 		
 		Statement statement = null;
 		ResultSet resultSet = null;
@@ -173,14 +172,15 @@ public class JdbcExample {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake", "root", "Beije11");
 		//System.out.println(connection.isClosed());
 		
 		//insert(connection);
 		//update(connection);
+		System.out.println("bhfiso");
 		//insertContacts(connection);
 		//select(connection);
-		search(connection, "Di Bella");
+		//search(connection, "Di Bella");
 		
 		connection.close();
 	}
