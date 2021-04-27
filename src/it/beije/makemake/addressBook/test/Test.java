@@ -39,18 +39,29 @@ public class Test {
 
 
         //testing sort
-        addressBook2.sort();
-        System.out.println(addressBook2);
+//        addressBook2.sort();
+//        System.out.println(addressBook2);
 
         //testing search
 
-        List<Contact> result = addressBook2.search("camilla");
-        for (Contact c:
-                result) {
-            System.out.println(c);
-        }
+//        List<Contact> result = addressBook2.search("camilla");
+//        for (Contact c:
+//                result) {
+//            System.out.println(c);
+//        }
 
 
-        addressBook.toXMLFile("C:\\temp\\aaa");
+        //test create XML file
+//        addressBook.toXMLFile("C:\\temp\\aaa");
+
+        //test insert data from AddressBook into DB
+        String url = "jdbc:mysql://localhost:3306/makemake?serverTimezone=CET";
+        String user = "root";
+        String password = "Beije08";
+//        addressBook2.insertIntoDatabase(url, user, password);
+
+        //test create from DB
+        AddressBook addressBook3 = AddressBook.createFromDatabase(url, user, password);
+        System.out.println(addressBook3);
     }
 }

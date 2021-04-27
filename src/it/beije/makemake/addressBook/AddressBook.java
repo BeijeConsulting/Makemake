@@ -14,6 +14,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +64,7 @@ public class AddressBook {
             Element name = (Element)contact.getElementsByTagName("nome").item(0);
             Element surname = (Element)contact.getElementsByTagName("cognome").item(0);
             Element phone = (Element)contact.getElementsByTagName("telefono").item(0);
-            Element mail = (Element)contact.getElementsByTagName("mail").item(0);
+            Element mail = (Element)contact.getElementsByTagName("email").item(0);
 
             Contact c1;
             if (mail != null) {
@@ -195,6 +196,64 @@ public class AddressBook {
     public boolean remove(Contact c) {
         return contactList.remove(c);
     }
+
+
+
+    public void insertIntoDatabase(String url, String user, String password) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url,
+                    user, password);
+            for (Contact contact :
+                    contactList) {
+                contact.insertIntoDatabase(connection);
+            }
+            connection.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static AddressBook createFromDatabase(String url, String user, String password) {
+        AddressBook addressBook = new AddressBook();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url,
+                    user, password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM rubrica");
+            while (resultSet.next()) {
+                addressBook.contactList.add(Contact.createFromResultSet(resultSet));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return addressBook;
+    }
+
+    public void fetchFromDatabase(String url, String user, String password) {
+        //similar to the above method but add to existing AddressBook
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection connection = DriverManager.getConnection(url,
+                    user, password);
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM rubrica");
+            while (resultSet.next()) {
+                contactList.add(Contact.createFromResultSet(resultSet));
+            }
+            resultSet.close();
+            statement.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 
 
 

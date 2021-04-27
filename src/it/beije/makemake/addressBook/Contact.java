@@ -5,22 +5,23 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.sql.*;
 import java.util.Locale;
 
 public class Contact implements Comparable<Contact> {
 
-    private String name = "";
-    private String surname = "";
-    private String phone = "";
-    private String mail = "";
-    private String address = "";
+    private String name;
+    private String surname;
+    private String phone;
+    private String mail;
+    private String address;
 
     public Contact(String[] fields) {
-        name = fields[0] == null ? "" : fields[0];
-        surname = fields[0] == null ? "" : fields[1];
-        phone = fields[0] == null ? "" : fields[2];
-        mail = fields[0] == null ? "" : fields[3];
-        address = fields[0] == null ? "" : fields[4];
+        name = fields[0];
+        surname = fields[1];
+        phone = fields[2];
+        mail = fields[3];
+        address = fields[4];
     }
 
     public String getName() {
@@ -105,7 +106,7 @@ public class Contact implements Comparable<Contact> {
         String surname = fields[1];
         String phone = fields[2];
         String mail = fields[3];
-        String address = fields.length > 4 ? fields[4] : "";
+        String address = fields.length > 4 ? fields[4] : null;
 
         return new Contact(name, surname, phone, mail, address);
     }
@@ -141,23 +142,23 @@ public class Contact implements Comparable<Contact> {
     @Override
     public int compareTo(Contact o) {
         int r = 0;
-        if (!this.name.isEmpty() && !o.name.isEmpty()) {
+        if (this.name != null && o.name != null) {
             r = this.name.toLowerCase(Locale.ROOT).compareTo(o.name.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
-        if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
+        if (this.surname != null && o.surname != null) {
             r = this.surname.toLowerCase(Locale.ROOT).compareTo(o.surname.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
-        if (!this.phone.isEmpty() && !o.phone.isEmpty()) {
+        if (this.phone != null && o.phone != null) {
             r = this.phone.toLowerCase(Locale.ROOT).compareTo(o.phone.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
-        if (!this.mail.isEmpty() && !o.mail.isEmpty()) {
+        if (this.mail != null && o.mail != null) {
             r = this.mail.toLowerCase(Locale.ROOT).compareTo(o.mail.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
-        if (!this.address.isEmpty() && !o.address.isEmpty()) {
+        if (this.address != null && o.address != null) {
             r = this.address.toLowerCase(Locale.ROOT).compareTo(o.address.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
@@ -193,5 +194,29 @@ public class Contact implements Comparable<Contact> {
             return this.compareTo(c) == 0;
         }
         return false;
+    }
+
+    public void insertIntoDatabase(Connection connection) {
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("" +
+                    "INSERT into rubrica (nome, cognome, telefono, email) VALUES (?, ?, ?, ?)");
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, surname);
+            preparedStatement.setString(3, phone);
+            preparedStatement.setString(4, mail);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public static Contact createFromResultSet(ResultSet resultSet) throws SQLException {
+        String name = resultSet.getString("nome");
+        String surname = resultSet.getString("cognome");
+        String phone = resultSet.getString("telefono");
+        String mail = resultSet.getString("email");
+        return new Contact(name, surname, phone, mail);
     }
 }
