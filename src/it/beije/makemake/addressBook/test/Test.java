@@ -30,17 +30,26 @@ public class Test {
 //
 //
         //testing search
-        List<Contact> result = addressBook.search("mario");
-        for (Contact c:
-             result) {
-            System.out.println(c);
-        }
+
 //
 
         //testing AddressBook from XML
 
-        AddressBook addressBook2 = AddressBook.createFromXML("C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\rubrica.xml");
-//        System.out.println(addressBook2);
+        AddressBook addressBook2 = AddressBook.createFromXML("C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\my_rubrica.xml");
+
+
+        //testing sort
+        addressBook2.sort();
+        System.out.println(addressBook2);
+
+        //testing search
+
+        List<Contact> result = addressBook2.search("camilla");
+        for (Contact c:
+                result) {
+            System.out.println(c);
+        }
+
 
         addressBook.toXMLFile("C:\\temp\\aaa");
     }

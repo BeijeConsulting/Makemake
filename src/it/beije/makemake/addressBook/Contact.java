@@ -142,19 +142,24 @@ public class Contact implements Comparable<Contact> {
     public int compareTo(Contact o) {
         int r = 0;
         if (!this.name.isEmpty() && !o.name.isEmpty()) {
-            r += this.name.toLowerCase(Locale.ROOT).compareTo(o.name.toLowerCase(Locale.ROOT));
+            r = this.name.toLowerCase(Locale.ROOT).compareTo(o.name.toLowerCase(Locale.ROOT));
+            if (r != 0) return r;
         }
         if (!this.surname.isEmpty() && !o.surname.isEmpty()) {
-            r += this.surname.toLowerCase(Locale.ROOT).compareTo(o.surname.toLowerCase(Locale.ROOT));
+            r = this.surname.toLowerCase(Locale.ROOT).compareTo(o.surname.toLowerCase(Locale.ROOT));
+            if (r != 0) return r;
         }
         if (!this.phone.isEmpty() && !o.phone.isEmpty()) {
-            r += this.phone.toLowerCase(Locale.ROOT).compareTo(o.phone.toLowerCase(Locale.ROOT));
+            r = this.phone.toLowerCase(Locale.ROOT).compareTo(o.phone.toLowerCase(Locale.ROOT));
+            if (r != 0) return r;
         }
         if (!this.mail.isEmpty() && !o.mail.isEmpty()) {
-            r += this.mail.toLowerCase(Locale.ROOT).compareTo(o.mail.toLowerCase(Locale.ROOT));
+            r = this.mail.toLowerCase(Locale.ROOT).compareTo(o.mail.toLowerCase(Locale.ROOT));
+            if (r != 0) return r;
         }
         if (!this.address.isEmpty() && !o.address.isEmpty()) {
-            r += this.address.toLowerCase(Locale.ROOT).compareTo(o.address.toLowerCase(Locale.ROOT));
+            r = this.address.toLowerCase(Locale.ROOT).compareTo(o.address.toLowerCase(Locale.ROOT));
+            if (r != 0) return r;
         }
         return r;
     }
