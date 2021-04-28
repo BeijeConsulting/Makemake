@@ -11,6 +11,8 @@ public class HelloMakemake {
 		
 		
 		);
+		
+		Singleton singleton = Singleton.getInstance();
 	}
 
 }
