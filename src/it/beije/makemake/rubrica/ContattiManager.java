@@ -10,8 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class ContattiManager {
-	private static final String rubricaDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica1.csv";
-	private static final String destDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica_copia.csv";
+	public static final String rubricaDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica1.csv";
+	public static final String destDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica_copia.csv";
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di
 	// contatti)
@@ -21,7 +21,7 @@ public class ContattiManager {
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while (bufferedReader.ready()) {
 			String nextLine = bufferedReader.readLine();
-			if (!nextLine.isEmpty()) {
+			if (!nextLine.isEmpty() && !nextLine.contains("COGNOME")) {
 				String[] contactCsv = nextLine.split(";");
 				contactList.add(new Contatto(contactCsv));
 			}

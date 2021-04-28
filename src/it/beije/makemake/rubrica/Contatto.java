@@ -26,7 +26,7 @@ public class Contatto {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
-		this.email = email.trim().equals("") ? null : email;
+		this.email = email==null ? null : email.trim();
 	}
 
 	public Contatto(String[] contattoCsv) {
