@@ -27,7 +27,7 @@ public class JdbcExample {
 //			ResultSet resultSet = statement.getResultSet();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("id : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -54,7 +54,7 @@ public class JdbcExample {
 		
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO rubrica VALUES (null,'Zippo','Andrea','789569879','mia@email.it')");
+			statement.executeUpdate("INSERT INTO rubrica VALUES (null,'Andrea','Zippo','789569879','mia@email.it')");
 			
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -147,7 +147,7 @@ public class JdbcExample {
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("id : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -173,14 +173,14 @@ public class JdbcExample {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije05");
 		//System.out.println(connection.isClosed());
 		
-		//insert(connection);
+		insert(connection);
 		//update(connection);
 		//insertContacts(connection);
 		//select(connection);
-		search(connection, "Di Bella");
+		search(connection, "Zippo");
 		
 		connection.close();
 	}

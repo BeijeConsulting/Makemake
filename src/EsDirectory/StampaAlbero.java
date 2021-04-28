@@ -22,6 +22,7 @@ public class StampaAlbero {
 			// fileDaScrivere));
 
 			System.out.println(Albero(percorsoFile));
+			System.out.println("fatto");
 			// chiusura
 			// lettore.close();
 			// scrittore.close();
@@ -33,29 +34,26 @@ public class StampaAlbero {
 
 	public static String Albero(String percorso) {
 
-		System.out.println("metodo");
 		File f = new File(percorso);
 		String albero = "";
-		String[] lista = f.list();
-		
+		File[] lista = f.listFiles();
+
 		for (int i = 0; i < lista.length; i++) {
-			System.out.println("for");
-			System.out.println(f.getPath());
-			System.out.println(lista[i]);
-			if (new File(f.getPath() + "\\" + lista[i]).isDirectory()) {
-				System.out.println("kladlbjcdjbkad");
-				String[] nome = lista[i].split("\\");
-				albero += "\t" + nome[nome.length - 1] + " (Dir) \n";
-				System.out.println(nome[nome.length - 1]);
-				albero += Albero(f.getPath() + "\\" + lista[i]);
 
-			} else if (new File(f.getPath() + "\\" + lista[i]).isFile()) {
+			if (lista[i].isDirectory()) {
 
+				albero += "\t" + lista[i].getName() + " (Dir) \n";
+
+				albero +="\t\t"+ Albero(lista[i].getPath());
 				
-				//albero += "\t\t" + nome[nome.length - 1];
+
+			} else if (lista[i].isFile()) {
+
+				albero += "\t" + lista[i].getName()+"\n";
+
 			}
 		}
-
+		
 		return albero;
 	}
 }
