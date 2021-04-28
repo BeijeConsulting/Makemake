@@ -1,7 +1,9 @@
 package it.beije.makemake.JDBC;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,11 +22,16 @@ public class JDBCmetods {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
 		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije02");
+		//Mette all'interno della Lista dei contatti quello che c'è nel database
 		//select(connection);
 		
-		insertFromFile("C:\\Users\\Padawan02\\Desktop\\temp\\rubrica1.csv");
+		//Copia su un file il contenuto della lista di contatti presi dal database
+		//copyOnFile("C:\\Users\\Padawan02\\Desktop\\temp\\rubrica1.csv");
 		
-		insert(connection);
+		//Prende dal file e carica all'interno del database tramite la insert sotto
+		//insertFromFile("C:\\Users\\Padawan02\\Desktop\\temp\\rubrica1.csv");
+		//insert(connection);
+		
 		connection.close();
 		
 		for(Contatto c : contatti)
@@ -118,10 +125,27 @@ public class JDBCmetods {
 			contatti.add(contatto);
 		}
 		
-		//for(Contatto c : contatti) {
-			//System.out.println(c.toString());
-		//}
 		
 		bufferedReader.close();
+	}
+	
+	public static void copyOnFile(String pathFile) throws Exception{
+		FileWriter writer = new FileWriter(new File(pathFile));
+		for (Contatto contatto : contatti) {
+			writer.write(contatto.getNome());
+			writer.write(';');
+			writer.write(contatto.getCognome());
+			writer.write(';');
+			writer.write(contatto.getTelefono());
+			writer.write(';');
+			if (contatto.getEmail() != null) {
+				writer.write(contatto.getEmail());
+			}
+
+			writer.write('\n');
+		}
+
+		writer.flush();
+		writer.close();
 	}
 }
