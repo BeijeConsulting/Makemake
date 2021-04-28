@@ -2,3 +2,7 @@
 /.classpath
 /.project
 /target/
+<<<<<<< HEAD
+=======
+/.settings/
+>>>>>>> refs/heads/main
