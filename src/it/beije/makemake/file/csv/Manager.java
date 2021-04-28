@@ -20,11 +20,41 @@ public class Manager {
 		file = mergeFile(fileA, fileB);
 		readFile(file);
 		searchContact(file);
-		
-		
+
 	}
-	public static void searchContact(File file) throws Exception {
+	public static BufferedReader openFileToRead(String path) throws FileNotFoundException {
+		File file = new File(path);
+		FileReader reader = new FileReader(file);
+		BufferedReader buffer = new BufferedReader(reader);
+		
+		return buffer;
+	}
+	
+	public static void openFileToWrite(String path, ArrayList<Contatto> list) throws IOException {
+		File file = new File(path);
+		FileWriter writer = new FileWriter(file);
+		
+		writer.write("NOME;COGNOME;TELEFONO;EMAIL;\n");
+		
+		for(Contatto contatto : list) {
+			writer.write(contatto.getNome());
+			writer.write(';');
+			writer.write(contatto.getCognome());
+			writer.write(';');
+			writer.write(contatto.getTelefono());
+			writer.write(';');
+			writer.write(contatto.getEmail());
+			writer.write('\n');
+		}
+		
+		writer.flush();
+		writer.close();
+	}
+	
+	public static void searchContact(String path) {
+		
 		Scanner in = new Scanner(System.in);
+		
 		ArrayList<Contatto> cont = convertRubricaToList(file);
 	
 		System.out.println("Forniscimi il parametro per trovare il contatto : ");
@@ -56,72 +86,33 @@ public class Manager {
 		
 		
 	}
-	public static File mergeFile(File fileA, File fileB) throws Exception{
-		ArrayList<Contatto> listA = convertRubricaToList(fileA);
-		ArrayList<Contatto> listB = convertRubricaToList(fileB);
+	
+	public static File mergeFile(String pathA, String pathB, String destPath) {
+		BufferedReader bufferA = openFileToRead(pathA);
+		BufferedReader bufferB = openFileToRead(pathB);
 		
-		File newFile = new File("C:/Users/Padawan11/Desktop/nuovaRubrica.csv");
-		FileWriter writer = new FileWriter(newFile);
+		ArrayList<Contatto> listA = convertRubricaToList(bufferA);
+		ArrayList<Contatto> listB = convertRubricaToList(bufferB);
 		
-		writer.write("NOME;COGNOME;TELEFONO;EMAIL;\n");
-		
-		for(Contatto contatto : listA) {
-			writer.write(contatto.getNome());
-			writer.write(';');
-			writer.write(contatto.getCognome());
-			writer.write(';');
-			writer.write(contatto.getTelefono());
-			writer.write(';');
-			writer.write(contatto.getEmail());
-			writer.write('\n');
+		for(Contatto cont: listB) {
+			listA.add(cont);
 		}
+		//ho salvato tutti i contatti in listB
 		
-		writer.flush();
-		for(Contatto contatto : listB) {
-			writer.write(contatto.getNome());
-			writer.write(contatto.getCognome());
-			writer.write(';');
-			writer.write(contatto.getNome());
-			writer.write(';');
-			writer.write(contatto.getTelefono());
-			writer.write(';');
-			writer.write(contatto.getEmail());
-			writer.write('\n');
-		}
-		writer.flush();
-		writer.close();
-		
-		return newFile;
+		openFileToWrite(destPath, listA);
 		
 	}
 	
-	public static void readFile(File file) throws Exception{
-		if( !(file.exists() || file.isFile())) {
-			System.out.println("Hai cannato qualcosa");
-			return ;
-		}
-			
-	
-		
-		FileReader fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		
-		while(bufferedReader.ready()) {
-			System.out.println(bufferedReader.readLine());
-		}
-		bufferedReader.close();
-	}
 	
 
-	public static ArrayList<Contatto> convertRubricaToList(File file) throws Exception{
-		FileReader fileReader = new FileReader(file);
-		BufferedReader bufferedReader = new BufferedReader(fileReader);
+	public static ArrayList<Contatto> convertRubricaToList(BufferedReader bufferedReader) throws Exception{
+		
 		ArrayList<Contatto> contatti = new ArrayList<>();
 		
 		while(bufferedReader.ready()) {
 			String line = bufferedReader.readLine();
 			String values[] = line.split(";");
-			contatti.add(new Contatto(values[0], values[1], values[2], values[3]));
+			contatti.add(new Contatto(0, values[0], values[1], values[2], values[3]));
 		}
 		bufferedReader.close();
 		//tolgo la prima riga che è inutile in quanto contiene solo
@@ -139,11 +130,13 @@ public class Manager {
 		}
 	}
 
-	public static void orderRubricaNome(File file) throws Exception{
-		ArrayList<Contatto> contatti = convertRubricaToList(file);
+	public static void orderRubricaNome(String path) throws Exception{
+		BufferedReader buffer = openFileToRead(path);
+		ArrayList<Contatto> contatti = convertRubricaToList(buffer);
 		ArrayList<Contatto> newContatti = new ArrayList<>();
 		
 		ArrayList<String> nomi = new ArrayList<>();
+		
 		for(Contatto c : contatti) {
 			nomi.add(c.getNome());		
 		}
@@ -162,13 +155,5 @@ public class Manager {
 			System.out.println(c);
 		}
 	}
-	public static Object openFileToWrite(String path) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public static void addContact(Object openFileToWrite, Contatto cont) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 }

@@ -1,6 +1,7 @@
 package it.beije.makemake.file;
 
 
+import java.io.File;
 import java.util.Scanner;
 import it.beije.makemake.file.csv.Manager;
 import it.beije.makemake.file.rubrica.Contatto;
@@ -20,7 +21,10 @@ public class ContactsHandler {
 		String input = "";
 
 		do {
-			System.out.println("Cosa vuoi fare?(r:read , c:change, w:write q:quit, s:search)");
+			System.out.println("--------------------------------------------------------------");
+			System.out.println("Cosa vuoi fare?"
+					+ "(r:read , c:change, w:write q:quit, s:search, i:importFromDataBase, e:exportToDataBase)");
+			System.out.println("--------------------------------------------------------------");
 			input = in.nextLine();
 			switch(input) {
 				case "r":
@@ -28,6 +32,12 @@ public class ContactsHandler {
 					break;
 				case "w":
 					//write();
+					break;
+				case "i":
+					//import();
+					break;
+				case "e":
+					//export();
 					break;
 				case "c":
 					change();
@@ -55,16 +65,19 @@ public class ContactsHandler {
 		System.out.println("Inserisci il email : ");
 		email = in.nextLine();
 		
-		return  new Contatto(nome, cognome, telefono, email);
+		return  new Contatto(0,nome, cognome, telefono, email);
 	}
 	
 	public static void change() {
-		System.out.println("Forniscimi il nome del file che vuoi modificare(ti trovi sul desktop) ?");
+		File file = null;
 		String path, exten;
-
-		path = in.nextLine();
-		path = desktopPath+path;
-		System.out.println(path);
+		do{
+			System.out.println("Forniscimi il nome di un  file valido che vuoi modificare(ti trovi sul desktop) ?");
+			path = in.nextLine();
+			path = desktopPath+path;
+			file =new File(path);
+		}while(file.exists());
+		
 		
 		Contatto cont = createContact();
 

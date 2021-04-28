@@ -14,12 +14,16 @@ public class DataBaseManager {
 
 	public static void main(String arg[]) {
 		Connection connection= null;
-		
+		ArrayList<Contatto> result = null;
 		try {
+			
 			connection = openConnection();
-			insert(connection, new Contatto(1, "Antony", "Shenouda", "12", "@"));
-			insert(connection, new Contatto(1, "Antony", "Shenouda", "12", "@"));
-			select(connection);
+			result = selectAll(connection);
+			System.out.println(result);
+			updateSurnameByName(connection, "Chisalè", "Edo");
+			System.out.println(result);
+			System.out.println(searchByName(connection,"Edo"));
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally{
@@ -39,7 +43,7 @@ public class DataBaseManager {
 		return connection;
 	}
 	
-	public static void select(Connection connection) {
+	public static ArrayList<Contatto> selectAll(Connection connection) {
 		Statement statement = null;
 		ResultSet resultSet = null;
 		ArrayList<Contatto> contactList = new ArrayList<>();
@@ -59,9 +63,6 @@ public class DataBaseManager {
 								);
 			}
 			
-			for(Contatto cont : contactList) {
-				System.err.println(cont);
-			}
 		}catch(SQLException sqlException) {
 			sqlException.printStackTrace();
 		}finally {
@@ -72,6 +73,8 @@ public class DataBaseManager {
 				e.printStackTrace();
 			}
 		}
+		//se tutto va a buon fine ritorna un array con i contatti altrimenti un array vuoto.
+		return contactList;
 	}
 	
 	public static void insert(Connection connection,  Contatto cont) {
@@ -98,16 +101,17 @@ public class DataBaseManager {
 		}
 	}
 	
-	public static void update(Connection connection, String attribute, String value, String condAttr, String condValue) {
+	public static void updateSurnameByName(Connection connection, String valueAttr, String condValue) {
 		PreparedStatement prepStat = null;
 		
 		try {
-			prepStat = connection.prepareStatement("UPDATE rubrica SET ?=? WHERE ?=?");
+			prepStat = connection.prepareStatement("UPDATE rubrica SET cognome=? WHERE nome=?");
 			
-			prepStat.setString(1, attribute);
-			prepStat.setString(2, value);
-			prepStat.setString(3, condAttr);
-			prepStat.setString(4, condValue);
+
+
+			prepStat.setString(1, valueAttr);
+
+			prepStat.setString(2, condValue);
 
 			
 			prepStat.executeUpdate();
@@ -122,5 +126,42 @@ public class DataBaseManager {
 		}
 	}
 
+	public static ArrayList<Contatto> searchByName(Connection connection,String valueAttr) {
+		PreparedStatement prepStat = null;
+		ResultSet resultSet = null;
+		ArrayList<Contatto> searchedContact = new ArrayList<Contatto>();
+		
+		try {
+			prepStat = connection.prepareStatement("SELECT * FROM rubrica WHERE nome = ?");
+			
+
+			prepStat.setString(1, valueAttr);
+			
+			resultSet = prepStat.executeQuery();
+			
+			while(resultSet.next()) {
+				searchedContact.add(new Contatto(
+										resultSet.getInt("id"),
+										resultSet.getString("nome"),
+										resultSet.getString("cognome"),
+										resultSet.getString("telefono"),
+										resultSet.getString("email")
+											)
+								);
+			}
+			
+		}catch(SQLException sqlException) {
+			sqlException.printStackTrace();
+		}finally {
+			try {
+				resultSet.close();
+				prepStat.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		//se tutto va a buon fine ritorna un array con i contatti altrimenti un array vuoto.
+		return searchedContact;
+	}
 
 }

@@ -94,7 +94,8 @@ public class ManagerXML{
 			Element tagTelef = (Element) contactNode.getElementsByTagName("telefono").item(0);
 			Element tagEmail = (Element) contactNode.getElementsByTagName("email").item(0);
 			
-			contactList.add(new Contatto( tagName.getTextContent(),
+			contactList.add(new Contatto( 0,
+										  tagName.getTextContent(),
 										  tagSurname.getTextContent(),
 										  tagTelef.getTextContent(),
 										  tagEmail.getTextContent()
@@ -118,6 +119,7 @@ public class ManagerXML{
 		Element telefono = document.createElement("telefono");
 		Element email = document.createElement("email");
 		
+	
 		nome.setTextContent(cont.getNome());
 		cognome.setTextContent(cont.getCognome());
 		telefono.setTextContent(cont.getTelefono());

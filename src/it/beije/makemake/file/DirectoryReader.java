@@ -31,7 +31,7 @@ public class DirectoryReader {
 		System.out.println("Top ho finito, Vuoi che ti apra il file oppure te lo apri tu?y/n");
 		String answer = in.next();
 		if(answer.equals("y"))
-			Manager.readFile(destFile);
+			Manager.readFile(path);
 		
 	}
 	
