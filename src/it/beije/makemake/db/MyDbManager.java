@@ -1,16 +1,15 @@
-package it.beije.makemake.database;
+package it.beije.makemake.db;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
+import it.beije.makemake.database.ConnectionManager;
 import it.beije.makemake.rubrica.ContattiManager;
 import it.beije.makemake.rubrica.Contatto;
 
@@ -354,10 +353,12 @@ public class MyDbManager {
 
 	public static void main(String[] args) throws Exception {
 
-		Class.forName("com.mysql.cj.jdbc.Driver");
 
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET",
-				"root", "Beije09");
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET",
+//				"root", "Beije09");
+		
+		Connection connection =MyConnectionManager.getConnection();
 		// System.out.println(connection.isClosed());
 
 		// insert(connection);
