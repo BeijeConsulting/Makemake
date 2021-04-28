@@ -21,13 +21,13 @@ public class JdbcExample {
 		
 		try {
 			statement = connection.createStatement();
-//			resultSet = statement.executeQuery("SELECT nome as name,cognome,id FROM rubrica");
+//			resultSet = statement.executeQuery("SELECT nome as name,cognome,idRubrica FROM rubrica");
 			resultSet = statement.executeQuery("SELECT * FROM rubrica");
-//			statement.execute("SELECT nome as name,cognome,id FROM rubrica");
+//			statement.execute("SELECT nome as name,cognome,idRubrica FROM rubrica");
 //			ResultSet resultSet = statement.getResultSet();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("idRubrica : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -147,7 +147,7 @@ public class JdbcExample {
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("idRubrica : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -173,14 +173,14 @@ public class JdbcExample {
 		
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
-		//System.out.println(connection.isClosed());
+		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije12");
+		
 		
 		//insert(connection);
 		//update(connection);
 		//insertContacts(connection);
 		//select(connection);
-		search(connection, "Di Bella");
+		search(connection, "andrea");
 		
 		connection.close();
 	}
