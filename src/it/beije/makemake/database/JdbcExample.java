@@ -88,6 +88,7 @@ public class JdbcExample {
 	}
 
 
+
 //	public static void insertContacts(Connection connection) {
 //		
 //////		Contatto c1 = new Contatto();
@@ -184,5 +185,4 @@ public class JdbcExample {
 //		
 //		connection.close();
 //	}
-//
 }
