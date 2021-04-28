@@ -172,23 +172,48 @@ public class JdbcExample {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		
-//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
+	
+		ArrayList<Connection> lista= new ArrayList<Connection>();
+		boolean vai= true;
+		for (int i = 0; i<15; i++) {
+			try{
+			lista.add(GestoreConnessioni.getConnection());
+			}catch(Exception e) {
+				vai= false;
+				
+				System.out.println("["+ i+ "] eccezione: "  );
+				e.printStackTrace();
+			}finally {
+				
+			}
+		}
+		System.out.println("----------------------------");
+		for (int i = 0; i < lista.size(); i++) {
+			System.out.println("connesione numero["+ i+"]"+lista.get(i));
+		}
 		
-<<<<<<< HEAD
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije05");
-=======
+		
+
+//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije05");
+//
 		Connection connection = ConnectionManager.getConnection();
->>>>>>> refs/remotes/origin/main
-		//System.out.println(connection.isClosed());
+		Connection connection2 = ConnectionManager.getConnection();
+		Connection connection3 = ConnectionManager.getConnection();
+		System.out.println("------------------");
+		System.out.println(connection);
+		System.out.println(connection2);
+		System.out.println(connection3);
 		
-		insert(connection);
-		//update(connection);
-		//insertContacts(connection);
+//
+//		//System.out.println(connection.isClosed());
+//		
+//		insert(connection);
+//		//update(connection);
+//		//insertContacts(connection);
 		//select(connection);
-		search(connection, "Zippo");
-		
-		connection.close();
+		//search(connection2, "Zippo");
+//		
+		//connection.close();
 	}
 
 }
