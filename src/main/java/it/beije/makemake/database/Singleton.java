@@ -1,4 +1,4 @@
-package it.beije.makemake;
+package it.beije.makemake.database;
 
 public class Singleton {
 
