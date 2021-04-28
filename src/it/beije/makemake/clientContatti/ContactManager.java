@@ -11,12 +11,13 @@ import it.beije.makemake.file.Manager;
 import it.beije.makemake.rubrica.Contatto;
 
 public class ContactManager {
-	private static List<Contatto> rubrica = new ArrayList<>();
 	private static Scanner tastiera = new Scanner(System.in);
-	private static String path = "C:\\Users\\Padawan06\\Desktop\\rubrica1.csv";
 
 	public static void main(String[] args) throws Exception {
-		File f = new File(path);
+		List<Contatto> rubrica = new ArrayList<>();
+		//String path = "C:\\Users\\Padawan06\\Desktop\\rubrica1.csv";
+		System.out.println("inserisci il path del file: ");
+		File f = new File(tastiera.nextLine());
 		rubrica = Manager.convertRubricaToList(f);
 		boolean ciclo = true;
 		
@@ -27,23 +28,23 @@ public class ContactManager {
 			tastiera.nextLine();
 			switch (scelta) {
 			case 1:
-				visualizza();
+				visualizza(rubrica);
 				break;
 			case 2:
-				addContact();
+				addContact(rubrica);
 				break;
 			case 3:
-				searchContact();
+				searchContact(rubrica);
 				break;
 			case 4:
 			
-				editContact();
+				editContact(rubrica);
 				break;
 			case 5:
-				removeContact();
+				removeContact(rubrica);
 				break;
 			case 6:
-				saveChanges(f);
+				saveChanges(f,rubrica);
 				break;
 			case 7:
 				System.out.println("Hai premuto exit!");
@@ -68,7 +69,7 @@ public class ContactManager {
 
 	}
 
-	public static void visualizza() {
+	public static void visualizza(List<Contatto> rubrica) {
 		for (int i=0;i<rubrica.size();i++) {
 			System.out.println((i+1)+")");
 			System.out.println("Nome: "+rubrica.get(i).getNome()+" ");
@@ -81,7 +82,7 @@ public class ContactManager {
 		}
 	}
 
-	public static void addContact() {
+	public static void addContact(List<Contatto> rubrica) {
 		String nome, cognome, telefono;
 		System.out.println("nome: ");
 		nome = tastiera.nextLine();
@@ -90,9 +91,9 @@ public class ContactManager {
 		System.out.println("telefono: ");
 		telefono = tastiera.nextLine();
 		String email = null;
-		if (isPresent(nome, cognome)) {
+		if (isPresent(nome, cognome,rubrica)) {
 			System.out.println("Contatto già presente, inserire un contatto diverso!");
-			addContact();
+			addContact(rubrica);
 		} else {
 			System.out.println("Vuoi inserire anche il l'email?[S/N]");
 			String scelta = tastiera.nextLine();
@@ -105,15 +106,15 @@ public class ContactManager {
 		}
 	}
 
-	public static void searchContact() {
+	public static void searchContact(List<Contatto> rubrica) {
 		System.out.println("nome: ");
-		String nome = tastiera.nextLine();
+		String nome = tastiera.nextLine().trim();
 		System.out.println("cognome: ");
-		String cognome = tastiera.nextLine();
-		if (isPresent(nome, cognome)) {
+		String cognome = tastiera.nextLine().trim();
+		if (isPresent(nome, cognome,rubrica)) {
 			for (Contatto c : rubrica) {
 				if (c.getNome().equalsIgnoreCase(nome) && c.getCognome().equalsIgnoreCase(cognome)) {
-					c.toString();
+					System.out.println(c.toString());
 					break;
 				}
 			}
@@ -122,24 +123,23 @@ public class ContactManager {
 		}
 	}
 
-	public static boolean isPresent(String nome, String cognome) {
+	public static boolean isPresent(String nome, String cognome,List<Contatto>rubrica) {
 		boolean flag = false;
 		for (Contatto c : rubrica) {
 			if (c.getNome().equalsIgnoreCase(nome) && c.getCognome().equalsIgnoreCase(cognome)) {
-				flag = true;
-				break;
+				flag=true;
 			}
 		}
 		return flag;
 	}
 
-	public static void editContact() {
+	public static void editContact(List<Contatto>rubrica) {
 		System.out.println("nome: ");
 		String nome = tastiera.nextLine();
 		System.out.println("cognome: ");
 		String cognome = tastiera.nextLine();
-		if (isPresent(nome, cognome)) {
-			int i = getIndexOfContact(nome, cognome);
+		if (isPresent(nome, cognome,rubrica)) {
+			int i = getIndexOfContact(nome, cognome,rubrica);
 			System.out.println("Inserire nuovo nome: ");
 			String newName = tastiera.nextLine();
 			rubrica.get(i).setNome(newName);
@@ -163,28 +163,27 @@ public class ContactManager {
 		}
 	}
 
-	public static void removeContact() {
+	public static void removeContact(List<Contatto>rubrica) {
 		System.out.println("nome: ");
 		String nome = tastiera.nextLine();
 		System.out.println("cognome: ");
 		String cognome = tastiera.nextLine();
-		if (isPresent(nome, cognome)) {
-			int index = getIndexOfContact(nome, cognome);
+		if (isPresent(nome, cognome,rubrica)) {
+			int index = getIndexOfContact(nome, cognome,rubrica);
 			rubrica.remove(index);
 			System.out.println("Contatto rimosso");
 		} else {
-			System.out.println("Contatto non rimosso, non esiste nella rubrica");
+			System.out.println("Contatto non esiste nella rubrica");
 		}
 	}
 
-	public static int getIndexOfContact(String nome, String cognome) {
+	public static int getIndexOfContact(String nome, String cognome,List<Contatto>rubrica) {
 		int index = -1;
-		if (isPresent(nome, cognome)) {
+		if (isPresent(nome, cognome,rubrica)) {
 			for (int i = 0; i < rubrica.size(); i++) {
 				if (rubrica.get(i).getNome().equalsIgnoreCase(nome)
 						&& rubrica.get(i).getCognome().equalsIgnoreCase(cognome)) {
-					index = i;
-					break;
+					return i;
 				}
 			}
 		}
@@ -192,7 +191,7 @@ public class ContactManager {
 		return index;
 	}
 
-	public static List<Contatto> searchDuplicates(String nome, String cognome) {
+	public static List<Contatto> searchDuplicates(String nome, String cognome,List<Contatto>rubrica) {
 		List<Contatto> duplicati = new ArrayList<>();
 		for (Contatto c : rubrica) {
 			if (c.toString().contains(nome) || c.toString().contains(cognome)) {
@@ -203,7 +202,7 @@ public class ContactManager {
 	}
 
 	// salvare eventuali modifiche nella lista sul file
-	public static void saveChanges(File f) throws IOException {
+	public static void saveChanges(File f,List<Contatto>rubrica) throws IOException {
 		FileWriter writer = new FileWriter(f);
 		for (int i=0;i<rubrica.size();i++) {
 			writer.write(rubrica.get(i).getNome());
@@ -214,9 +213,10 @@ public class ContactManager {
 			writer.write(';');
 			if (rubrica.get(i).getEmail() != null) {
 				writer.write(rubrica.get(i).getEmail());
-				writer.write('\n');
+				writer.write(';');
 			}
-			
+
+			writer.write('\n');
 		}
 		writer.flush();
 		writer.close();
