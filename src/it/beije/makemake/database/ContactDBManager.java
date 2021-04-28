@@ -23,7 +23,7 @@ public class ContactDBManager {
 	}
 	
 	public static void importFromDB(Connection connection,File f) throws IOException {
-		FileWriter fileWriter = new FileWriter(f);
+		FileWriter fileWriter = new FileWriter(f,true);
 		Statement statement = null;
 		ResultSet resultSet = null;
 				try {
