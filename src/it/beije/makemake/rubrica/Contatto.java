@@ -1,6 +1,8 @@
 package it.beije.makemake.rubrica;
 
-public class Contatto {
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
+public class Contatto implements Comparable<Contatto> {
 
 	private int id;
 	private String nome;
@@ -11,6 +13,7 @@ public class Contatto {
 	public Contatto() {
 		
 	}
+	
 	public Contatto(String nome, String cognome, String telefono, String email) {
 		this.nome = nome;
 		this.cognome = cognome;
@@ -52,7 +55,7 @@ public class Contatto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 
@@ -64,6 +67,7 @@ public class Contatto {
 		
 		return builder.toString();
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Contatto) {
@@ -72,5 +76,13 @@ public class Contatto {
 		}
 		return false;
 		}
+
+	@Override
+	public int compareTo(Contatto o) {
+		String a = this.nome.toLowerCase();
+		String b = o.getNome().toLowerCase();
+		
+		return a.compareTo(b);
+	}
 	
 }

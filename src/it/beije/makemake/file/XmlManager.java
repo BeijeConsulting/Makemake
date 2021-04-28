@@ -82,7 +82,6 @@ public class XmlManager extends CsvManager {
             cognome.setTextContent(lista.get(i).getCognome());
             Element telefono = document.createElement("telefono");
             telefono.setTextContent(lista.get(i).getTelefono());
-
             contatto.appendChild(nome);
             contatto.appendChild(cognome);
             contatto.appendChild(telefono);

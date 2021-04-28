@@ -1,66 +1,20 @@
 package it.beije.makemake.rubrica;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
-import it.beije.makemake.file.CsvManager;
-import it.beije.makemake.file.XmlManager;
 
-public class GestisciRubrica {
-
-	public static String file = "C:/Users/Padawan07/Desktop/rubrica/rubrica.txt";
-
-	public static void main(String[] args) throws Exception {
-
-		Scanner in = new Scanner(System.in);
-		boolean flag = false;
-
-		System.out.println("RUBRICA:");
-		List<Contatto> contatti = CsvManager.leggiCsv(file);
-		//stampaContatti(contatti);
-		
-		do {
-			stampaMenu();
-			String s = in.nextLine();
-			flag = true;
-			switch (s) {
-			case "1":
-				contatti.add(leggiContatto(in));
-				System.out.println(contatti.size());
-				scriviListaInCsv(contatti, file);
-				flag = false;
-				break;
-			case "2":
-				stampaContatti(contatti);
-				contatti.remove(leggiContatto(in));
-				scriviListaInCsv(contatti, file);
-				flag = false;
-
-				break;
-			case "3":
-				System.out.println(searchContact(contatti, leggiContatto(in)));
-				break;
-			case "4":
-				duplicateContact(contatti);
-				break;
-
-			default:
-				break;
-			}
-		} while (flag);
-
-	}
+public class GestisciRubrica{
 
 	public static void stampaMenu() {
 		System.out.println("\nCosa vuoi fare? " + "\n 1) Aggiungere contatto" + "\n 2) Rimuovere contatto"
-				+ "\n 3) Cercare contatto" + "\n 4) Visualizzare contatti duplicati\n");
+				+ "\n 3) Cercare contatto" + "\n 4) Visualizzare contatti duplicati\n" + " 5) Riordinare per nome\n" + " 6) Modifica contatto\n"+ " 7) unisci db a csv\n");
 
 	}
-
 	// controllo solo che non siano "" vuote e che cell sia solo numeri e mail abbia @
 	public static Contatto leggiContatto(Scanner in) {
 		String Nome ="", Cognome="", Telefono="", Email="";
@@ -86,9 +40,7 @@ public class GestisciRubrica {
 		while (flag == false) {
 			System.out.println("Inserisci telefono");
 			Telefono = in.nextLine();
-			if (!(Telefono.isEmpty()) && !(Telefono.contains("[a-zA-Z]"))) {
-				flag = true;
-			}
+			flag = validoTelefono(Telefono);
 		}
 		 flag = false;
 		while (flag == false) {
@@ -103,6 +55,17 @@ public class GestisciRubrica {
 		return contatto;
 	}
 
+	private static boolean validoTelefono(String telefono) {
+				if( telefono.startsWith("+") && Character.isDigit(telefono.charAt(0)) ) {
+					for (int i = 1; i < telefono.length(); i++) {
+						if(!Character.isDigit(telefono.charAt(i)))
+							return false;
+					}
+				}//BHOOOO
+				
+				
+		return true;
+	}
 	public static void scriviListaInCsv(List<Contatto> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile));
 		for (int i = 0; i < contatti.size(); i++) {
@@ -152,11 +115,19 @@ public class GestisciRubrica {
 		return "Il contatto non è presente nella lista";
 
 	}
+	public static boolean searchContact(List<Contatto> contatti, Contatto c, int bho) {
+		for (int i = 0; i < contatti.size(); i++) {
+			if (contatti.get(i).getNome().equals(c.getNome()) || contatti.get(i).getCognome().equals(c.getCognome())
+					|| contatti.get(i).getTelefono().equals(c.getTelefono())
+					|| contatti.get(i).getEmail().equals(c.getEmail()))
+				return true;
+		}
+		return false;
 
-	public static void sortByName(List<Contatto> contatti) throws Exception {
-		//Collections.sort((List<T>) contatti);
-		
-		
+	}
+
+	public static void sortByName(List<Contatto> contatti) throws Exception  {
+		Collections.sort(contatti);
 	}
 
 	public static void stampaContatti(List<Contatto> contatti) {
@@ -164,5 +135,4 @@ public class GestisciRubrica {
 			System.out.println(contatti.get(i).toString());
 		}
 	}
-
 }
