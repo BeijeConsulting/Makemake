@@ -101,6 +101,30 @@ public class MyDBManager {
 		}
 		return contatti;
 	}
+	
+	public static List<Contatto> getRubrica(Connection connection) {
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		List<Contatto> contatti = new ArrayList<Contatto>();
+		try {
+			preparedStatement = connection.prepareStatement("SELECT * FROM rubrica");
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				contatti.add(new Contatto(resultSet.getString("nome"), resultSet.getString("cognome"),
+						resultSet.getString("telefono"), resultSet.getString("email")));
+			}
+		} catch (SQLException sqlException) {
+			sqlException.printStackTrace();
+		} finally {
+			try {
+				resultSet.close();
+				preparedStatement.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return contatti;
+	}
 
 	public static void deleteBy(Connection connection, String filter, String value) {
 		PreparedStatement preparedStatement = null;
