@@ -114,7 +114,7 @@ public class FileManager {
 	}
 
 	public static void main(String[] args) throws IOException {
-		File file = new File("C:/Users/Padawan06/Desktop/rubrica1.csv");
+		File file = new File("C:/Users/Padawan04/Desktop/rubrica1.txt");
 		ArrayList<Contatto> rubrica = carica(file);
 		ordina(file, rubrica);
 		for (Contatto c : rubrica) {
