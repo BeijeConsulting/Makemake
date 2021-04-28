@@ -12,6 +12,8 @@ public class CaricoCont {
 		List<Contatto> contatti = new ArrayList<Contatto>();
 		String pathFile = new String("C:\\Users\\Padawan13\\Desktop\\rubrica1.csv");	
 		Contatto nuovo = new Contatto("Andrea", "Zippo", "2835579", "bfybu@cazzi.com");
+		
+		
 		//aggiungo il nuovo contatto
 		contatti.add(nuovo);
 		appendInRubrica(contatti, pathFile);

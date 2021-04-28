@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.Arrays;
 import java.io.FileWriter;
-import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 import it.beije.makemake.rubrica.Contatto;
@@ -17,6 +16,7 @@ public class AlphaOrder {
 				List<Contatto> contatti = new ArrayList<Contatto>();
 				String pathFile = new String("C:\\Users\\Padawan13\\Desktop\\rubrica1.csv");	
 				
+				// Salvo in un arrayList il contenuto della rubrica;
 				BufferedReader bufferedReader = new BufferedReader(new FileReader(pathFile));
 				while (bufferedReader.ready()) {
 					String row = bufferedReader.readLine();
@@ -37,9 +37,11 @@ public class AlphaOrder {
 				String[] names = new String[contatti.size()];
 				String[] surnames = new String[contatti.size()];
 				
+				//estraggo nomi e cognomi
 				names = nameextr(contatti, names);
 				surnames = surnameextr(contatti, surnames);
 				
+				// Ordino gli array di stringhe;
 				Arrays.sort(names);
 				Arrays.sort(surnames);
 				
@@ -47,17 +49,15 @@ public class AlphaOrder {
 				appendInRubricacres(contatti, pathFile, names);
 				appendInRubricacres(contatti, pathFile, surnames);
 				
-				
+				//Stampo il contenuto del file in lettura
 				System.out.println("-------------------\n");
-				
 				File f = new File("C:\\Users\\Padawan13\\Desktop\\rubrica1.csv");
 				FileReader fileReader = new FileReader(f);
 				int c = fileReader.read();
 				while (c >= 0) {
 					System.out.print((char) c);
 					c = fileReader.read();
-				}
-				
+				}				
 	}
 			
 	//  estrazione del nome
@@ -77,11 +77,10 @@ public class AlphaOrder {
 				surnames[i] = contatto.getCognome();
 				i++;
 		}
-		return surnames;
-		
+		return surnames;		
 	}
 				
-
+// Scrivo in sul file in base all'ordine dato!!
 public static void appendInRubricacres(List<Contatto> contatti, String pathFile, String[] str_cntrl) throws Exception {
 	FileWriter writer = new FileWriter(new File(pathFile), true);
 	for (int i=0; i<str_cntrl.length; i++){
