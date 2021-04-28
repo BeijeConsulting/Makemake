@@ -10,25 +10,32 @@ import java.util.ArrayList;
 
 import it.beije.makemake.file.rubrica.Contatto;
 
-public class DataBaseManager {
-
-	public static void main(String arg[]) {
+public class DataBaseManager {	public static void main(String arg[]) {
 		Connection connection= null;
 		ArrayList<Contatto> result = null;
 		try {
 			
-			connection = openConnection();
+			//connection = openConnection();
+			//usiamo il ConnectionManager ossia un esempio di Singleton
+			connection = ConnectionManager.getConnection();
 			result = selectAll(connection);
 			System.out.println(result);
 			updateSurnameByName(connection, "Chisalè", "Edo");
 			System.out.println(result);
 			System.out.println(searchByName(connection,"Edo"));
 			
+			while(true) {
+				ConnectionManager.getConnection();
+			}
+			
+		}catch(MaxConnectionException e) {
+			System.out.println("Tutte le connessioni sono al momento occupate!");
 		}catch(Exception e) {
 			e.printStackTrace();
-		}finally{
+		}
+		finally{
 			try {
-				connection.close();
+				System.out.println(ConnectionManager.closeConnection(connection));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
