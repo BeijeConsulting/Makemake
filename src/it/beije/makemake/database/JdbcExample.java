@@ -171,9 +171,15 @@ public class JdbcExample {
 
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
-		Class.forName("com.mysql.cj.jdbc.Driver");
+//		Class.forName("com.mysql.cj.jdbc.Driver");
+//		
+//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
 		
+<<<<<<< HEAD
 		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije05");
+=======
+		Connection connection = ConnectionManager.getConnection();
+>>>>>>> refs/remotes/origin/main
 		//System.out.println(connection.isClosed());
 		
 		insert(connection);
