@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.database;
+package it.andrea.esercitazione.contatti.db;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HDBManager {
 	private static final int MAX_SESSIONS = 10;
+	
 	private static List<Session> sessions = new ArrayList<Session>();
 
 	private HDBManager() {

@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.contatti;
+package it.andrea.esercitazione.contatti.csv;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class MyCsvManager {
 	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1.csv";

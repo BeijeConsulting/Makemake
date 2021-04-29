@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.database;
+package it.andrea.esercitazione.contatti.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.andrea.esercitazione.contatti.Contatto;
+import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class MyDBManager {
 

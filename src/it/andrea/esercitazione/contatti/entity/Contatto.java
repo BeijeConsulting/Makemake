@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.contatti;
+package it.andrea.esercitazione.contatti.entity;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;

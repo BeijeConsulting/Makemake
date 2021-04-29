@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.xml;
+package it.andrea.esercitazione.contatti.xml;
 
 import java.io.File;
 import java.io.FileReader;
@@ -16,8 +16,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.andrea.esercitazione.contatti.Contatto;
-import it.andrea.esercitazione.contatti.MyCsvManager;
+import it.andrea.esercitazione.contatti.csv.MyCsvManager;
+import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class MyXmlManager {
 	public final static String XML_PATH = "C:/Users/Padawan10/git/Makemake/src/it/andrea/esercitazione/xml/xmlfiles/rubrica.xml";

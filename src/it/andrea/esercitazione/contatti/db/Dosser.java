@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.database;
+package it.andrea.esercitazione.contatti.db;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

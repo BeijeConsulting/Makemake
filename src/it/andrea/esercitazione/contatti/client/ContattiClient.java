@@ -1,12 +1,12 @@
-package it.andrea.esercitazione.contatticlient;
+package it.andrea.esercitazione.contatti.client;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
 import java.util.Scanner;
 
-import it.andrea.esercitazione.contatti.Contatto;
-import it.andrea.esercitazione.contatti.MyCsvManager;
+import it.andrea.esercitazione.contatti.csv.MyCsvManager;
+import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class ContattiClient {
 	public static void printMenu() {
