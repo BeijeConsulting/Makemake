@@ -2,7 +2,7 @@ package it.beije.makemake.file;
 
 import java.util.Scanner;
 
-import it.beije.makemake.file.csv.Manager;
+
 
 import java.io.*;
 
@@ -28,10 +28,7 @@ public class DirectoryReader {
 		analyzer(writer, file, "");
 		writer.flush();
 		writer.close();
-		System.out.println("Top ho finito, Vuoi che ti apra il file oppure te lo apri tu?y/n");
-		String answer = in.next();
-		if(answer.equals("y"))
-			Manager.readFile(path);
+		
 		
 	}
 	
