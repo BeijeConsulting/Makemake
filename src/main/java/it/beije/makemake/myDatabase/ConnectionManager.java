@@ -7,7 +7,7 @@ import java.util.List;
 class ConnectionManager {
 
     private ConnectionManager() {
-        Class.forName("com.mysql.cj.jdbc.Driver");
+//        Class.forName("com.mysql.cj.jdbc.Driver");
 
     }
 
@@ -24,7 +24,7 @@ class ConnectionManager {
     }
 
     public Connection getConnection() {
-
+        return null;
     }
 
 
