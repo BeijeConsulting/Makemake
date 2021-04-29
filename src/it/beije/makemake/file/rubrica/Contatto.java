@@ -9,13 +9,19 @@ public class Contatto {
 	private String email;
 	
 	
+	public Contatto() {
+		
+	}
 
-	public Contatto(int id, String nome, String cognome, String telefono, String email) {
-		this.id =id;
+	public Contatto(String nome, String cognome, String telefono, String email) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
 		this.email = email;
+	}
+	public Contatto(int id, String nome, String cognome, String telefono, String email) {
+		this(nome, cognome, telefono, email);
+		this.id =id;
 	}
 	
 	public int getId() {
