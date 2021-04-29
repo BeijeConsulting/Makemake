@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class FileManager {
 	/*
@@ -41,12 +41,12 @@ public class FileManager {
 		
 	}
 
-	public static ArrayList<Contatto> convertRubricaToList(File file) throws Exception {
+	public static ArrayList<ContattoAnnotation> convertRubricaToList(File file) throws Exception {
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		ArrayList<Contatto> contatti = new ArrayList<>();
+		ArrayList<ContattoAnnotation> contatti = new ArrayList<>();
 		
-		Contatto c = new Contatto();
+		ContattoAnnotation c = new ContattoAnnotation();
 		while (bufferedReader.ready()) {
 			String line = bufferedReader.readLine();
 			String values[] = line.split(";");
@@ -64,7 +64,7 @@ public class FileManager {
 		return contatti;
 	}
 	
-	public static void searchForDuplicates(ArrayList<Contatto> list) {
+	public static void searchForDuplicates(ArrayList<ContattoAnnotation> list) {
 
 		for (int i = 0; i < list.size(); i++) {
 			for (int j = i + 1; j < list.size(); j++)
@@ -75,11 +75,11 @@ public class FileManager {
 
 	
 	
-	public static ArrayList<Contatto> carica(File file) throws IOException {
+	public static ArrayList<ContattoAnnotation> carica(File file) throws IOException {
 		FileReader fileReader = new FileReader(file);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
-		ArrayList<Contatto> rubrica = new ArrayList<Contatto>();
-		Contatto c = new Contatto();
+		ArrayList<ContattoAnnotation> rubrica = new ArrayList<ContattoAnnotation>();
+		ContattoAnnotation c = new ContattoAnnotation();
 		while (bufferedReader.ready()) {
 			String[] line = bufferedReader.readLine().split(";");
 			
@@ -95,7 +95,7 @@ public class FileManager {
 		return rubrica;
 	}
 
-	public static void ordina(File fileName, ArrayList<Contatto> rubrica) throws IOException {
+	public static void ordina(File fileName, ArrayList<ContattoAnnotation> rubrica) throws IOException {
 		for (int i = 0; i < rubrica.size(); i++) {
 			for (int j = i + 1; j < rubrica.size(); j++) {
 				if (((String) rubrica.get(i).getNome()).compareTo((String) rubrica.get(j).getNome()) > 0) {
@@ -104,7 +104,7 @@ public class FileManager {
 			}
 		}
 		FileWriter fileWriter = new FileWriter(fileName);
-		for (Contatto c : rubrica) {
+		for (ContattoAnnotation c : rubrica) {
 			fileWriter.write(c.getNome() + ";" + c.getCognome() + ";" + c.getTelefono() + ";" + c.getEmail());
 			fileWriter.write("\n");
 		}
@@ -115,9 +115,9 @@ public class FileManager {
 
 	public static void main(String[] args) throws IOException {
 		File file = new File("C:/Users/Padawan04/Desktop/rubrica1.txt");
-		ArrayList<Contatto> rubrica = carica(file);
+		ArrayList<ContattoAnnotation> rubrica = carica(file);
 		ordina(file, rubrica);
-		for (Contatto c : rubrica) {
+		for (ContattoAnnotation c : rubrica) {
 			System.out.println(c);
 		}
 

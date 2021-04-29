@@ -13,11 +13,11 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class WriteXml {
 	
-	public static void createXml(ArrayList<Contatto> contatti) throws Exception {
+	public static void createXml(ArrayList<ContattoAnnotation> contatti) throws Exception {
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -63,7 +63,7 @@ public class WriteXml {
 	
 	public static void main (String [] args) throws Exception {
 		File f = new File("C:\\Users\\Padawan04\\git\\Makemake\\rubrica.xml");
-		ArrayList<Contatto> contatti = XmlManager.load(f);
+		ArrayList<ContattoAnnotation> contatti = XmlManager.load(f);
 		createXml(contatti);
 		
 	}

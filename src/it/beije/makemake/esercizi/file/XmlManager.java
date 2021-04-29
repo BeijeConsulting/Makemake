@@ -10,11 +10,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class XmlManager {
 
-	public static  ArrayList<Contatto> load(File file) throws Exception{
+	public static  ArrayList<ContattoAnnotation> load(File file) throws Exception{
 		
 		FileReader fileReader = new FileReader(file);
 		while (fileReader.ready()) {
@@ -32,7 +32,7 @@ public class XmlManager {
         NodeList contatti = rubrica.getElementsByTagName("contatto");
         
         Element contatto = null;
-        ArrayList<Contatto> contact = new ArrayList<>();
+        ArrayList<ContattoAnnotation> contact = new ArrayList<>();
         Element nome = null;
         Element cognome = null;
         Element telefono = null;
@@ -41,7 +41,7 @@ public class XmlManager {
 		for (int i = 0; i < contatti.getLength(); i++) {
 			contatto = (Element) contatti.item(i);
 			//System.out.println("getChildNodes : " + contatto.getChildNodes().getLength());
-			Contatto c = new Contatto();
+			ContattoAnnotation c = new ContattoAnnotation();
 			
 			nome = (Element) contatto.getElementsByTagName("nome").item(0);
 			cognome = (Element) contatto.getElementsByTagName("cognome").item(0);

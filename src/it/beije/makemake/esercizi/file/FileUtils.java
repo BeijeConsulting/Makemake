@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.util.Arrays;
 import java.util.List;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class FileUtils {
 

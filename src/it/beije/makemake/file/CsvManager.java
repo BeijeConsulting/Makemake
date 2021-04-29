@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class CsvManager {
 	
@@ -34,9 +34,9 @@ public class CsvManager {
 		fileReader.close();
 	}
 	
-	public static void appendInRubrica(List<Contatto> contatti, String pathFile) throws Exception {
+	public static void appendInRubrica(List<ContattoAnnotation> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile), true);
-		for (Contatto contatto : contatti) {
+		for (ContattoAnnotation contatto : contatti) {
 			writer.write(contatto.getCognome());
 			writer.write(';');
 			writer.write(contatto.getNome());
@@ -69,14 +69,14 @@ public class CsvManager {
 
 		System.out.println("-------------------\n");
 		
-		List<Contatto> contatti = new ArrayList<Contatto>();
+		List<ContattoAnnotation> contatti = new ArrayList<ContattoAnnotation>();
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/temp/prova.txt"));
 		//BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while (bufferedReader.ready()) {
 			String row = bufferedReader.readLine();
 			//System.out.println(row);
 			String[] rowParts = row.split(";");
-			Contatto contatto = new Contatto();
+			ContattoAnnotation contatto = new ContattoAnnotation();
 			contatto.setNome(rowParts[0]);
 			contatto.setCognome(rowParts[1]);
 			contatto.setTelefono(rowParts[2]);

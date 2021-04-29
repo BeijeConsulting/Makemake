@@ -9,14 +9,14 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoAnnotation;
 
 public class HDBexample {
 	
 	public static void main(String[] args) {
 		
 		Configuration configuration = new Configuration().configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(ContattoAnnotation.class);
 				//.addAnnotatedClass(Libri.class)
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -26,12 +26,12 @@ public class HDBexample {
 //		System.out.println(session.isOpen());
 		
 		//Query HQL
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
+		Query<ContattoAnnotation> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
 		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
-		List<Contatto> contatti = query.list();
+		List<ContattoAnnotation> contatti = query.list();
 		
-		Contatto contatto = null;
-		for (Contatto c : contatti) {
+		ContattoAnnotation contatto = null;
+		for (ContattoAnnotation c : contatti) {
 			System.out.println(c);
 			contatto = c;
 		}
