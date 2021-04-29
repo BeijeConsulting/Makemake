@@ -121,7 +121,6 @@ public class Contact implements Comparable<Contact> {
         String surname = fields[1];
         String phone = fields[2];
         String mail = fields[3];
-        String address = fields.length > 4 ? fields[4] : null;
 
         return new Contact(name, surname, phone, mail);
     }

@@ -80,6 +80,10 @@ public class Test {
         System.out.println();
         System.out.println(addressBook3);
 
+        //test remove and update db
+        addressBook3.removeAllAndUpdateDB("Ermenegildo");
+        addressBook3.removeAllAndUpdateDB("Carlo");
+
 
 
     }

@@ -287,6 +287,8 @@ public class AddressBook {
 
 
     public void updateDB() {
+        //can be called only if AddressBook is created from db
+        //or if it has been uploaded to db
         AddressBook addressBook = new AddressBook();
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSession();
@@ -301,6 +303,8 @@ public class AddressBook {
 
     
     public void updateNameAndDB(String oldName, String newName) {
+        //can be called only if AddressBook is created from db
+        //or if it has been uploaded to db
         Contact c = new Contact();
         c.setName(oldName);
         List<Contact> updated = search(c);
@@ -317,16 +321,35 @@ public class AddressBook {
     }
 
 
+    public boolean removeAllAndUpdateDB(Contact c) {
+        //can be called only if AddressBook is created from db
+        //or if it has been uploaded to db.
+        //Note that the object passed is only used for testing equality
+        //(you are not obligated to pass the entity bean corresponding to a database row).
+        //This removes ALL the objects satisfying equality
+        //from AddressBook and database
+        //Return true if at least one contact was removed
+        boolean removed = false;
+        List<Contact> updated = search(c);
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        for (Contact contact:
+                updated) {
+            removed = contactList.remove(contact);
+            Transaction transaction = session.beginTransaction();
+            session.delete(contact);
+            transaction.commit();
+        }
+        sessionManager.closeSession(session);
+        return removed;
+    }
 
-
-
-
-
-
-
-
-
-
+    public boolean removeAllAndUpdateDB(String name) {
+        //remove by name
+        Contact contact = new Contact();
+        contact.setName(name);
+        return removeAllAndUpdateDB(contact);
+    }
 
 
 
