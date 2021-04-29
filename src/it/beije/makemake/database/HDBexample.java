@@ -1,8 +1,12 @@
 package it.beije.makemake.database;
 
+<<<<<<< HEAD
 import it.beije.makemake.file.rubrica.Contatto;
 
 
+=======
+import java.io.File;
+>>>>>>> origin
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,6 +21,10 @@ public class HDBexample {
 
 	public static void main(String[] args) {
 		
+
+//		Configuration configuration = new Configuration().configure()
+//				.addAnnotatedClass(Contatto.class);
+//				//.addAnnotatedClass(Libri.class)
 
 		
 		
