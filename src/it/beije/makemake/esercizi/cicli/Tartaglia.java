@@ -46,18 +46,18 @@ public class Tartaglia {
 			
 			StringBuilder nuovaSerie = new StringBuilder("1\t1");
 			
-			for (int j=1, posizione=0; j<serie.length() ;j+=2, posizione+=2) {
-				
-				terzo= (int)serie.charAt(posizione) + (int)serie.charAt(posizione+2);
-				nuovaSerie.insert(j , "\t"+terzo);
-				
-				
-				
-				
-			}
-			
-			System.out.println(nuovaSerie);
-			serie= nuovaSerie;
+//			for (int j=1, posizione=0; j<serie.length() ;j+=2, posizione+=2) {
+//				
+//				terzo= (int)serie.charAt(posizione) + (int)serie.charAt(posizione+2);
+//				nuovaSerie.insert(j , "\t"+terzo);
+//				
+//				
+//				
+//				
+//			}
+//			
+//			System.out.println(nuovaSerie);
+//			serie= nuovaSerie;
 		}
 		
 		
