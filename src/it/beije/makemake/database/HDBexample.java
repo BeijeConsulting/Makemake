@@ -1,5 +1,6 @@
 package it.beije.makemake.database;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -22,6 +23,7 @@ public class HDBexample {
 	public static void main(String[] args) {
 		
 		Session session = SessionManager.getSession();
+		
 //		System.out.println(session.isOpen());
 		
 		//Query HQL

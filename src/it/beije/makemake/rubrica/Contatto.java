@@ -1,13 +1,31 @@
 package it.beije.makemake.rubrica;
 
 import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-public class Contatto implements Comparable<Contatto> {
-
+@Entity
+@Table(name = "rubrica")
+public class Contatto implements Comparable<Contatto>{
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id")
 	private int id;
+	
+	@Column(name = "nome")
 	private String nome;
+
+	@Column(name = "cognome")
 	private String cognome;
+
+	@Column(name = "telefono")
 	private String telefono;
+
+	@Column(name = "email")
 	private String email;
 	
 	public Contatto() {

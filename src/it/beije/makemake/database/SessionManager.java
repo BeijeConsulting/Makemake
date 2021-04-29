@@ -4,6 +4,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import it.beije.makemake.rubrica.Contatto;
+
 public class SessionManager {
 
 	private SessionManager() {}
@@ -11,7 +13,8 @@ public class SessionManager {
 	private static Session config;
 	
 	private static Session init(){
-		Configuration configuration = new Configuration().configure();
+		Configuration configuration = new Configuration().configure()
+				.addAnnotatedClass(Contatto.class);
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		
