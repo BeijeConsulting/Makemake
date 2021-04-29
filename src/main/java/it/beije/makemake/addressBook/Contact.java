@@ -10,6 +10,20 @@ import java.util.Locale;
 
 public class Contact implements Comparable<Contact> {
 
+    private int id;
+
+    public Contact() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String name;
     private String surname;
     private String phone;
@@ -62,6 +76,15 @@ public class Contact implements Comparable<Contact> {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public Contact(int id, String name, String surname, String phone, String mail, String address) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.mail = mail;
+        this.address = address;
     }
 
     public Contact(String name, String surname, String phone, String mail, String address) {

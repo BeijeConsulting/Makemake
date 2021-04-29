@@ -1,8 +1,11 @@
 package it.beije.makemake.addressBook;
 
+import it.beije.makemake.myDatabase.SessionManager;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -250,6 +253,71 @@ public class AddressBook {
             e.printStackTrace();
         }
     }
+
+    public void insertIntoDatabase2() {
+        //using hibernate instead of jdbc directly
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        for (Contact c :
+                contactList) {
+            Transaction transaction = session.beginTransaction();
+            session.save(c);
+            transaction.commit();
+
+        }
+        sessionManager.closeSession(session);
+
+    }
+
+    public static AddressBook createFromDatabase2() {
+        //using hibernate instead of jdbc directly
+        AddressBook addressBook = new AddressBook();
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        Query<Contact> contactsQuery = session.createQuery("SELECT c FROM Contact as c");
+        List<Contact> contacts = contactsQuery.list();
+        for (Contact c :
+                contacts) {
+            addressBook.addContact(c);
+        }
+        sessionManager.closeSession(session);
+        return addressBook;
+
+    }
+
+
+    public void updateDB() {
+        AddressBook addressBook = new AddressBook();
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        for (Contact c :
+                contactList) {
+            Transaction transaction = session.getTransaction();
+            session.save(c);
+            transaction.commit();
+        }
+        sessionManager.closeSession(session);
+    }
+
+    
+    public void updateNameAndDB(String oldName, String newName) {
+        Contact c = new Contact();
+        c.setName(oldName);
+        List<Contact> updated = search(c);
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        for (Contact contact:
+             updated) {
+            contact.setName(newName);
+            Transaction transaction = session.beginTransaction();
+            session.update(contact);
+            transaction.commit();
+        }
+        sessionManager.closeSession(session);
+    }
+
+
+
 
 
 

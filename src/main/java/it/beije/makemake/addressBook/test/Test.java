@@ -12,7 +12,7 @@ public class Test {
 //        //testing AddressBook toString
 //
         AddressBook addressBook = AddressBook.createFromCSV(
-                "C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\src\\it\\beije\\makemake\\addressBook\\test\\address_book.csv",
+                "C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\src\\main\\java\\it\\beije\\makemake\\addressBook\\test\\address_book.csv",
                 ";", false);
 ////        System.out.println(addressBook.toString());
 //
@@ -61,7 +61,26 @@ public class Test {
 //        addressBook2.insertIntoDatabase(url, user, password);
 
         //test create from DB
-        AddressBook addressBook3 = AddressBook.createFromDatabase(url, user, password);
+//        AddressBook addressBook3 = AddressBook.createFromDatabase(url, user, password);
+//        System.out.println(addressBook3);
+
+
+        //DB interaction with hibernate test
+
+        //upload to db
+        addressBook2.insertIntoDatabase2();
+
+        //create from db
+        AddressBook addressBook3 = AddressBook.createFromDatabase2();
         System.out.println(addressBook3);
+
+        //testing update name and db
+        addressBook3.updateNameAndDB("Carlo", "Ermenegildo");
+
+        System.out.println();
+        System.out.println(addressBook3);
+
+
+
     }
 }
