@@ -103,7 +103,7 @@ public class HDBManager {
 	}
 
 	// TODO not working:
-	public static void delete(String filter, String value) {
+	public static void deleteBy(String filter, String value) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			session.createQuery("DELETE FROM Contatto WHERE " + filter + " = :" + filter).setParameter(filter, value);
