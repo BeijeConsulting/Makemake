@@ -19,7 +19,11 @@ public class ListaContatti {
 	}
 	public void caricaLista(String nome, String cognome, String telefono, String mail) {
 		
-		Contatto obj = new Contatto(nome, cognome, telefono, mail);
+		Contatto obj = new Contatto();
+		obj.setNome(nome);
+		obj.setCognome(cognome);
+		obj.setTelefono(telefono);
+		obj.setEmail(mail);
 		if(!contattoEsistente(obj)) {
 			lista.add(obj);
 		}
