@@ -19,11 +19,11 @@ public class ConnectionPool {
 		return pool;
 	}
 
-	 public Connection getConnection() {
+	 //public Connection getConnection() {
 		  
-		return;
+		//return;
 		 
-	 }
+	// }
 	 public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
 //		Connection connection =MyConnectionManager.getConnection();
