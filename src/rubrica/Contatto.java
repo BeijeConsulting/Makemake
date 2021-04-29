@@ -1,8 +1,16 @@
-package Rubrica;
+package rubrica;
 
 public class Contatto {
 	
 	//attributi
+	private int id;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	private String nome;
 	private String cognome;
 	private String telefono;
@@ -52,19 +60,24 @@ public class Contatto {
 		}
 		return uguale;
 	}
+	
+	
 	@Override
 	public String toString() {
-		return "Contatto [nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", mail=" + mail + "]";
+		return "Contatto [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", mail="
+				+ mail + "]";
 	}
-	
 	//costruttore
-	public Contatto(String nome, String cognome, String telefono, String mail) {
-		
+	public Contatto(int id,String nome, String cognome, String telefono, String mail) {
+		this.setId(id);
 		this.setNome(nome);
 		this.setCognome(cognome);
 		this.setTelefono(telefono);
 		this.setMail(mail);
 	}
+	public Contatto(String nome, String cognome, String telefono, String mail) {
+		this(0,nome,cognome,telefono,mail);
+	}
 	
-	
+	public Contatto() {}
 }

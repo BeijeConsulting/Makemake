@@ -2,20 +2,20 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
 
 <hibernate-mapping>
-   <class name = "it.beije.makemake.rubrica.Contatto" table = "rubrica">
+   <class name = "rubrica.Contatto" table = "rubrica">
       
       <meta attribute = "class-description">
          This class contains the rubrica detail.
       </meta>
       
-      <id name = "id" type = "int" column = "id">
+      <id name = "id" type = "int" column = "idRubrica">
          <generator class="native"/>
       </id>
       
       <property name = "cognome" column = "cognome" type = "string"/>
       <property name = "nome" column = "nome" type = "string"/>
       <property name = "telefono" column = "telefono" type = "string"/>
-      <property name = "email" column = "email" type = "string"/>
+      <property name = "mail" column = "mail" type = "string"/>
       
    </class>
 </hibernate-mapping>

@@ -1,4 +1,4 @@
-package Rubrica;
+package rubrica;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +19,13 @@ public class ListaContatti {
 		}
 	}
 
+	public void caricaLista(int id,String nome, String cognome, String telefono, String mail) {
+
+		Contatto obj = new Contatto(id,nome, cognome, telefono, mail);
+		if (!contattoEsistente(obj)) {
+			lista.add(obj);
+		}
+	}
 	public void caricaLista(String nome, String cognome, String telefono, String mail) {
 
 		Contatto obj = new Contatto(nome, cognome, telefono, mail);
