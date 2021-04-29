@@ -51,7 +51,6 @@ public class MyXmlManager {
 			Element email = (Element) contatto.getElementsByTagName("email").item(0);
 			Contatto contact = new Contatto(nome.getTextContent(), cognome.getTextContent(), telefono.getTextContent(),
 					email == null ? null : email.getTextContent());
-			contact.setEta(Integer.valueOf(contatto.getAttribute("eta")));
 			contactList.add(contact);
 		}
 		return contactList;

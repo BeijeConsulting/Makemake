@@ -1,20 +1,37 @@
 package it.andrea.esercitazione.contatti.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+@Entity
+@Table(name = "rubrica")
 public class Contatto {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private int id;
-	private String nome;
-	private String cognome;
-	private String telefono;
-	private String email;
 
-	private Integer eta;
+	@Column(name = "nome")
+	private String nome;
+
+	@Column(name = "cognome")
+	private String cognome;
+
+	@Column(name = "telefono")
+	private String telefono;
+
+	@Column(name = "email")
+	private String email;
 
 	public Contatto() {
 	}
@@ -42,14 +59,6 @@ public class Contatto {
 		this.cognome = contatto.getCognome();
 		this.telefono = contatto.getTelefono();
 		this.email = contatto.getEmail() == null ? null : email;
-	}
-
-	public Integer getEta() {
-		return eta;
-	}
-
-	public void setEta(Integer eta) {
-		this.eta = eta;
 	}
 
 	public int getId() {
@@ -111,11 +120,6 @@ public class Contatto {
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (eta == null) {
-			if (other.eta != null)
-				return false;
-		} else if (!eta.equals(other.eta))
-			return false;
 		if (nome == null) {
 			if (other.nome != null)
 				return false;
@@ -155,7 +159,6 @@ public class Contatto {
 		return true;
 	}
 
-
 	@Override
 	public String toString() {
 		return "Contatto [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email="
@@ -172,9 +175,6 @@ public class Contatto {
 		Document document = builder.newDocument();
 
 		Element contatto = document.createElement("contatto");
-		if (this.getEta() != null) {
-			contatto.setAttribute("eta", Integer.toString(this.getEta()));
-		}
 		if (this.getNome() != null) {
 			Element nome = document.createElement("nome");
 			nome.setTextContent(this.getNome());

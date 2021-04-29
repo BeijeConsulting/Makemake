@@ -12,8 +12,8 @@ import java.util.List;
 import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class MyCsvManager {
-	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1.csv";
-	public static final String DEST_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csvfiles\\rubrica1copy.csv";
+	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1.csv";
+	public static final String DEST_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1copy.csv";
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di
 	// contatti)
