@@ -14,11 +14,8 @@ public class HDBexample {
 	
 	public static void main(String[] args) {
 		
-		Configuration configuration = new Configuration().configure();
-		
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		
-		Session session = sessionFactory.openSession();
+		Session session = SessionManager.getSession();
+		Session session2 = SessionManager.getSession();
 		
 //		System.out.println(session.isOpen());
 		
