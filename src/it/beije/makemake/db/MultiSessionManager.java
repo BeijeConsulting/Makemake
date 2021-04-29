@@ -18,16 +18,21 @@ public class MultiSessionManager {
 	
 	
 	public static Session getMultiSessions() throws Exception {
-
-		if (sessions.size()<MAX) {
+		if (sessions.size() < MAX) {
 			Configuration configuration = new Configuration().configure();
 			SessionFactory sessionFactory = configuration.buildSessionFactory();
 			Session session = sessionFactory.openSession();
 			sessions.add(session);
-		  return session;
+			return session;
 		}
-		 throw new Exception();
-}
+		throw new Exception();
+	}
+	
+	public static void closeSession(Session session) {
+		session.close();
+		sessions.remove(session);
+		System.out.println("sessione chiusa?" + !session.isOpen());
+	}
 
 
 }

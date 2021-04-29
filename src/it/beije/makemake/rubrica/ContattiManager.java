@@ -15,15 +15,15 @@ public class ContattiManager {
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di
 	// contatti)
-	public static List<Contatto> getContactList(File orig) throws Exception {
-		List<Contatto> contactList = new ArrayList<Contatto>();
+	public static List<ContattoRubrica> getContactList(File orig) throws Exception {
+		List<ContattoRubrica> contactList = new ArrayList<ContattoRubrica>();
 		FileReader fileReader = new FileReader(orig);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while (bufferedReader.ready()) {
 			String nextLine = bufferedReader.readLine();
 			if (!nextLine.isEmpty() && !nextLine.contains("COGNOME")) {
 				String[] contactCsv = nextLine.split(";");
-				contactList.add(new Contatto(contactCsv));
+				contactList.add(new ContattoRubrica(contactCsv));
 			}
 		}
 		bufferedReader.close();
@@ -31,10 +31,10 @@ public class ContattiManager {
 	}
 
 	// metodo che scriva questa lista 
-	public static void writeList(List<Contatto> contactList, File dest) throws Exception {
+	public static void writeList(List<ContattoRubrica> contactList, File dest) throws Exception {
 		FileWriter fileWriter = new FileWriter(dest);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		for (Contatto contatto : contactList) {
+		for (ContattoRubrica contatto : contactList) {
 			bufferedWriter.write(contatto.toCsv() + "\n");
 			bufferedWriter.flush();
 		}
@@ -43,11 +43,11 @@ public class ContattiManager {
 
 	// metodo che effettui la fusione di 2 file rubrica in uno solo
 	public static void mergeFiles(File destFile, File mergingFile) throws Exception {
-		List<Contatto> destList = getContactList(destFile);
-		List<Contatto> mergingList = getContactList(mergingFile);
+		List<ContattoRubrica> destList = getContactList(destFile);
+		List<ContattoRubrica> mergingList = getContactList(mergingFile);
 		FileWriter fileWriter = new FileWriter(destFile, true);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-		for (Contatto contatto : mergingList) {
+		for (ContattoRubrica contatto : mergingList) {
 			if (!destList.contains(contatto)) {
 				bufferedWriter.append(contatto.toCsv() + "\n");
 				bufferedWriter.flush();
@@ -58,44 +58,44 @@ public class ContattiManager {
 
 	// metodo che metta in ordine alfabetico i contatti (per nome o per cognome)
 	public static void sortByName(File file) throws Exception {
-		List<Contatto> contactList = getContactList(file);
+		List<ContattoRubrica> contactList = getContactList(file);
 		Collections.sort(contactList, (o1, o2) -> o1.getNome().compareTo(o2.getNome()));
 		writeList(contactList, file);
 	}
 
-	public static List<Contatto> sortByName(List<Contatto> contactList) {
+	public static List<ContattoRubrica> sortByName(List<ContattoRubrica> contactList) {
 		Collections.sort(contactList, (o1, o2) -> o1.getNome().compareTo(o2.getNome()));
 		return contactList;
 	}
 
 	// metodo che cerchi un contatto nella rubrica (per uno qualsiasi degli
 	// attributi)
-	public static List<Contatto> searchBy(List<Contatto> contactList, String attribute, String value) throws Exception {
-		List<Contatto> resultList = new ArrayList<Contatto>();
+	public static List<ContattoRubrica> searchBy(List<ContattoRubrica> contactList, String attribute, String value) throws Exception {
+		List<ContattoRubrica> resultList = new ArrayList<ContattoRubrica>();
 		switch (attribute.toLowerCase()) {
 		case "nome":
-			for (Contatto contatto : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (contatto.getNome().equals(value)) {
 					resultList.add(contatto);
 				}
 			}
 			break;
 		case "cognome":
-			for (Contatto contatto : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (contatto.getCognome().equals(value)) {
 					resultList.add(contatto);
 				}
 			}
 			break;
 		case "telefono":
-			for (Contatto contatto : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (contatto.getTelefono().equals(value)) {
 					resultList.add(contatto);
 				}
 			}
 			break;
 		case "email":
-			for (Contatto contatto : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (contatto.getEmail().equals(value)) {
 					resultList.add(contatto);
 				}
@@ -109,10 +109,10 @@ public class ContattiManager {
 	}
 
 	// metodo che individui eventuali contatti duplicati
-	public static List<Contatto> findDuplicates(List<Contatto> contactList) {
-		List<Contatto> duplicates = new ArrayList<Contatto>();
-		for (Contatto candidate : contactList) {
-			for (Contatto contatto : contactList) {
+	public static List<ContattoRubrica> findDuplicates(List<ContattoRubrica> contactList) {
+		List<ContattoRubrica> duplicates = new ArrayList<ContattoRubrica>();
+		for (ContattoRubrica candidate : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (candidate != contatto && candidate.equals(contatto)) {
 					duplicates.add(candidate);
 					break;
@@ -122,9 +122,9 @@ public class ContattiManager {
 		return duplicates;
 	}
 
-	public static boolean hasDuplicates(List<Contatto> contactList) {
-		for (Contatto candidate : contactList) {
-			for (Contatto contatto : contactList) {
+	public static boolean hasDuplicates(List<ContattoRubrica> contactList) {
+		for (ContattoRubrica candidate : contactList) {
+			for (ContattoRubrica contatto : contactList) {
 				if (candidate != contatto && candidate.equals(contatto)) {
 					return true;
 				}
@@ -133,16 +133,16 @@ public class ContattiManager {
 		return false;
 }
 
-	public static void printContactList(List<Contatto> contactList) {
-		for (Contatto contatto : contactList) {
+	public static void printContactList(List<ContattoRubrica> contactList) {
+		for (ContattoRubrica contatto : contactList) {
 			if (!contatto.getNome().equals("NOME")) {
 				System.out.println(contatto.toString());
 			}
 		}
 	}
 
-	public static boolean containsNoOptional(Contatto contatto, List<Contatto> contactList) {
-		for (Contatto contact : contactList) {
+	public static boolean containsNoOptional(ContattoRubrica contatto, List<ContattoRubrica> contactList) {
+		for (ContattoRubrica contact : contactList) {
 			if (contatto.equalsNoOptional(contact)) {
 				return true;
 			}

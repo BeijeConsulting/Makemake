@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Rubrica {
-	static ArrayList<Contatto> cont = new ArrayList<Contatto>();
+	static ArrayList<ContattoRubrica> cont = new ArrayList<ContattoRubrica>();
 	static File f = new File("C:/Users/Padawan09/git/Makemake/src/it/beije/makemake/rubrica/ciao.txt");
 	static File g = new File("C:/Users/Padawan09/git/Makemake/src/it/beije/makemake/rubrica/come.txt");
 	static File h = new File("C:/Users/Padawan09/git/Makemake/src/it/beije/makemake/rubrica/merge1.txt");
@@ -19,7 +19,7 @@ public class Rubrica {
 		fusioneFile(f,g,h);
 	}
 
-	public static void caricaContatti(List<Contatto> contatti, String path) throws Exception {
+	public static void caricaContatti(List<ContattoRubrica> contatti, String path) throws Exception {
 		FileReader fileReader = new FileReader(path);
 		BufferedReader bufferedReader = new BufferedReader(fileReader);
 
@@ -27,7 +27,7 @@ public class Rubrica {
 			String row = bufferedReader.readLine();
 
 			String[] rowParts = row.split(";");
-			Contatto c = new Contatto();
+			ContattoRubrica c = new ContattoRubrica();
 			c.setNome(rowParts[0]);
 			c.setCognome(rowParts[1]);
 			c.setTelefono(rowParts[2]);
@@ -35,7 +35,7 @@ public class Rubrica {
 			contatti.add(c);
 
 		}
-		for (Contatto c : contatti) {
+		for (ContattoRubrica c : contatti) {
 			System.out.println(c.toString());
 		}
 	}

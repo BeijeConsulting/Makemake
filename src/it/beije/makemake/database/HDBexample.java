@@ -1,5 +1,6 @@
 package it.beije.makemake.database;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -8,13 +9,15 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class HDBexample {
 	
 	public static void main(String[] args) {
 		
-		Configuration configuration = new Configuration().configure();
+		Configuration configuration = new Configuration().configure()
+				.addAnnotatedClass(ContattoRubrica.class);
+				//.addAnnotatedClass(Libri.class)
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		
@@ -23,12 +26,12 @@ public class HDBexample {
 //		System.out.println(session.isOpen());
 		
 		//Query HQL
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
-		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
-		List<Contatto> contatti = query.list();
+		//Query<ContattoRubrica> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
+		//Query<ContattoRubrica> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
+		List<ContattoRubrica> contatti = query.list();
 		
-		Contatto contatto = null;
-		for (Contatto c : contatti) {
+		ContattoRubrica contatto = null;
+		for (ContattoRubrica c : contatti) {
 			System.out.println(c);
 			contatto = c;
 		}

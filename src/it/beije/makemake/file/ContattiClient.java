@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.beije.makemake.rubrica.ContattiManager;
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class ContattiClient {
 
@@ -22,7 +22,7 @@ public class ContattiClient {
 			String telefono= in.nextLine();
 			System.out.println("email: ");
 			String email= in.nextLine();
-			Contatto c = new Contatto(nome, cognome, telefono, email);
+			ContattoRubrica c = new ContattoRubrica(nome, cognome, telefono, email);
 			FileWriter fr = new FileWriter(file, true);
 			fr.append(c.toCsv());
 			fr.append("\n");
@@ -39,7 +39,7 @@ public class ContattiClient {
 				String telefono= in.nextLine();
 				System.out.println("email: ");
 				String email= in.nextLine();
-				Contatto c = new Contatto(nome, cognome, telefono, email);
+				ContattoRubrica c = new ContattoRubrica(nome, cognome, telefono, email);
 				FileWriter fr = new FileWriter(file);
 				fr.append(c.toCsv());
 				fr.append("\n");
@@ -51,9 +51,9 @@ public class ContattiClient {
 
 	}
 	
-	public static List<Contatto> cercaContatto(File f) throws Exception {
+	public static List<ContattoRubrica> cercaContatto(File f) throws Exception {
 		Scanner in = new Scanner(System.in);
-		List<Contatto> risultato= ContattiManager.getContactList(f);
+		List<ContattoRubrica> risultato= ContattiManager.getContactList(f);
 		if (f.exists()) {
 			System.out.println("nome: ");
 			String nome=in.nextLine();
@@ -71,7 +71,7 @@ public class ContattiClient {
 
 	}
 
-	public static Contatto scegliContatto(List<Contatto> contactList) {
+	public static ContattoRubrica scegliContatto(List<ContattoRubrica> contactList) {
 		Scanner in=new Scanner(System.in);
 		if (contactList.size() == 0) {
 			System.out.println("Non ci sono contatti!");
@@ -87,9 +87,9 @@ public class ContattiClient {
 	public static void modificaContatto(File f) throws Exception {
 	Scanner in=new Scanner(System.in);
 	System.out.println("Selezione il nome del cotatto da cercare");
-	Contatto c= scegliContatto(cercaContatto(f));
+	ContattoRubrica c= scegliContatto(cercaContatto(f));
 	if(c!= null) {
-		Contatto nuovocont= new Contatto(c);
+		ContattoRubrica nuovocont= new ContattoRubrica(c);
 		System.out.println(("cosa vuoi modificare? nome, cognome, telefono o email?"));
 		String s=in.nextLine();
 		switch(s) {
@@ -110,7 +110,7 @@ public class ContattiClient {
 			nuovocont.setEmail(in.nextLine());
 			break;
 		}
-		List<Contatto> contactList = ContattiManager.getContactList(f);
+		List<ContattoRubrica> contactList = ContattiManager.getContactList(f);
 	}
 	}
 	

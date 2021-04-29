@@ -11,7 +11,7 @@ import java.util.List;
 
 import it.beije.makemake.database.ConnectionManager;
 import it.beije.makemake.rubrica.ContattiManager;
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class MyDbManager {
 	public static void select(Connection connection) {
@@ -48,8 +48,8 @@ public class MyDbManager {
 		}
 	}
 
-	public static List<Contatto> selectList(Connection connection) { // prende dal db e mette in una lista
-		List<Contatto> contatti = new ArrayList<Contatto>();
+	public static List<ContattoRubrica> selectList(Connection connection) { // prende dal db e mette in una lista
+		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
 		Statement statement = null;
 		ResultSet resultSet = null;
 
@@ -58,7 +58,7 @@ public class MyDbManager {
 			resultSet = statement.executeQuery("SELECT * FROM rubrica");
 
 			while (resultSet.next()) {
-				contatti.add(new Contatto(resultSet.getString("nome"), resultSet.getString("cognome"),
+				contatti.add(new ContattoRubrica(resultSet.getString("nome"), resultSet.getString("cognome"),
 						resultSet.getString("telefono"), resultSet.getString("email")));
 			}
 
@@ -96,7 +96,7 @@ public class MyDbManager {
 		}
 	}
 
-	public static void insert(Connection connection, Contatto contatto) throws SQLException { // insert che aggiunge un
+	public static void insert(Connection connection, ContattoRubrica contatto) throws SQLException { // insert che aggiunge un
 																								// contatto
 		PreparedStatement preparedStatement = null;
 		try {
@@ -121,7 +121,7 @@ public class MyDbManager {
 		}
 	}
 
-	public static void insert(Connection connection, List<Contatto> contatti) throws SQLException { // insert che
+	public static void insert(Connection connection, List<ContattoRubrica> contatti) throws SQLException { // insert che
 																									// aggiunge un
 																									// contatto
 		PreparedStatement preparedStatement = null;
@@ -130,7 +130,7 @@ public class MyDbManager {
 			preparedStatement = connection
 					.prepareStatement("INSERT INTO rubrica (cognome,nome,telefono,email) VALUES (?,?,?,?)");
 
-			for (Contatto contatto : contatti) {
+			for (ContattoRubrica contatto : contatti) {
 				preparedStatement.setString(1, contatto.getCognome());
 				preparedStatement.setString(2, contatto.getNome());
 				preparedStatement.setString(3, contatto.getTelefono());
@@ -202,17 +202,17 @@ public class MyDbManager {
 
 	public static void insertContacts(Connection connection) {
 
-		Contatto c1 = new Contatto();
+		ContattoRubrica c1 = new ContattoRubrica();
 		c1.setCognome("Nesta");
 		c1.setNome("Alessandro");
 		c1.setTelefono("9237693284");
 		c1.setEmail("milan@email.it");
-		Contatto c2 = new Contatto();
+		ContattoRubrica c2 = new ContattoRubrica();
 		c2.setCognome("Pirlo");
 		c2.setNome("Andrea");
 		c2.setTelefono("53245234");
 		c2.setEmail("milanjuve@email.it");
-		List<Contatto> contatti = new ArrayList<Contatto>();
+		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
 		contatti.add(c1);
 		contatti.add(c2);
 
@@ -225,7 +225,7 @@ public class MyDbManager {
 			preparedStatement = connection
 					.prepareStatement("INSERT INTO rubrica (cognome,nome,telefono,email) VALUES (?,?,?,?)");
 
-			for (Contatto c : contatti) {
+			for (ContattoRubrica c : contatti) {
 //				String insert = "INSERT INTO rubrica VALUES (null,'" + c.getCognome() + "','" + c.getNome() + "','" + c.getTelefono() + "','" + c.getEmail() +"')";
 //				System.out.println(insert);
 				// statement.executeUpdate(insert);
@@ -282,18 +282,18 @@ public class MyDbManager {
 		}
 	}
 
-	public static List<Contatto> searchBy(Connection connection, String filter, String value) {
+	public static List<ContattoRubrica> searchBy(Connection connection, String filter, String value) {
 
 		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
-		List<Contatto> contatti = new ArrayList<Contatto>();
+		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
 		try {
 			preparedStatement = connection.prepareStatement("SELECT * FROM rubrica WHERE " + filter + " = ?");
 			preparedStatement.setString(1, value);
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
-				contatti.add(new Contatto(resultSet.getString("nome"), resultSet.getString("cognome"),
+				contatti.add(new ContattoRubrica(resultSet.getString("nome"), resultSet.getString("cognome"),
 						resultSet.getString("telefono"), resultSet.getString("email")));
 			}
 

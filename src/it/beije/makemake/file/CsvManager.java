@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 
 import java.io.BufferedReader;
@@ -17,7 +17,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class CsvManager {
 	
@@ -42,9 +42,9 @@ public class CsvManager {
 		fileReader.close();
 	}
 	
-	public static void appendInRubrica(List<Contatto> contatti, String pathFile) throws Exception {
+	public static void appendInRubrica(List<ContattoRubrica> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile), true);
-		for (Contatto contatto : contatti) {
+		for (ContattoRubrica contatto : contatti) {
 			writer.write(contatto.getCognome());
 			writer.write(';');
 			writer.write(contatto.getNome());
@@ -77,14 +77,14 @@ public class CsvManager {
 
 		System.out.println("-------------------\n");
 		
-		List<Contatto> contatti = new ArrayList<Contatto>();
+		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\ciao.txt"));
 		//BufferedReader bufferedReader = new BufferedReader(fileReader);
 		while (bufferedReader.ready()) {
 			String row = bufferedReader.readLine();
 			//System.out.println(row);
 			String[] rowParts = row.split(";");
-			Contatto contatto = new Contatto();
+			ContattoRubrica contatto = new ContattoRubrica();
 			contatto.setNome(rowParts[0]);
 			contatto.setCognome(rowParts[1]);
 			contatto.setTelefono(rowParts[2]);
