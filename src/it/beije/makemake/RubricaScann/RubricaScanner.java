@@ -24,7 +24,6 @@ public class RubricaScanner {
 			tastiera.nextLine();
 			switch (var) {
 			case 1:
-
 				initRubrica(path);
 				break;
 			case 2:

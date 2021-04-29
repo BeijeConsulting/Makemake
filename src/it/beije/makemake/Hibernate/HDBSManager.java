@@ -21,6 +21,7 @@ public class HDBSManager {
 		
 		System.out.println(select());
 		
+		insert(new Contatto("Antony","Shenouda","3333333","antony.shenouda@gmail.com"));
 		//delete();
 		//update();
 		
@@ -54,38 +55,35 @@ public class HDBSManager {
 	
 	public static void update() {
 		Session mySession = newSingleton.getSession();
-		Transaction transaction = mySession.beginTransaction();
+	
 		Scanner in = new Scanner(System.in);
-		Contatto updCont = null;
-		List<Contatto> tableContact = select();
+		
+		Query<Contatto> myQuery = mySession.createQuery("SELECT c FROM Contatto as c");
+		List<Contatto> tableContact = myQuery.list();
+		//List<Contatto> tableContact = select();
+		
 		System.out.println("Choose the contact id you want to update");
 		
 		int id = Integer.parseInt(in.nextLine());
-		
-		for(Contatto c : tableContact) {
-			if (c.getId() == id){
-				updCont = c;
-				break;
-			}
-			
-		}
-		
 		System.out.println("Change the name ");
 		String name = in.nextLine();
 		System.out.println("Change the surname ");
 		String surname = in.nextLine();
 		
+		for(Contatto c : tableContact) {
+			if (c.getId() == id){
+				c.setNome(name);
+				c.setCognome(surname);	
+				Transaction transaction = mySession.beginTransaction();
+				transaction.commit();
+				mySession.save(c);
+
+				break;
+			}		
+		}
 		in.close();
-		
-		updCont.setNome(name);
-		updCont.setCognome(surname);
-		
-		mySession.save(updCont);
-		transaction.commit();
-		
+
 		mySession.close();
-		
-		
 
 	}
 
@@ -100,7 +98,6 @@ public class HDBSManager {
 		System.out.println("Choose the contact id you want to remove");
 		
 		int id = in.nextInt();
-		in.close();
 		
 		for(Contatto c : tableContact) {
 			if (c.getId() == id){
