@@ -1,5 +1,6 @@
 package it.beije.makemake.database;
 
+import java.io.File;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -14,7 +15,9 @@ public class HDBexample {
 	
 	public static void main(String[] args) {
 		
-		Configuration configuration = new Configuration().configure();
+		Configuration configuration = new Configuration().configure()
+				.addAnnotatedClass(Contatto.class);
+				//.addAnnotatedClass(Libri.class)
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		
