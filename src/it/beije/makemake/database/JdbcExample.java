@@ -165,13 +165,7 @@ public class JdbcExample {
 		}
 	}
 		
-	
 	public static void main(String[] args) throws Exception {
-		
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-//		
-//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
-		
 		Connection connection = ConnectionManager.getConnection();
 		//System.out.println(connection.isClosed());
 		
