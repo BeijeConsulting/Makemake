@@ -8,7 +8,7 @@
          This class contains the rubrica detail.
       </meta>
       
-      <id name = "id" type = "int" column = "id">
+      <id name = "id" type = "int" column = "idRubrica">
          <generator class="native"/>
       </id>
       

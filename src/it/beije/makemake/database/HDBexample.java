@@ -14,13 +14,15 @@ public class HDBexample {
 	
 	public static void main(String[] args) {
 		
+		
+		
 		Configuration configuration = new Configuration().configure();
 		
 		SessionFactory sessionFactory = configuration.buildSessionFactory();
 		
 		Session session = sessionFactory.openSession();
 		
-//		System.out.println(session.isOpen());
+		System.out.println(session.isOpen());
 		
 		//Query HQL
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
