@@ -6,18 +6,15 @@ import java.sql.SQLException;
 
 
 public class ConnectionManager {
+	private static Connection connection;
 	
 	private ConnectionManager() {}
 	
-	private static Connection connection;
-	
 	public static Connection getConnection() throws ClassNotFoundException, SQLException {
-		
 		if (connection == null || connection.isClosed()) {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
 		}
-		
 		return connection;
 	}
 	
