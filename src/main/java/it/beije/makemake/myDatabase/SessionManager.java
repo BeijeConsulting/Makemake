@@ -1,5 +1,6 @@
 package it.beije.makemake.myDatabase;
 
+import it.beije.makemake.addressBook.Contact;
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
@@ -13,7 +14,8 @@ import java.util.List;
 public class SessionManager {
 
     private SessionManager() {
-        Configuration configuration = new Configuration().configure();
+        Configuration configuration = new Configuration().configure()
+                .addAnnotatedClass(Contact.class);
         this.sessionFactory = configuration.buildSessionFactory();
     }
 

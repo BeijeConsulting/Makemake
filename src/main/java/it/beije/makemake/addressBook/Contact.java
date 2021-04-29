@@ -3,17 +3,39 @@ package it.beije.makemake.addressBook;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
+import javax.persistence.*;
+
 import java.sql.*;
 import java.util.Locale;
 
+@Entity
+@Table(name="rubrica")
 public class Contact implements Comparable<Contact> {
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name="id")
     private int id;
+    @Column(name="nome")
+    private String name;
+    @Column(name="cognome")
+    private String surname;
+    @Column(name="telefono")
+    private String phone;
+    @Column(name="email")
+    private String mail;
+
 
     public Contact() {
 
+    }
+
+
+    public Contact(String[] fields) {
+        name = fields[0];
+        surname = fields[1];
+        phone = fields[2];
+        mail = fields[3];
     }
 
     public int getId() {
@@ -24,30 +46,12 @@ public class Contact implements Comparable<Contact> {
         this.id = id;
     }
 
-    private String name;
-    private String surname;
-    private String phone;
-    private String mail;
-    private String address;
-
-    public Contact(String[] fields) {
-        name = fields[0];
-        surname = fields[1];
-        phone = fields[2];
-        mail = fields[3];
-        address = fields[4];
-    }
-
     public String getName() {
         return name;
     }
 
     public String getSurname() {
         return surname;
-    }
-
-    public String getAddress() {
-        return address;
     }
 
     public String getPhone() {
@@ -62,10 +66,6 @@ public class Contact implements Comparable<Contact> {
         this.surname = surname;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public void setPhone(String phone) {
         this.phone = phone;
     }
@@ -78,21 +78,12 @@ public class Contact implements Comparable<Contact> {
         this.mail = mail;
     }
 
-    public Contact(int id, String name, String surname, String phone, String mail, String address) {
+    public Contact(int id, String name, String surname, String phone, String mail) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.mail = mail;
-        this.address = address;
-    }
-
-    public Contact(String name, String surname, String phone, String mail, String address) {
-        this.name = name;
-        this.surname = surname;
-        this.phone = phone;
-        this.mail = mail;
-        this.address = address;
     }
 
     public Contact(String name, String surname, String phone, String mail) {
@@ -101,6 +92,7 @@ public class Contact implements Comparable<Contact> {
         this.phone = phone;
         this.mail = mail;
     }
+
 
     public Contact(String name) {
         this.name = name;
@@ -131,7 +123,7 @@ public class Contact implements Comparable<Contact> {
         String mail = fields[3];
         String address = fields.length > 4 ? fields[4] : null;
 
-        return new Contact(name, surname, phone, mail, address);
+        return new Contact(name, surname, phone, mail);
     }
 
 
@@ -145,7 +137,6 @@ public class Contact implements Comparable<Contact> {
                 .append(surname).append(delim)
                 .append(phone).append(delim)
                 .append(mail).append(delim)
-                .append(address)
                 .append("\n");
         return result.toString();
     }
@@ -157,7 +148,6 @@ public class Contact implements Comparable<Contact> {
         sb.append(" Surname: " + surname);
         sb.append(" Phone: " + phone);
         sb.append(" Mail: " + mail);
-        sb.append(" Address: " + address);
         sb.append("\n");
         return sb.toString();
     }
@@ -181,10 +171,6 @@ public class Contact implements Comparable<Contact> {
             r = this.mail.toLowerCase(Locale.ROOT).compareTo(o.mail.toLowerCase(Locale.ROOT));
             if (r != 0) return r;
         }
-        if (this.address != null && o.address != null) {
-            r = this.address.toLowerCase(Locale.ROOT).compareTo(o.address.toLowerCase(Locale.ROOT));
-            if (r != 0) return r;
-        }
         return r;
     }
 
@@ -194,17 +180,14 @@ public class Contact implements Comparable<Contact> {
         Element surname = document.createElement("cognome");
         Element phone = document.createElement("telefono");
         Element mail = document.createElement("mail");
-        Element address = document.createElement("indirizzo");
         name.setTextContent(this.name);
         surname.setTextContent(this.surname);
         phone.setTextContent(this.phone);
         mail.setTextContent(this.mail);
-        address.setTextContent(this.address);
         contact.appendChild(name);
         contact.appendChild(surname);
         contact.appendChild(phone);
         contact.appendChild(mail);
-        contact.appendChild(address);
         return contact;
     }
 
