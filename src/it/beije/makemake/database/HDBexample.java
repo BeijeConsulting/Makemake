@@ -12,11 +12,16 @@ import it.beije.makemake.rubrica.Contatto;
 
 public class HDBexample {
 	
+	
+	public static void insert(Session session, List<Contatto> contatti) {
+		for(Contatto c: contatti)
+			session.save(c);
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		Session session = SessionManager.getSession();
-		Session session2 = SessionManager.getSession();
-		
 //		System.out.println(session.isOpen());
 		
 		//Query HQL
