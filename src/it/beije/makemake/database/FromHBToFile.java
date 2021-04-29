@@ -19,15 +19,20 @@ public class FromHBToFile {
 		String percorsoFile = "C:\\JavaFile\\";
 		//String readFile = "AddressBook.csv";
 		String writeFile = "rubrica.txt";
-		//ListaContatti contacts = new ListaContatti();
+		Session session = null;
+		ListaContatti contacts = new ListaContatti();
 		
-		Session session = HDBConnection.getConnection();
+		session = HDBConnection.getConnection();	
 		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.list();
+		for(Contatto c : query.list()) {
+			contacts.caricaLista(c);
+		}
+		session.close();
+		
 		
 		try {
 			PrintStream write = new PrintStream(new FileOutputStream(percorsoFile + writeFile));
-			write.println(contatti.toString());
+			write.println(contacts.toString());
 			
 		}catch(IOException e) {
 			System.out.println("Errore nell'input.");
