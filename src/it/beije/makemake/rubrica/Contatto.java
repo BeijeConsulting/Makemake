@@ -1,6 +1,6 @@
 package it.beije.makemake.rubrica;
 
-public class Contatto implements Comparable<Contatto> {
+public class Contatto{
 
 	private int id;
 	private String nome;
@@ -63,8 +63,8 @@ public class Contatto implements Comparable<Contatto> {
 		
 		return builder.toString();
 	}
-	@Override
-	public int compareTo(Contatto c) {
-		return this.cognome.compareToIgnoreCase(c.cognome);
-	}
+	//@Override
+//	public int compareTo(Contatto c) {
+//		return this.cognome.compareToIgnoreCase(c.cognome);
+//	}
 }

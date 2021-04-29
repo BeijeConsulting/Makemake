@@ -73,7 +73,7 @@ public class Manager {
 	}
 
 	public static void ordina(List<Contatto> rubrica){
-		/*for (int i = 0; i < rubrica.size(); i++) {
+		/*for (int i = 0; i < rubrica.size(); i++) { -- codice ordinamento bubblesort
 			for (int j = i + 1; j < rubrica.size(); j++) {
 				if ((rubrica.get(i).getNome()).compareTo(rubrica.get(j).getNome()) > 0) {
 					Collections.swap(rubrica, i, j);
