@@ -72,9 +72,11 @@ public class HDBManager {
 			}
 		}
 	}
-	public static ContattoAnnotation leggiContatto(Scanner in) {
+//	Scanner in
+	public static ContattoAnnotation leggiContatto() {
 		String Nome ="", Cognome="", Telefono="", Email="";
 		boolean flag = false;
+		Scanner in = new Scanner(System.in);
 		
 		while (flag == false) {
 			System.out.println("Inserisci nome");

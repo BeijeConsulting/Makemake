@@ -35,7 +35,7 @@ public class HCriteria {
 				
 				switch (scelta) {
 				case 1: // Aggiungi
-					addContact(HDBManager.leggiContatto(tastiera), session);
+					addContact(HDBManager.leggiContatto(), session);
 					
 					break;
 				case 2: // Rimuovi
