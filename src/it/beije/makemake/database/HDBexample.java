@@ -28,14 +28,14 @@ public class HDBexample {
 		//Query HQL
 		//Query<ContattoRubrica> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
 		//Query<ContattoRubrica> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
-		List<ContattoRubrica> contatti = query.list();
+//		List<ContattoRubrica> contatti = query.list();
 		
-		ContattoRubrica contatto = null;
-		for (ContattoRubrica c : contatti) {
-			System.out.println(c);
-			contatto = c;
-		}
-		
+//		ContattoRubrica contatto = null;
+//		for (ContattoRubrica c : contatti) {
+//			System.out.println(c);
+//			contatto = c;
+//		}
+//		
 		
 		Transaction transaction = session.beginTransaction();
 

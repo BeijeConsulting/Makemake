@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class ContattiManager {
-	public static final String rubricaDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica1.csv";
+	public static final String rubricaDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica2.csv";
 	public static final String destDir = "C:\\Users\\Padawan09\\git\\Makemake\\src\\it\\beije\\makemake\\rubrica\\fileCsv\\rubrica_copia.csv";
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di

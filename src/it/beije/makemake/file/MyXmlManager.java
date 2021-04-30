@@ -50,7 +50,7 @@ public class MyXmlManager {
 			Element email = (Element) contatto.getElementsByTagName("email").item(0);
 			ContattoRubrica contact = new ContattoRubrica(nome.getTextContent(), cognome.getTextContent(), telefono.getTextContent(),
 					email == null ? null : email.getTextContent());
-			contact.setEta(Integer.valueOf(contatto.getAttribute("eta")));
+//			contact.setEta(Integer.valueOf(contatto.getAttribute("eta")));
 			contactList.add(contact);
 		}
 		return contactList;
@@ -81,7 +81,7 @@ public class MyXmlManager {
 //        root.appendChild(contatto);
         for(ContattoRubrica contact : contactList) {
         	  Element contatto = document.createElement("contatto");
-              contatto.setAttribute("eta", Integer.toString(contact.getEta()));
+//              contatto.setAttribute("eta", Integer.toString(contact.getEta()));
               Element nome = document.createElement("nome");
               nome.setTextContent(contact.getNome());
               Element cognome = document.createElement("cognome");

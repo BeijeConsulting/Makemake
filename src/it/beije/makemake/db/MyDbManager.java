@@ -9,11 +9,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.database.ConnectionManager;
 import it.beije.makemake.rubrica.ContattiManager;
 import it.beije.makemake.rubrica.ContattoRubrica;
 
-public class MyDbManager {
+public class MyDbManager { //gestione db con metodi e query
+
 	public static void select(Connection connection) {
 
 		Statement statement = null;

@@ -10,7 +10,7 @@ import org.hibernate.cfg.Configuration;
 
 import it.beije.makemake.rubrica.ContattoRubrica;
 
-public class SessionManager {
+public class SessionManager { //gestione sessioni
 
 	    private SessionManager() {
 	       Configuration configuration = new Configuration().configure()
@@ -30,7 +30,7 @@ public class SessionManager {
 	        return instance;
 	    }
 
-	    public static Session getSession() {
+	    public static Session getSession() throws TooManySessionsException{
 	        Session session;
 	        for (Session s : sessionList) {
 	            if (!s.isOpen()) {
