@@ -61,16 +61,16 @@ public class HCriteria {
 					Transaction transaction = session.beginTransaction();
 					switch (str) {
 					case "1":
-						c.setNome(valore);
+						c1.setNome(valore);
 						break;
 					case "2":
-						c.setCognome(valore);
+						c1.setCognome(valore);
 						break;
 					case "3":
-						c.setEmail(valore);
+						c1.setEmail(valore);
 						break;
 					case "4":
-						c.setTelefono(valore);
+						c1.setTelefono(valore);
 						break;
 					default:
 						throw new NumberFormatException();}
