@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.Scanner;
 
-import it.andrea.esercitazione.contatti.csv.MyCsvManager;
+import it.andrea.esercitazione.contatti.csv.CsvManager;
 import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class ContattiClient {
@@ -42,7 +42,7 @@ public class ContattiClient {
 
 	public static boolean addToFile(Contatto contatto, File file) {
 		try {
-			if (!MyCsvManager.containsNoOptional(contatto, MyCsvManager.getContactList(file))) {
+			if (!CsvManager.containsNoOptional(contatto, CsvManager.getContactList(file))) {
 				FileWriter fileWriter = new FileWriter(file, true);
 				fileWriter.append(contatto.toCsv());
 				fileWriter.flush();
@@ -56,26 +56,26 @@ public class ContattiClient {
 	}
 
 	public static List<Contatto> searchContact(Scanner scanner, File file) throws Exception {
-		List<Contatto> searchResult = MyCsvManager.getContactList(file);
+		List<Contatto> searchResult = CsvManager.getContactList(file);
 		System.out.println("Inserisci nome: ");
 		String nome = scanner.nextLine();
-		searchResult = MyCsvManager.searchBy(searchResult, "nome", nome);
+		searchResult = CsvManager.searchBy(searchResult, "nome", nome);
 		if (searchResult.size() == 0) {
 			System.out.println("Nessun contatto trovato!");
 		} else {
 			System.out.println("Contatti trovati: " + searchResult.size());
-			MyCsvManager.printContactList(searchResult);
+			CsvManager.printContactList(searchResult);
 			if (searchResult.size() > 1) {
 				System.out.println("Vuoi filtrare per cognome? (S/N) ");
 				if (scanner.nextLine().toUpperCase().equals("S")) {
 					System.out.println("Inserisci cognome: ");
 					String cognome = scanner.nextLine();
-					searchResult = MyCsvManager.searchBy(searchResult, "cognome", cognome);
+					searchResult = CsvManager.searchBy(searchResult, "cognome", cognome);
 					if (searchResult.size() == 0) {
 						System.out.println("Nessun contatto trovato!");
 					} else {
 						System.out.println("Contatti trovati: " + searchResult.size());
-						MyCsvManager.printContactList(searchResult);
+						CsvManager.printContactList(searchResult);
 					}
 				}
 			}
@@ -117,21 +117,21 @@ public class ContattiClient {
 				System.out.print("Inserisci nuova email: ");
 				modifiedContatto.setEmail(scanner.nextLine());
 			}
-			List<Contatto> contactList = MyCsvManager.getContactList(file);
+			List<Contatto> contactList = CsvManager.getContactList(file);
 //			TODO
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
 		Scanner scanner = new Scanner(System.in);
-		File file = new File(MyCsvManager.DEST_DIR);
+		File file = new File(CsvManager.DEST_PATH);
 		String selection;
 		do {
 			printMenu();
 			selection = scanner.nextLine().toUpperCase();
 			switch (selection) {
 			case "1": // Visualizza rubrica
-				MyCsvManager.printContactList(MyCsvManager.sortByName(MyCsvManager.getContactList(file)));
+				CsvManager.printContactList(CsvManager.sortByName(CsvManager.getContactList(file)));
 				break;
 			case "2": // Aggiungi un contatto
 				while (!addContact(scanner, file)) {

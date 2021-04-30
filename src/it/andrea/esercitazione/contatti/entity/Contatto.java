@@ -41,7 +41,7 @@ public class Contatto {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.telefono = telefono;
-		this.email = email.trim().equals("") ? null : email;
+		this.email = email;
 	}
 
 	public Contatto(String[] contattoCsv) {
@@ -161,8 +161,7 @@ public class Contatto {
 
 	@Override
 	public String toString() {
-		return "Contatto [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", telefono=" + telefono + ", email="
-				+ email + "]";
+		return "\nNome: " + nome + "\nCognome: " + cognome + "\nTelefono: " + telefono + "\nEmail: " + email;
 	}
 
 	public String toCsv() {

@@ -5,15 +5,17 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import it.andrea.esercitazione.contatti.entity.Contatto;
 
-public class MyCsvManager {
-	public static final String RUBRICA_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1.csv";
-	public static final String DEST_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1copy.csv";
+public class CsvManager {
+	public static final String RUBRICA_PATH = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1.csv";
+	public static final String DEST_PATH = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\rubrica1copy.csv";
+	public static final String MAIN_DIR = "C:\\Users\\Padawan10\\git\\Makemake\\src\\it\\andrea\\esercitazione\\contatti\\csv\\files\\";
 
 	// metodo per caricare i contatti di una rubrica (che restituisca una lista di
 	// contatti)
@@ -37,6 +39,19 @@ public class MyCsvManager {
 	public static void writeList(List<Contatto> contactList, File dest) throws Exception {
 		FileWriter fileWriter = new FileWriter(dest);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		for (Contatto contatto : contactList) {
+			bufferedWriter.write(contatto.toCsv() + "\n");
+			bufferedWriter.flush();
+		}
+		bufferedWriter.close();
+	}
+
+	public static void writeList(List<Contatto> contactList, String filename) throws IOException {
+		File file = new File(MAIN_DIR + filename + ".csv");
+		FileWriter fileWriter = new FileWriter(file);
+		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		bufferedWriter.write(new Contatto("NOME", "COGNOME", "TELEFONO", "EMAIL").toCsv() + "\n");
+		bufferedWriter.flush();
 		for (Contatto contatto : contactList) {
 			bufferedWriter.write(contatto.toCsv() + "\n");
 			bufferedWriter.flush();

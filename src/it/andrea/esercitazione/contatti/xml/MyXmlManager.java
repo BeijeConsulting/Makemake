@@ -16,7 +16,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import it.andrea.esercitazione.contatti.csv.MyCsvManager;
+import it.andrea.esercitazione.contatti.csv.CsvManager;
 import it.andrea.esercitazione.contatti.entity.Contatto;
 
 public class MyXmlManager {
@@ -97,7 +97,7 @@ public class MyXmlManager {
 			printFile(f);
 			System.out.println("\n-------------------\n\n");
 
-			MyCsvManager.printContactList(retrieveContactList(f));
+			CsvManager.printContactList(retrieveContactList(f));
 
 			writeXmlFile(retrieveContactList(f));
 		}
