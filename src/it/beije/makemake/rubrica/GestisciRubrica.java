@@ -40,13 +40,15 @@ public class GestisciRubrica{
 		while (flag == false) {
 			System.out.println("Inserisci telefono");
 			Telefono = in.nextLine();
-			flag = validoTelefono(Telefono);
+			if (!(Telefono.isEmpty())) {
+				flag = true;
+			}
 		}
 		 flag = false;
 		while (flag == false) {
 			System.out.println("Inserisci email");
 			Email = in.nextLine();
-			if (Email.contains("@")) {
+			if (!(Email.isEmpty())) {
 				flag = true;
 			}
 		}
@@ -55,17 +57,7 @@ public class GestisciRubrica{
 		return contatto;
 	}
 
-	private static boolean validoTelefono(String telefono) {
-				if( telefono.startsWith("+") && Character.isDigit(telefono.charAt(0)) ) {
-					for (int i = 1; i < telefono.length(); i++) {
-						if(!Character.isDigit(telefono.charAt(i)))
-							return false;
-					}
-				}//BHOOOO
-				
-				
-		return true;
-	}
+	
 	public static void scriviListaInCsv(List<Contatto> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile));
 		for (int i = 0; i < contatti.size(); i++) {

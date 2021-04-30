@@ -1,72 +1,64 @@
 package it.beije.makemake.database;
 
-import java.io.File;
 import java.util.List;
+import java.util.Scanner;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
-
 import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.GestisciRubrica;
 
 public class HDBexample {
-	
-	
-	public static void insert(Session session, List<Contatto> contatti) {
+
+	public static void insert(Session session, Contatto c) {
+		session.save(c);
+	}
+	public static void insertall(Session session, List<Contatto> contatti) {
 		for(Contatto c: contatti)
 			session.save(c);
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		Session session = SessionManager.getSession();
-		
-//		System.out.println(session.isOpen());
-		
-		//Query HQL
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
-		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
-		List<Contatto> contatti = query.list();
-		
-		Contatto contatto = null;
-		for (Contatto c : contatti) {
-			System.out.println(c);
-			contatto = c;
-		}
-		
-		
-		Transaction transaction = session.beginTransaction();
 
-		//INSERT
-//		Contatto newContatto = new Contatto();
-//		//newContatto.setId(30);
-//		newContatto.setCognome("Miglietta");
-//		newContatto.setNome("Pierantonio2");
-//		newContatto.setEmail("p.miglietta2@beije.it");
-//		System.out.println("contatto PRE : " + newContatto);
-//		session.save(newContatto);
-//		System.out.println("contatto POST : " + newContatto);
-
+	public static void update(Session session, Contatto c) {
+		
 //		//UPDATE
 //		contatto.setCognome("Staibano");
 //		contatto.setNome("Andrea");		
-//		
-//		System.out.println("contatto PRE : " + contatto);
-//		session.save(contatto);
-//		System.out.println("contatto POST : " + contatto);
+	
 		
-//		//DELETE
-//		session.remove(contatto);
-		
-		//throw new RuntimeException();
-		
+	}
+
+	public static void delete(Session session, Contatto c) {
+		session.remove(c);
+	}
+
+	public static void selectAll(Session session) {
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");// SELECT * FROM rubrica
+		List<Contatto> contatti = query.list();
+		for(Contatto c: contatti)
+			System.out.println(c);
+	}
+
+	public static void selectContatc(Session session, Contatto c) {
+		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = '" + c.getCognome() + "'AND nome ='"+c.getNome()+"' AND email ='" + c.getEmail() + "'AND telefono ='" + c.getTelefono() + "' ");
+		List<Contatto> contatti = query.list();
+		for(Contatto con: contatti)
+			System.out.println(con);
+	}
+	
+	public static void main(String[] args) throws Exception {
+
+		Session session = SessionManager.getSession();
+		selectAll(session);
+		//selectContatc(session, GestisciRubrica.leggiContatto(new Scanner(System.in)));
+		delete(session, GestisciRubrica.leggiContatto(new Scanner(System.in)));
+		//insert(session, GestisciRubrica.leggiContatto(new Scanner(System.in)));
+	
+		Transaction transaction = session.beginTransaction();
 		transaction.commit();
-		//transaction.rollback();
-		
-		session.close();
+		// transaction.rollback();
+
+		SessionManager.close(session);
 	}
 
 }

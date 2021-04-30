@@ -10,7 +10,7 @@ public class ConnectionManager {
 	
 	private static Connection connection;
 	private static int cont;
-	private static int maxConnessioni = 141;
+	private static final int maxConnessioni = 141;
 	private static ArrayList<Connection> lista = new ArrayList<Connection>();
 	
 	private ConnectionManager() {}

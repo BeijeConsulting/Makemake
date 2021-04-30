@@ -8,9 +8,9 @@ import it.beije.makemake.rubrica.Contatto;
 
 public class SessionManager {
 
-	private SessionManager() {}
-	
 	private static Session config;
+
+	private SessionManager() {}
 	
 	private static Session init(){
 		Configuration configuration = new Configuration().configure()
@@ -23,10 +23,15 @@ public class SessionManager {
 		return session;
 	}
 	
-	public static Session getSession() {
-		if (config == null) 
+	public static Session getSession() throws Exception {
+		if (config == null) { 
 			return init();
+			}
 		return config;			
 	}
+	public static void close(Session session) {
+		config = null;
+		session.close();
+	}
+	}
 
-}

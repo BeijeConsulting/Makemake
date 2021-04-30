@@ -1,6 +1,5 @@
 package it.beije.makemake.rubrica;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,7 +28,6 @@ public class Contatto implements Comparable<Contatto>{
 	private String email;
 	
 	public Contatto() {
-		
 	}
 	
 	public Contatto(String nome, String cognome, String telefono, String email) {
