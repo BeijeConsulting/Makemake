@@ -3,6 +3,8 @@ package it.beije.makemake.addressBook.test;
 import it.beije.makemake.addressBook.AddressBook;
 import it.beije.makemake.addressBook.Contact;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Test {
@@ -12,7 +14,7 @@ public class Test {
 //        //testing AddressBook toString
 //
         AddressBook addressBook = AddressBook.createFromCSV(
-                "C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\src\\main\\java\\it\\beije\\makemake\\addressBook\\test\\address_book.csv",
+                "C:\\Users\\Ricky\\IdeaProjects\\Makemake\\src\\main\\java\\it\\beije\\makemake\\addressBook\\test\\address_book.csv",
                 ";", false);
 ////        System.out.println(addressBook.toString());
 //
@@ -35,7 +37,7 @@ public class Test {
 
         //testing AddressBook from XML
 
-        AddressBook addressBook2 = AddressBook.createFromXML("C:\\Users\\Padawan08\\IdeaProjects\\Makemake\\my_rubrica.xml");
+        AddressBook addressBook2 = AddressBook.createFromXML("C:\\Users\\Ricky\\IdeaProjects\\Makemake\\my_rubrica.xml");
 
 
         //testing sort
@@ -77,12 +79,16 @@ public class Test {
         //testing update name and db
         addressBook3.updateNameAndDB("Carlo", "Ermenegildo");
 
-        System.out.println();
-        System.out.println(addressBook3);
+//        System.out.println();
+//        System.out.println(addressBook3);
 
         //test remove and update db
-        addressBook3.removeAllAndUpdateDB("Ermenegildo");
-        addressBook3.removeAllAndUpdateDB("Carlo");
+//        addressBook3.removeAllAndUpdateDB("Ermenegildo");
+//        addressBook3.removeAllAndUpdateDB("Carlo");
+
+        //test get AddressBook from db using name list
+        AddressBook matchingNames = AddressBook.getContactsFromNameList(Arrays.asList("Camilla", "Ermenegildo"));
+        System.out.println(matchingNames);
 
 
 
