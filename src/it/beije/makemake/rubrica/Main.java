@@ -33,13 +33,13 @@ public class Main {
 			case "1": //Aggiungi
 				contatti.add(GestisciRubrica.leggiContatto(in));
 				System.out.println(contatti.size());
-				GestisciRubrica.scriviListaInCsv(contatti, file);
+				CsvManager.scriviListaInCsv(contatti, file);
 				flag = false;
 				break;
 			case "2": //Rimuovi
 				GestisciRubrica.stampaContatti(contatti);
 				contatti.remove(GestisciRubrica.leggiContatto(in));
-				GestisciRubrica.scriviListaInCsv(contatti, file);
+				CsvManager.scriviListaInCsv(contatti, file);
 				flag = false;
 
 				break;
@@ -63,13 +63,14 @@ public class Main {
 						contatti.add(a.get(i));
 					}
 				}
-				GestisciRubrica.scriviListaInCsv(contatti,file);
+				CsvManager.scriviListaInCsv(contatti,file);
 				break;
 			case "8"://metti csv in db
 				for(int i=0;i<contatti.size();i++) {
 					JdbcExample.insert(connection, contatti.get(i));
 				}
 				break;
+				
 			default:
 				break CICLO;
 			}

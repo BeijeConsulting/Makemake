@@ -26,6 +26,22 @@ public class CsvManager {
 		return contatti;
 	}
 
+	public static void scriviListaInCsv(List<Contatto> contatti, String pathFile) throws Exception {
+		FileWriter writer = new FileWriter(new File(pathFile));
+		for (int i = 0; i < contatti.size(); i++) {
+			writer.write(contatti.get(i).getNome());
+			writer.write(';');
+			writer.write(contatti.get(i).getCognome());
+			writer.write(';');
+			writer.write(contatti.get(i).getTelefono());
+			writer.write(';');
+			writer.write(contatti.get(i).getEmail());
+			writer.write('\n');
+		}
+		writer.flush();
+		writer.close();
+	}
+
 	public static void cloneTxtFile(File orig, File clone) throws Exception {
 		if (!orig.exists()) {
 			System.out.println("File origine non trovato!!");

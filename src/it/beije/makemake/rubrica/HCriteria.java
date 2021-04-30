@@ -1,5 +1,6 @@
 package it.beije.makemake.rubrica;
 
+import java.io.File;
 import java.util.List;
 import java.util.Scanner;
 import org.hibernate.Criteria;
@@ -7,6 +8,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import it.beije.makemake.database.SessionManager;
+import it.beije.makemake.file.CsvManager;
+import it.beije.makemake.file.XmlManager;
 
 public class HCriteria {
 
@@ -36,6 +39,23 @@ public class HCriteria {
 				modifyContact(session,GestisciRubrica.leggiContatto(s),s);
 			default:
 				break CICLO;
+			case "5":
+				CsvManager.scriviListaInCsv(selectAll(session),ottieniPercorso(s,0));
+				continue;
+			case "6":
+				XmlManager.scriviInXml(selectAll(session),ottieniPercorso(s,1));
+				continue;
+			case "7":
+				List<Contatto> cont= XmlManager.leggiXmlInArray(new File(ottieniPercorso(s,1)));
+				for(Contatto c: cont) {
+					addContact(c, session);
+				}
+			case "8":
+				List<Contatto> cont1= CsvManager.leggiCsv(ottieniPercorso(s, 0));
+				for(Contatto c: cont1) {
+					addContact(c, session);
+				}
+				
 			}
 		} while (flag);
 		System.out.println("fine");
@@ -43,15 +63,30 @@ public class HCriteria {
 		SessionManager.close(session);
 
 	}
+	public static String ottieniPercorso(Scanner s,int i) {
+		String percorso;
+		if(i == 0) {
+			 percorso = "C:/Users/Padawan07/Desktop/rubrica/rubrica.txt";}
+		else {
+			 percorso = "C:/Users/Padawan07/Desktop/rubrica/rubrica1.xml";}
 
+		System.out.println("vuoi creare nuovo file? S/N o qualsiasi");
+		
+		if(s.nextLine().equals("S")) {
+			System.out.println("inserisci nome nuovo file");
+			percorso = "C:/Users/Padawan07/Desktop/rubrica/"+s.nextLine();
+		}
+		return percorso;
+		
+	}
 	public static String modifyContact(Session session,Contatto c,Scanner s) throws Exception {
 		if(selectContact(c, session) == null)
-			return"Il contatto inserito non è nella rubrica";
+			return"IL CONTATTO INSERITO NON E' IN RUBRICA";
 		else {
 			List<Contatto> contatti = selectAll(session);
 			try {
 			System.out.println(contatti);
-			System.out.println("Quale campo vuoi modificare: \n"
+			System.out.println("QUALE CAMPO VUOI MODIFICARE?: \n"
 					+ "1: NOME\n2: COGNOME\n3: EMAIL\n4: TELEFONO\n");
 			String str = s.nextLine();			
 			System.out.println("Inserire nuovo valore: ");
@@ -76,20 +111,18 @@ public class HCriteria {
 						throw new NumberFormatException();}
 					session.save(c1);
 					transaction.commit();
-					System.out.println("COntatto aggiornato");
+					System.out.println("CONTATTO AGGIORNATO");
 				}
 				
 			}
 			}catch (NumberFormatException e) {
-				System.out.println("Errore: inserire numero da 1 a 4");
+				System.out.println("ERRORE: inserire numero da 1 a 4");
 			}
 			return null;
 		}
 		
 			
 	}
-
-	// mostra tutti i contatti
 	public static List<Contatto> selectAll(Session session) throws Exception {
 
 		Criteria criteria = session.createCriteria(Contatto.class);
@@ -99,7 +132,6 @@ public class HCriteria {
 		return contatti;
 
 	}
-	
 	public static List<Contatto> selectContact(Contatto c, Session session) throws Exception {
 		
 		Criteria criteria = session.createCriteria(Contatto.class);
@@ -115,8 +147,8 @@ public class HCriteria {
 
 	}
 	public static void stampaMenu() {
-		System.out.println("\nCosa vuoi fare? " + "\n 1) Aggiungere contatto" + "\n 2) Rimuovere contatto"
-				+ "\n 3) Leggi rubrica" + "\n 4) Modifica contatto\n"+ " 7) unisci db a csv\n");
+		System.out.println("\nCOSA VUOI FARE? " + "\n 1) AGGIUNGERE CONTATTO" + "\n 2) RIMUOVERE CONTATTO"
+				+ "\n 3) LEGGERE RUBRICA" + "\n 4) MODIFICA CONTATTO\n"+ " 5) METTI DATABASE IN CSV\n"+ " 6) METTI DATABASE IN XML\n"+ " 7) METTI XML IN DB\n");
 
 	}
 	public static void deleteContact(Contatto c, Session session) throws Exception {

@@ -54,11 +54,12 @@ public class XmlManager extends CsvManager {
 			Element cognome = (Element) contatto.getElementsByTagName("cognome").item(0);
 			Element telefono = (Element) contatto.getElementsByTagName("telefono").item(0);
 			Element email = (Element) contatto.getElementsByTagName("email").item(0);
+			String cognome1,nome1,email1,telefono1;
 			
-			String cognome1 = cognome.getTextContent();
-			String nome1 = nome.getTextContent();
-			String email1 = email.getTextContent();
-			String telefono1 = cognome.getTextContent();
+			try{ cognome1 = cognome.getTextContent();}catch (NullPointerException e) { cognome1	= null;	}
+			try { nome1 = nome.getTextContent();}catch (NullPointerException e) { nome1	= null;	}
+			try { email1 = email.getTextContent();}catch (NullPointerException e) { email1	= null;	}
+			try { telefono1 = cognome.getTextContent();}catch (NullPointerException e) { telefono1	= null;	}
 			Contatto cont = new Contatto(nome1, cognome1, telefono1, email1);	
 			listacontatti.add(cont);
 			//System.out.println(cont.toString());
@@ -82,9 +83,13 @@ public class XmlManager extends CsvManager {
             cognome.setTextContent(lista.get(i).getCognome());
             Element telefono = document.createElement("telefono");
             telefono.setTextContent(lista.get(i).getTelefono());
+            Element email = document.createElement("email");
+            telefono.setTextContent(lista.get(i).getEmail());
             contatto.appendChild(nome);
             contatto.appendChild(cognome);
             contatto.appendChild(telefono);
+            contatto.appendChild(email);
+
             
             root.appendChild(contatto);
             

@@ -58,22 +58,6 @@ public class GestisciRubrica{
 	}
 
 	
-	public static void scriviListaInCsv(List<Contatto> contatti, String pathFile) throws Exception {
-		FileWriter writer = new FileWriter(new File(pathFile));
-		for (int i = 0; i < contatti.size(); i++) {
-			writer.write(contatti.get(i).getNome());
-			writer.write(';');
-			writer.write(contatti.get(i).getCognome());
-			writer.write(';');
-			writer.write(contatti.get(i).getTelefono());
-			writer.write(';');
-			writer.write(contatti.get(i).getEmail());
-			writer.write('\n');
-		}
-		writer.flush();
-		writer.close();
-	}
-
 	public static void duplicateContact(List<Contatto> contatti) {
 		List<Contatto> duplicati = new ArrayList<Contatto>();
 		boolean flag = false;
