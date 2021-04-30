@@ -13,7 +13,7 @@ import it.beije.makemake.rubrica.ContattoAnnotation;
 public class HDBManager {
 	public static void main(String[] args) throws Exception {
 		Scanner in = new Scanner(System.in);
-		SessionManager.getSessionManager();
+		SessionManager.getSession();
 	
 		
 		boolean f = true;		
@@ -72,4 +72,46 @@ public class HDBManager {
 			}
 		}
 	}
+	public static ContattoAnnotation leggiContatto(Scanner in) {
+		String Nome ="", Cognome="", Telefono="", Email="";
+		boolean flag = false;
+		
+		while (flag == false) {
+			System.out.println("Inserisci nome");
+			 Nome = in.nextLine();
+			if (!(Nome.isEmpty())) {
+				flag = true;
+			}
+		}
+		 flag = false;
+		
+		while (flag == false) {
+			System.out.println("Inserisci cognome");
+			Cognome = in.nextLine();
+			if (!(Cognome.isEmpty())) {
+				flag = true;
+			}
+		}
+		 flag = false;
+		while (flag == false) {
+			System.out.println("Inserisci telefono");
+			Telefono = in.nextLine();
+			if (!(Telefono.isEmpty())) {
+				flag = true;
+			}
+		}
+		 flag = false;
+		while (flag == false) {
+			System.out.println("Inserisci email");
+			Email = in.nextLine();
+			if (!(Email.isEmpty())) {
+				flag = true;
+			}
+		}
+		
+		ContattoAnnotation contatto = new ContattoAnnotation(Nome, Cognome, Telefono, Email);
+		return contatto;
+	}
+
+
 }

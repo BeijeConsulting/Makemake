@@ -22,6 +22,16 @@ public class ContattoAnnotation {
 	@Column(name = "cognome")
 	private String cognome;
 
+	public ContattoAnnotation() {}
+	
+	public ContattoAnnotation( String cognome, String nome, String telefono, String email) {
+		super();
+		this.nome = nome;
+		this.cognome = cognome;
+		this.telefono = telefono;
+		this.email = email;
+	}
+
 	@Column(name = "telefono")
 	private String telefono;
 
@@ -74,4 +84,14 @@ public class ContattoAnnotation {
 		
 		return builder.toString();
 	}
+	
+	
+	
+	public boolean equals(Object obj) {
+		if(obj instanceof ContattoAnnotation) {
+			ContattoAnnotation c = (ContattoAnnotation) obj;
+			return nome.equals(c.nome) && cognome.equals(c.cognome) && telefono.equals(c.telefono) && email.equals(c.email);
+		}
+		return false;
+		}
 }
