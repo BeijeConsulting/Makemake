@@ -80,7 +80,9 @@ public class Manager {
 				}
 			}
 		}*/
+
 		//Collections.sort((List<T>) rubrica);
+
 	}
 
 	public static void main(String[] args) throws IOException {

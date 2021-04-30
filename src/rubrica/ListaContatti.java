@@ -1,3 +1,4 @@
+
 package rubrica;
 
 import java.util.ArrayList;
@@ -19,13 +20,14 @@ public class ListaContatti {
 		}
 	}
 
-	public void caricaLista(int id,String nome, String cognome, String telefono, String mail) {
+	public void caricaLista(int id, String nome, String cognome, String telefono, String mail) {
 
-		Contatto obj = new Contatto(id,nome, cognome, telefono, mail);
+		Contatto obj = new Contatto(id, nome, cognome, telefono, mail);
 		if (!contattoEsistente(obj)) {
 			lista.add(obj);
 		}
 	}
+
 	public void caricaLista(String nome, String cognome, String telefono, String mail) {
 
 		Contatto obj = new Contatto(nome, cognome, telefono, mail);
@@ -41,7 +43,16 @@ public class ListaContatti {
 				esiste = true;
 			}
 		}
+		return esiste;
+	}
 
+	public boolean contattoEsistente(String nome, String cognome) {
+		boolean esiste = false;
+		for (Contatto c : lista) {
+			if (c.getNome() == nome && c.getCognome() == cognome) {
+				esiste = true;
+			}
+		}
 		return esiste;
 	}
 
@@ -76,44 +87,57 @@ public class ListaContatti {
 
 		return -1;
 	}
-	public void modificaContatto(int pos, Contatto nuovo){
-		this.getLista().set(pos, nuovo);
-		
-	
+
+	public int posContatto(String nome, String cognome) {
+
+		for (int i = 0; i < lista.size(); i++) {
+			if (lista.get(i).getNome() == nome && lista.get(i).getCognome() == cognome) {
+				return i;
+			}
+		}
+		return -1;
 	}
+
+	public void modificaContatto(int pos, Contatto nuovo) {
+		this.getLista().set(pos, nuovo);
+
+	}
+
 	public void fondiLista(ListaContatti nLista) {
 		for (int i = 0; i < nLista.getLista().size(); i++) {
 			this.caricaLista(nLista.getLista().get(i));
 		}
 	}
-	public ArrayList<Contatto> cercaContatto(int parametro, String valoreParametro){
-		ArrayList<Contatto> a = new ArrayList<Contatto>();
-		for (int i = 0; i <this.getLista().size(); i++) {
-			Contatto contattoCorrente = this.getLista().get(i);
-			switch(parametro) {
-				case 1 :                          
-					if(contattoCorrente.getNome().equalsIgnoreCase(valoreParametro))
-						a.add(contattoCorrente);
-					break;
-				case 2 :
-					if(contattoCorrente.getCognome().equalsIgnoreCase(valoreParametro))
-						a.add(contattoCorrente);
-					break;	
-				case 3 :
-					if(contattoCorrente.getTelefono().equalsIgnoreCase(valoreParametro))
-						a.add(contattoCorrente);
-					break;
-				case 4 :
-					if(contattoCorrente.getMail().equalsIgnoreCase(valoreParametro))
-						a.add(contattoCorrente);
-					break;
-				default:
-					System.out.println("Parametro di ricerca non valido");
-			}
-		}
-		
-		return a;
-		
-	}
+
+//	public ArrayList<Contatto> cercaContatto(int parametro, String valoreParametro){
+//		ArrayList<Contatto> a = new ArrayList<Contatto>();
+//		for (int i = 0; i <this.getLista().size(); i++) {
+//			Contatto contattoCorrente = this.getLista().get(i);
+//			switch(parametro) {
+//				case 1 :                          
+//					if(contattoCorrente.getNome().equalsIgnoreCase(valoreParametro))
+//						a.add(contattoCorrente);
+//					break;
+//				case 2 :
+//					if(contattoCorrente.getCognome().equalsIgnoreCase(valoreParametro))
+//						a.add(contattoCorrente);
+//					break;	
+//				case 3 :
+//					if(contattoCorrente.getTelefono().equalsIgnoreCase(valoreParametro))
+//						a.add(contattoCorrente);
+//					break;
+//				case 4 :
+//					if(contattoCorrente.getMail().equalsIgnoreCase(valoreParametro))
+//						a.add(contattoCorrente);
+//					break;
+//				default:
+//					System.out.println("Parametro di ricerca non valido");
+//			}
+//		}
+//		
+//		return a;
+
+//	}
 
 }
+
