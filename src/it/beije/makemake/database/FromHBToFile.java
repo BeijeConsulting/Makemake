@@ -29,7 +29,6 @@ public class FromHBToFile {
 		}
 		session.close();
 		
-		
 		try {
 			PrintStream write = new PrintStream(new FileOutputStream(percorsoFile + writeFile));
 			write.println(contacts.toString());
