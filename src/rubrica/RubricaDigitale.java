@@ -24,17 +24,17 @@ public class RubricaDigitale {
 		
 		String fileDaLeggere = "rubrica1.csv";
 		String fileDaScrivere = "rubricaMOD.txt";
-		ListaContatti rub1 = new ListaContatti();
+		ListaContatti listarubrica = new ListaContatti();
 		try {
 			BufferedReader lettore = new BufferedReader(new FileReader(percorsoFile + fileDaLeggere));
 			PrintStream scrittore = new PrintStream(new FileOutputStream(percorsoFile + fileDaScrivere));
 			while ((riga = lettore.readLine()) != null) {
 				// codice
 				String[] contatto = riga.split(";");
-				rub1.caricaLista(contatto[0], contatto[1], contatto[2], contatto[3]);
+				listarubrica.caricaLista(contatto[0], contatto[1], contatto[2], contatto[3]);
 			}
 
-			scrittore.println(rub1.toString());
+			scrittore.println(listarubrica.toString());
 			System.out.println("fatto");
 
 			// chiusura
@@ -46,7 +46,7 @@ public class RubricaDigitale {
 
 		boolean acceso = true;
 
-		ListaContatti lista = new ListaContatti();
+	//	ListaContatti lista = new ListaContatti();
 
 		while (acceso) {
 			menu();
@@ -66,7 +66,7 @@ public class RubricaDigitale {
 
 			case 1:
 				String[] contatto = creaContatto();
-				lista.caricaLista(contatto[0], contatto[1], contatto[2], contatto[3]);
+				listarubrica.caricaLista(contatto[0], contatto[1], contatto[2], contatto[3]);
 				System.out.println("Contatto caricato in rubrica");
 				break;
 			case 2:
@@ -90,18 +90,18 @@ public class RubricaDigitale {
 				System.out.println("vuoi sovrascrivere la vecchia lista? [SI] [NO]");
 				String opzione = tastiera.nextLine();
 				if(opzione.equalsIgnoreCase("si")) {
-					rub1= nuova;
+					listarubrica= nuova;
 					System.out.println("fatto");
 				}
 				System.out.println("vuoi fondere la vecchia lista con la nuova?[SI] [NO]");
 				opzione = tastiera.nextLine();
 				if(opzione.equalsIgnoreCase("si")) {
-					rub1.fondiLista(nuova);
+					listarubrica.fondiLista(nuova);
 					System.out.println("fatto");
 				}
 				break;
 			case 4:
-
+				System.out.println(listarubrica);
 				break;
 
 			}
@@ -115,7 +115,7 @@ public class RubricaDigitale {
 		System.out.println("[1)Crea un contatto.                     ]");
 		System.out.println("[2)Visualizza/Cambia cartella di default.]");
 		System.out.println("[3)Carica lista da Xml o Csv.            ]");
-		System.out.println("[4)modifica contatto                     ]");
+		System.out.println("[4)visualizza lista.                     ]");
 		System.out.println("[0)Esci.                                 ]");
 		System.out.println("[----------------------------------------]");
 		System.out.println();
@@ -163,7 +163,7 @@ public class RubricaDigitale {
 				 String nomeFile = tastiera.nextLine() +".csv";
 				 File a = new File(percorsoFile + nomeFile);
 				 if(a.exists()) {
-					 rub = XmlManager.listaDaXml(a );
+					 rub = CsvManager.ListaDaCsv(a);
 				 }else
 					 System.out.println("file non esiste");
 				
