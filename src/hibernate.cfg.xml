@@ -21,6 +21,7 @@
       
       <property name = "hibernate.connection.username">root</property>
       <property name = "hibernate.connection.password">Beije06</property>
+
       
       <!-- List of XML mapping files -->
       <!-- mapping resource = "Contatto.hbm.xml"/ -->

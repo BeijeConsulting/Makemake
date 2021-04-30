@@ -1,3 +1,4 @@
+
 package rubrica;
 
 import java.util.ArrayList;
@@ -139,3 +140,4 @@ public class ListaContatti {
 //	}
 
 }
+

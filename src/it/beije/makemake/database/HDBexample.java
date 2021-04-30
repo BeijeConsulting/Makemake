@@ -9,19 +9,19 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import rubrica.Contatto;
 
 public class HDBexample {
 	
 	public static void main(String[] args) {
 		
-		Configuration configuration = new Configuration().configure()
-				.addAnnotatedClass(Contatto.class);
-				//.addAnnotatedClass(Libri.class)
+
+//		Configuration configuration = new Configuration().configure()
+//				.addAnnotatedClass(Contatto.class);
+//				//.addAnnotatedClass(Libri.class)
+
 		
-		SessionFactory sessionFactory = configuration.buildSessionFactory();
-		
-		Session session = sessionFactory.openSession();
+		Session session = GestoreSessioni.getSessione();
 		
 //		System.out.println(session.isOpen());
 		

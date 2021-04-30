@@ -1,3 +1,4 @@
+
 package rubrica;
 
 import javax.persistence.Column;

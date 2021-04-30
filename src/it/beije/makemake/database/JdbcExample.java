@@ -26,7 +26,7 @@ public class JdbcExample {
 //			ResultSet resultSet = statement.getResultSet();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("id : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -53,7 +53,7 @@ public class JdbcExample {
 		
 		try {
 			statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO rubrica VALUES (null,'Zippo','Andrea','789569879','mia@email.it')");
+			statement.executeUpdate("INSERT INTO rubrica VALUES (null,'Andrea','Zippo','789569879','mia@email.it')");
 			
 		} catch (SQLException sqlException) {
 			sqlException.printStackTrace();
@@ -146,7 +146,7 @@ public class JdbcExample {
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {
-				System.out.println("id : " + resultSet.getInt("id"));
+				System.out.println("id : " + resultSet.getInt("idRubrica"));
 				System.out.println("cognome : " + resultSet.getString("cognome"));
 				System.out.println("nome : " + resultSet.getString("nome"));
 				System.out.println("tel : " + resultSet.getString(4));
@@ -171,19 +171,48 @@ public class JdbcExample {
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		
 //		Class.forName("com.mysql.cj.jdbc.Driver");
-//		
-//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
+	
+		ArrayList<Connection> lista= new ArrayList<Connection>();
+		boolean vai= true;
+		for (int i = 0; i<15; i++) {
+			try{
+			lista.add(GestoreConnessioni.getConnection());
+			}catch(Exception e) {
+				vai= false;
+				
+				System.out.println("["+ i+ "] eccezione: "  );
+				e.printStackTrace();
+			}finally {
+				
+			}
+		}
+		System.out.println("----------------------------");
+		for (int i = 0; i < lista.size(); i++) {
+			System.out.println("connesione numero["+ i+"]"+lista.get(i));
+		}
 		
+		
+
+//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "Beije05");
+//
 		Connection connection = ConnectionManager.getConnection();
-		//System.out.println(connection.isClosed());
+		Connection connection2 = ConnectionManager.getConnection();
+		Connection connection3 = ConnectionManager.getConnection();
+		System.out.println("------------------");
+		System.out.println(connection);
+		System.out.println(connection2);
+		System.out.println(connection3);
 		
-		//insert(connection);
-		//update(connection);
-		//insertContacts(connection);
+//
+//		//System.out.println(connection.isClosed());
+//		
+//		insert(connection);
+//		//update(connection);
+//		//insertContacts(connection);
 		//select(connection);
-		search(connection, "Di Bella");
-		
-		connection.close();
+		//search(connection2, "Zippo");
+//		
+		//connection.close();
 	}
 
 }
