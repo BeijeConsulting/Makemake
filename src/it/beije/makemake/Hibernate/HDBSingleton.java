@@ -3,7 +3,7 @@ package it.beije.makemake.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.Hibernate.Contatto;
 
 import org.hibernate.Session;
 

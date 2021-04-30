@@ -4,38 +4,46 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.Hibernate.Contatto;
 
 public class HDBSManager {
-	private static HDBSingleton newSingleton ;
+	private static HDBSingleton newSingleton = HDBSingleton.getHDBSingleton();
 	//static List<Contatto> contatti ;
 	
 	public static void main(String[] args) {
 		
-		newSingleton =  HDBSingleton.getHDBSingleton();
+		//newSingleton =  HDBSingleton.getHDBSingleton();
 		
 		
-		System.out.println(select());
-		
-		insert(new Contatto("Antony","Shenouda","3333333","antony.shenouda@gmail.com"));
+		//System.out.println(select());
+		select();
+		//listSearch("Pierantonio");
+		//insert(new Contatto("Antony","Shenouda","3333333","antony.shenouda@gmail.com"));
 		//delete();
 		//update();
-		
+	
 	}
 	
 	public static List<Contatto> select() {
 		Session mySession = newSingleton.getSession();
 		
-		Query<Contatto> myQuery = mySession.createQuery("SELECT c FROM Contatto as c");
+		Criteria cr = mySession.createCriteria(Contatto.class);
 		
-		List<Contatto> contatti = myQuery.list();
 		
-			for(Contatto c : contatti)
-				System.out.println(c);
+		//Query<Contatto> myQuery = mySession.createQuery("SELECT c FROM Contatto as c");
+		//List<Contatto> contatti = myQuery.list();
+		List<Contatto> contatti = cr.list();
+		
+		
+			/*for(Contatto c : contatti)
+				System.out.println(c.toString());*/
 		
 		mySession.close();
 		
@@ -53,22 +61,19 @@ public class HDBSManager {
 		mySession.close();
 	}
 	
-	public static void update() {
+	public static void update(int id , String name, String surname) {
 		Session mySession = newSingleton.getSession();
 	
 		Scanner in = new Scanner(System.in);
 		
-		Query<Contatto> myQuery = mySession.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> tableContact = myQuery.list();
-		//List<Contatto> tableContact = select();
+		Criteria cr = mySession.createCriteria(Contatto.class);
 		
-		System.out.println("Choose the contact id you want to update");
 		
-		int id = Integer.parseInt(in.nextLine());
-		System.out.println("Change the name ");
-		String name = in.nextLine();
-		System.out.println("Change the surname ");
-		String surname = in.nextLine();
+		//Query<Contatto> myQuery = mySession.createQuery("SELECT c FROM Contatto as c");
+		
+		List<Contatto> tableContact = cr.list();
+		
+		
 		
 		for(Contatto c : tableContact) {
 			if (c.getId() == id){
@@ -81,23 +86,20 @@ public class HDBSManager {
 				break;
 			}		
 		}
-		in.close();
+		
 
 		mySession.close();
 
 	}
 
-	public static void delete() {
+	public static void delete(int id) {
 		Session mySession = newSingleton.getSession();
 		Transaction transaction = mySession.beginTransaction();
-		Scanner in = new Scanner(System.in);
+		
 		Contatto updCont = null;
 		List<Contatto> tableContact = select();
 		
 		
-		System.out.println("Choose the contact id you want to remove");
-		
-		int id = in.nextInt();
 		
 		for(Contatto c : tableContact) {
 			if (c.getId() == id){
@@ -112,4 +114,39 @@ public class HDBSManager {
 		mySession.close();
 
 	}
+	
+	public static void listSearch(String search,String cognome) {
+		Session mySession = newSingleton.getSession();
+		Transaction tx = null;
+		
+		try {
+			tx = mySession.beginTransaction();
+			Criteria cr = mySession.createCriteria(Contatto.class);
+			//System.out.println("Sono qui");
+			
+			cr.add(Restrictions.eq("nome", search)).add(Restrictions.eq("cognome", cognome));
+			List<Contatto> contatti = cr.list();
+			
+			
+		
+			for(Contatto c : contatti) {
+				System.out.println("[Nome : " + c.getNome());
+				System.out.println("Cognome : " + c.getCognome());
+				System.out.println("Telefono : " + c.getTelefono());
+				System.out.println("Id : " + c.getId() + " ] ");
+			}
+			tx.commit();
+		}catch(HibernateException e) {
+			
+			if(tx!= null) tx.rollback();
+			e.printStackTrace();
+			
+		}finally {
+			
+			mySession.close();
+			
+		}
+	}
+	
+	
 }
