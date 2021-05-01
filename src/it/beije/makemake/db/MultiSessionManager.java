@@ -12,7 +12,7 @@ import it.beije.makemake.rubrica.ContattoRubrica;
 public class MultiSessionManager {
 	
 
-	private static final int MAX = 150;
+	private static final int MAX = 5;
 	private static List<Session> sessions = new ArrayList<Session>();
 	 
       private MultiSessionManager() {
