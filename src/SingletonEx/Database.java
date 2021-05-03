@@ -9,7 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 import it.beije.makemake.rubrica.Contatto;
 
-class Database {
+public class Database {
 	   private static Database dbObject;
 
 	   private Database() {      

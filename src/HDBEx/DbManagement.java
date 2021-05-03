@@ -52,8 +52,6 @@ public class DbManagement {
 			System.out.println("Digita '1' per stampare il DB su PC");
 			System.out.println("Digita '2' per aggiungere al DB una lista di "
 			+ "nuovi contatti");
-			System.out.println("Digita '3' per scaricare il contenuto di un DB"
-			+ " in un file csv sul PC");
 			System.out.println("Digita '4' per scaricare il contenuto di un DB"
 			+ " in un file xml sul PC");
 			System.out.println("Digita '5' per rimuovere un contatto dal DB");
@@ -171,7 +169,8 @@ public class DbManagement {
 		      FileWriter writer = new FileWriter(x.nextLine());
 		      
 		      for(int i=0; i<contatti.size(); i++) {
-		    	contatto = (Contatto) contatti.get(i);	    	
+		    	contatto = (Contatto) contatti.get(i);	
+		    	System.out.println("contatto "+i+" "+contatto);
 		  		writer.write(contatto.getCognome());
 		  		writer.write(';');
 		  		writer.write(contatto.getNome());
@@ -182,8 +181,8 @@ public class DbManagement {
 		  		writer.write('\n');
 
 		  		writer.flush();
-		  		writer.close();
 		      }
+		      writer.close();
 		   } catch (HibernateException e) {
 		      if (tx!=null) tx.rollback();
 		      e.printStackTrace(); 

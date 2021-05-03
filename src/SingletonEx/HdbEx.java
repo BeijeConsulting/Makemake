@@ -13,21 +13,20 @@ import it.beije.makemake.rubrica.Contatto;
 import SingletonEx.Database;
 
 
-class HdbEx {
+public class HdbEx {
 public static void main(String[] args) {
 	final boolean flag = true;
-	final ArrayList <Database> sessions = new ArrayList <Database>();
+	final int MAX_COUNT = 150;
+	ArrayList <Database> sessions = new ArrayList <Database>();
 
 	try {
-		while(flag) {
+		if(sessions.size() < MAX_COUNT) {
 			Database db1 = Database.getInstance();
 			sessions.add(db1);			
 		}
 	}
 	catch(Exception e) {
 		e.printStackTrace();
-	}
-	finally {
 	}
 }
 }

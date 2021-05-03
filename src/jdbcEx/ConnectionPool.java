@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class ConnectionPool {
 	private final static ArrayList <Connection> connections = new ArrayList <Connection>();
-	private final static Integer MAX_AMOUNT = 250;
+	private final static Integer MAX_AMOUNT = 10;
 	private static Integer givenconnection = 0;
 	
 	public static void init() throws Exception {
@@ -44,7 +44,6 @@ public class ConnectionPool {
 			init();	
 		}
 	}catch(Exception e) {	
-		e.printStackTrace();
 	}
 	finally {
 		System.out.println("Inserisci una connessione da chiudere: ");

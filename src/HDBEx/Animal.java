@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "animali")
 public class Animal {
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id")
@@ -46,8 +46,8 @@ public class Animal {
 	public String getAge() {
 		return age;
 	}
-	public void setAge(String età) {
-		this.age = età;
+	public void setAge(String eta) {
+		this.age = eta;
 	}
 	
 	public String getDiet() {
