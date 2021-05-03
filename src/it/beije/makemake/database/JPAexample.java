@@ -17,6 +17,7 @@ public class JPAexample {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Makemake");
 		
 		EntityManager entityManager = factory.createEntityManager();
+	
 		
 		Contatto c = entityManager.find(Contatto.class, 26);
 		System.out.println(c);
@@ -38,8 +39,8 @@ public class JPAexample {
 		//Transaction
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
-		
-		//INSERT
+//		
+//		//INSERT
 //		Contatto newContatto = new Contatto();
 //		newContatto.setCognome("Viscomi");
 //		newContatto.setNome("Filippo");
@@ -48,10 +49,10 @@ public class JPAexample {
 //		entityManager.persist(newContatto);
 //		System.out.println("contatto POST : " + newContatto);
 		
-//		//UPDATE
-//		c.setCognome("Zippo");
-//		c.setTelefono("43214342");
-//		entityManager.persist(c);
+		//UPDATE
+		c.setCognome("GIOVANNI");
+		c.setTelefono("43214342");
+		entityManager.persist(c);
 		
 //		//DELETE
 //		entityManager.remove(c);

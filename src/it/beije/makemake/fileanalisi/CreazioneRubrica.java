@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.beije.makemake.rubrica.ContattoRubrica; 
+import it.beije.makemake.rubrica.Contatto; 
 
-public class CreazioneRurica {
+public class CreazioneRubrica {
 	
 	public static void cloneTxtFile(File orig, File clone) throws Exception {
 		
@@ -34,9 +34,9 @@ public class CreazioneRurica {
 		fileReader.close();
 	}
 	
-	public static void appendInRubrica(List<ContattoRubrica> contatti, String pathFile) throws Exception {
+	public static void appendInRubrica(List<Contatto> contatti, String pathFile) throws Exception {
 		FileWriter writer = new FileWriter(new File(pathFile), true);
-		for (ContattoRubrica contatto : contatti) {
+		for (Contatto contatto : contatti) {
 			writer.write(contatto.getCognome());
 			writer.write(';');
 			writer.write(contatto.getNome());
@@ -60,12 +60,12 @@ public class CreazioneRurica {
  
 		System.out.println("-------------------\n");
 		
-		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
+		List<Contatto> contatti = new ArrayList<Contatto>();
 		BufferedReader bufferedReader = new BufferedReader(new FileReader("C:/Users/jacopo/Desktop/java/jacopopazzo.csv"));
 		while (bufferedReader.ready()) {
 			String row = bufferedReader.readLine();
 			String[] rowParts = row.split(";");
-			ContattoRubrica contatto = new ContattoRubrica();
+			Contatto contatto = new Contatto();
 			
 			contatto.setNome(rowParts[0]);
 			contatto.setCognome(rowParts[1]);

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.StampedLock;
 
-import it.beije.makemake.rubrica.ContattoRubrica;
+import it.beije.makemake.rubrica.Contatto;
 
 public class JdbcExample {
 	
@@ -90,15 +90,15 @@ public class JdbcExample {
 
 	public static void insertContacts(Connection connection) {
 		
-		ContattoRubrica c1 = new ContattoRubrica();
+		Contatto c1 = new Contatto();
 		c1.setCognome("Rossi");
 		c1.setNome("Mario");
 		c1.setTelefono("532452");
-		ContattoRubrica c2 = new ContattoRubrica();
+		Contatto c2 = new Contatto();
 		c2.setCognome("Bianchi");
 		c2.setNome("Marco");
 		c2.setTelefono("53245234");
-		List<ContattoRubrica> contatti = new ArrayList<ContattoRubrica>();
+		List<Contatto> contatti = new ArrayList<Contatto>();
 		contatti.add(c1);
 		contatti.add(c2);
 		
@@ -111,7 +111,7 @@ public class JdbcExample {
 			
 			preparedStatement = connection.prepareStatement("INSERT INTO rubrica (cognome,nome,telefono,email) VALUES (?,?,?,?)");
 			
-			for (ContattoRubrica c : contatti) {
+			for (Contatto c : contatti) {
 //				String insert = "INSERT INTO rubrica VALUES (null,'" + c.getCognome() + "','" + c.getNome() + "','" + c.getTelefono() + "','" + c.getEmail() +"')";
 //				System.out.println(insert);
 				//statement.executeUpdate(insert);

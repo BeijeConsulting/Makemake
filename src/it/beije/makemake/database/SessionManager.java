@@ -3,8 +3,6 @@ package it.beije.makemake.database;
 import java.util.ArrayList;
 import java.util.List;
 import it.beije.makemake.fileanalisi.Contatto;
-import it.beije.makemake.rubrica.ContattoRubrica;
-
 import org.hibernate.Session;
 import org.hibernate.SessionException;
 import org.hibernate.SessionFactory;
@@ -14,7 +12,7 @@ import org.hibernate.cfg.Configuration;
 
 public class SessionManager {
 	private SessionManager() {
-		Configuration configuration = new Configuration().configure().addAnnotatedClass(ContattoRubrica.class);
+		Configuration configuration = new Configuration().configure().addAnnotatedClass(Contatto.class);
 		this.sessionFactory = configuration.buildSessionFactory();
 	}
 

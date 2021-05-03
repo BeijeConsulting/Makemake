@@ -19,9 +19,9 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.ContattoRubrica;
+import it.beije.makemake.rubrica.Contatto;
 
-import it.beije.makemake.rubrica.ContattoRubrica;
+import it.beije.makemake.rubrica.Contatto;
 
 
 public class HDBmanager {
@@ -30,6 +30,7 @@ public class HDBmanager {
 		Session s = SessionManager.getSession();
 		
 		System.out.println("vuoi modificare lo Database ? S/N");
+		
 		Scanner tastiera = new Scanner(System.in);
 		
 		
@@ -51,12 +52,12 @@ public class HDBmanager {
 			System.out.println(s);
 			flag=false;
 			
-			Query<ContattoRubrica> query = s.createQuery("SELECT c FROM ContattoRubrica as c");//SELECT * FROM rubrica
+			Query<Contatto> query = s.createQuery("SELECT c FROM ContattoRubrica as c");//SELECT * FROM rubrica
 			
-			List<ContattoRubrica> contatti = query.list();
+			List<Contatto> contatti = query.list();
 			
-			ContattoRubrica contatto = null;
-			for (ContattoRubrica c : contatti) {
+			Contatto contatto = null;
+			for (Contatto c : contatti) {
 				System.out.println(c);
 				contatto = c;
 			}
