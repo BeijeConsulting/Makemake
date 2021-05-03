@@ -30,7 +30,6 @@ public class HibernateMenu {
 			int var = tastiera.nextInt();
 			tastiera.nextLine();
 			
-			
 			switch(var) {
 			case 1 : 
 					contatti = HDBSManager.select();
