@@ -1,4 +1,4 @@
-package it.beije.makemake.database;
+package it.beije.makemake.database.hibernate;
 
 
 import org.hibernate.Criteria;
@@ -7,6 +7,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.LogicalExpression;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+
 import it.beije.makemake.file.rubrica.Contatto;
 
 public class CriteriaManager {

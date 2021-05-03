@@ -17,6 +17,27 @@ public class Manager {
 		return buffer;
 	}
 		
+	public static void addContactList(String path, ArrayList<Contatto> contactList) throws IOException{
+		File file = new File(path);
+		FileWriter writer = new FileWriter(file, true);
+		
+		for(Contatto contatto : contactList) {
+			writer.write(contatto.getNome());
+			writer.write(';');
+			writer.write(contatto.getCognome());
+			writer.write(';');
+			writer.write(contatto.getTelefono());
+			writer.write(';');
+			writer.write(contatto.getEmail());
+			writer.write('\n');
+			
+		}
+		
+		writer.flush();
+		writer.close();
+		
+	}
+	
 	public static void addContact(String path, Contatto contatto) throws IOException{
 		File file = new File(path);
 		FileWriter writer = new FileWriter(file, true);
@@ -57,9 +78,9 @@ public class Manager {
 		writer.close();
 	}
 	
-	public static void searchContact(String path) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static void changeContact(String path) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		Scanner in = new Scanner(System.in);
+		Scanner in1 = new Scanner(System.in);
 		BufferedReader buffer = openFileToRead(path);
 		ArrayList<Contatto> cont = convertRubricaToList(buffer);
 	
@@ -68,7 +89,7 @@ public class Manager {
 		String value = null;
 		
 		do {
-			value = in.next();
+			value = in1.nextLine();
 			
 			switch(value) {
 				case "Nome":
@@ -79,20 +100,27 @@ public class Manager {
 					break;
 				default:
 					System.out.println("Hai cannato il parametro forniscimene uno valido!");
-					break;
-					
+					break;	
 			}
 		}while(flag);
+		System.out.println("Inserisci il "+value+" da cercare!");
+		String valParam = in1.nextLine();
 		
 		for(Contatto c : cont) {
-			Method method = c.getClass().getMethod("get"+value, new Class[]{});
-			String returnValue = (String)method.invoke(c, null);
-			System.out.println(returnValue);
+			Method method = c.getClass().getDeclaredMethod("get"+value, new Class[]{});
+			String returnValue = (String)method.invoke(c);
+			if(valParam.equals(returnValue)) {
+				System.out.println(c);
+				System.out.println("Fornisci il nuovo "+ value);
+				
+				Method setter = c.getClass().getDeclaredMethod("set"+value, String.class);
+				setter.invoke(c, in1.nextLine());
+				openFileToWrite(path, cont);
+				return;
+			}
 		}
 		
-		in.close();
-		
-		
+		System.out.println("Non ho cambiato nessu contatto");
 	}
 	
 	public static void mergeFile(String pathA, String pathB, String destPath) throws IOException {

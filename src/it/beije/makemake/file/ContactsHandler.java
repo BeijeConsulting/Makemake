@@ -4,16 +4,18 @@ package it.beije.makemake.file;
 import java.io.BufferedReader;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
+import org.hibernate.internal.build.AllowSysOut;
 import org.w3c.dom.Document;
 
 import it.beije.makemake.file.rubrica.Contatto;
 import it.beije.makemake.file.xml.ManagerXML;
+import it.beije.makemake.database.hibernate.HDBexample;
 import it.beije.makemake.file.csv.Manager;
 
 public class ContactsHandler {
-	private static final String desktopPath = "C:/Users/Padawan11/OneDrive/Desktop/";
 	private static final Scanner in = new Scanner(System.in);
 	private static boolean flag = true;
 	
@@ -23,7 +25,7 @@ public class ContactsHandler {
 	
 	public static void menu() {
 		System.out.println("Benvenuto, se vuoi iniziare ad inserire i contatti nella tua rubrica");
-		String input = "";
+		String input;
 
 		do {
 			System.out.println("---------------------------------------------------------------------------------");
@@ -36,13 +38,13 @@ public class ContactsHandler {
 					read();
 					break;
 				case "w":
-					//write();
+					write();
 					break;
 				case "i":
-					//import();
+					importFromFileToDB();
 					break;
 				case "e":
-					//export();
+					exportFromDBtoFile();
 					break;
 				case "c":
 					change();
@@ -80,11 +82,13 @@ public class ContactsHandler {
 		do{
 			System.out.println("Forniscimi il nome di un  file valido che vuoi leggere(ti trovi sul desktop) ?");
 			path = in.nextLine();
-			file =new File(path);
-		}while(file.isFile());
+			file = new File(path);
+		}while(!file.isFile());
 		
 		int i = path.lastIndexOf('.');
 		
+		if(i == -1)
+			System.out.println("Errore nella ricerca dell'estensione");
 		
 		exten = path.substring(i+1);
 		
@@ -93,10 +97,15 @@ public class ContactsHandler {
 				Document doc = ManagerXML.openFileToRead(path);
 				ArrayList<Contatto> contList = ManagerXML.retriveContactTags(doc);
 				ManagerXML.printXmlDocument(contList);
-			}else {
+			}else if(exten.equals("csv")) 
+			{
 				BufferedReader buffer = Manager.openFileToRead(path);
 				ArrayList<Contatto> contList = Manager.convertRubricaToList(buffer);
-				System.out.println(contList);
+				for(Contatto cont : contList) {
+					System.out.println(cont);
+				}
+			}else {	
+				System.out.println("Estensione file non valida!");
 			}
 		}catch(Exception e) {
 			e.getStackTrace();
@@ -108,30 +117,159 @@ public class ContactsHandler {
 		File file = null;
 		String path, exten;
 		do{
-			System.out.println("Forniscimi il nome di un  file valido che vuoi modificare(ti trovi sul desktop) ?");
+			System.out.println("Forniscimi il nome di un  file valido di cui vuoi modificare un contatto");
 			path = in.nextLine();
 			file =new File(path);
-		}while(file.isFile());
+		}while(!file.isFile());
+		
+		int i = path.lastIndexOf('.');
+		
+		if(i == -1)
+			System.out.println("Errore nella ricerca dell'estensione");
+		
+		exten = path.substring(i+1);
+		
+		try {
+			if(exten.equals("xml")) {
+				ManagerXML.changeContact(path);
+			}else if(exten.equals("csv")) 
+			{
+				Manager.changeContact(path);
+			}else {	
+				System.out.println("Estensione file non valida!");
+			}
+		}catch(Exception e) {
+			e.getStackTrace();
+		}	
+		
+	}
+	
+	public static void write() {
+		File file = null;
+		String path, exten;
+		do{
+			System.out.println("Forniscimi il nome di un  file valido in cui vuoi scrivere");
+			path = in.nextLine();
+			file =new File(path);
+		}while(!file.isFile());
 		
 		
 		Contatto cont = createContact();
 
-		
 		int i = path.lastIndexOf('.');
 		
+		if(i == -1)
+			System.out.println("Errore nella ricerca dell'estensione");
 		
 		exten = path.substring(i+1);
 		
 		try {
 			if(exten.equals("xml")) {
 				ManagerXML.addContact(path, cont);
-			}else {
-				Manager.addContact(path , cont);
+			}else if(exten.equals("csv")) 
+			{
+				Manager.addContact(path, cont);
+			}else {	
+				System.out.println("Estensione file non valida!");
 			}
 		}catch(Exception e) {
 			e.getStackTrace();
 		}		
 		
+	}
+	
+	public static void importFromFileToDB() {
+		
+		
+		System.out.println("Seleziona il file da cui vuoi importare i file nel database");
+		File file = null;
+		String path, exten;
+		
+		do{
+			System.out.println("Forniscimi il nome di un  file valido che vuoi leggere(ti trovi sul desktop) ?");
+			path = in.nextLine();
+			file = new File(path);
+		}while(!file.isFile());
+		
+		int i = path.lastIndexOf('.');
+		
+		if(i == -1)
+			System.out.println("Errore nella ricerca dell'estensione");
+		
+		exten = path.substring(i+1);
+		System.out.println("Database before insertion");
+		List<Contatto> table = HDBexample.select();
+		for(Contatto c : table) {
+			System.out.println(c);
+		}
+		
+		try {
+			if(exten.equals("xml")) {
+				Document doc = ManagerXML.openFileToRead(path);
+				ArrayList<Contatto> contList = ManagerXML.retriveContactTags(doc);
+				
+				for(Contatto c : contList) {
+					HDBexample.insert(c);
+				}
+			}else if(exten.equals("csv")) 
+			{
+				BufferedReader buffer = Manager.openFileToRead(path);
+				ArrayList<Contatto> contList = Manager.convertRubricaToList(buffer);
+				for(Contatto c : contList) {
+					HDBexample.insert(c);
+				}
+			}else {	
+				System.out.println("Estensione file non valida!");
+			}
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+		
+		System.out.println("Database after insertion");
+		table = HDBexample.select();
+		for(Contatto c : table) {
+			System.out.println(c);
+		}
+	}
+	
+	public static void exportFromDBtoFile() {
+		System.out.println("Seleziona il file in cui vuoi importare i contatti salvati nel database");
+		
+		File file = null;
+		String path, exten;
+		
+		do{
+			System.out.println("Forniscimi il nome di un  file valido che vuoi leggere(ti trovi sul desktop) ?");
+			path = in.nextLine();
+			file = new File(path);
+		}while(!file.isFile());
+		
+		int i = path.lastIndexOf('.');
+		
+		if(i == -1)
+			System.out.println("Errore nella ricerca dell'estensione");
+		
+		exten = path.substring(i+1);
+		System.out.println("Database");
+		List<Contatto> table = HDBexample.select();
+		for(Contatto c : table) {
+			System.out.println(c);
+		}
+		ArrayList<Contatto> table1 = new ArrayList<>(table);
+		
+		try {
+			if(exten.equals("xml")) {
+				ManagerXML.addContactList(path, table1);
+			}else if(exten.equals("csv")) 
+			{
+				Manager.addContactList(path, table1);
+			}else {	
+				System.out.println("Estensione file non valida!");
+			}
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
+	
 	}
 	
 	public static void quit() {

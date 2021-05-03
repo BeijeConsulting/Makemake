@@ -1,8 +1,12 @@
 package it.beije.makemake.file.xml;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,6 +20,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import it.beije.makemake.file.rubrica.Contatto;
 
@@ -60,7 +65,7 @@ public class ManagerXML{
 		
 	}
 	
-	public static void openFileToWrite(String path, Document newDocument) {	
+	private static void openFileToWrite(String path, Document newDocument) {	
 		try {
 			StreamResult result = new StreamResult(new File(path));
 			TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -94,7 +99,7 @@ public class ManagerXML{
 			Element tagTelef = (Element) contactNode.getElementsByTagName("telefono").item(0);
 			Element tagEmail = (Element) contactNode.getElementsByTagName("email").item(0);
 			
-			contactList.add(new Contatto( 0,
+			contactList.add(new Contatto( 
 										  tagName.getTextContent(),
 										  tagSurname.getTextContent(),
 										  tagTelef.getTextContent(),
@@ -111,6 +116,52 @@ public class ManagerXML{
 		}
 	}
 	
+public static void changeContact(String path) throws IOException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ParserConfigurationException, SAXException {
+		
+		Document doc = openFileToRead(path);
+		ArrayList<Contatto> cont = retriveContactTags(doc);
+		Scanner in1 = new Scanner(System.in);
+		
+		System.out.println("Forniscimi il parametro per trovare il contatto : ");
+		boolean flag = true;
+		String value = null;
+		
+		do {
+			value = in1.nextLine();
+			
+			switch(value) {
+				case "Nome":
+				case "Cognome":
+				case "Telefono":
+				case "Email" :
+					flag = false;
+					break;
+				default:
+					System.out.println("Hai cannato il parametro forniscimene uno valido!");
+					break;	
+			}
+		}while(flag);
+		System.out.println("Inserisci il "+value+" da cercare!");
+		String valParam = in1.nextLine();
+		
+		for(Contatto c : cont) {
+			Method method = c.getClass().getDeclaredMethod("get"+value, new Class[]{});
+			String returnValue = (String)method.invoke(c);
+			if(valParam.equals(returnValue)) {
+				System.out.println(c);
+				System.out.println("Fornisci il nuovo "+ value);
+				
+				Method setter = c.getClass().getDeclaredMethod("set"+value, String.class);
+				setter.invoke(c, in1.nextLine());
+				Document newDoc = createDocument(cont);
+				openFileToWrite(path, newDoc);
+				return;
+			}
+		}
+		
+		System.out.println("Non ho cambiato nessu contatto");
+	}
+
 	public static Element createDocumentElement(Contatto cont, Document document) {
 		Element contatto = document.createElement("contatto");
 		
@@ -167,7 +218,26 @@ public class ManagerXML{
 		}catch(Exception e) {
 			e.getStackTrace();
 		}
+				
+	}
+	
+	public static void addContactList(String path, ArrayList<Contatto> contatti){
+		try {
 			
+			Document document = openFileToRead(path);
+			Document newDocument;
+			
+			ArrayList<Contatto> contactList = retriveContactTags(document);
+			
+			for(Contatto cont : contatti) {
+				contactList.add(cont);
+			}
+			
+			newDocument = createDocument(contactList);
+			openFileToWrite(path, newDocument);
 		
+		}catch(Exception e) {
+			e.getStackTrace();
+		}
 	}
 }

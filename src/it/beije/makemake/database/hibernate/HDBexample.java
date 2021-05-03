@@ -1,4 +1,4 @@
-package it.beije.makemake.database;
+package it.beije.makemake.database.hibernate;
 
 
 import it.beije.makemake.file.rubrica.Contatto;

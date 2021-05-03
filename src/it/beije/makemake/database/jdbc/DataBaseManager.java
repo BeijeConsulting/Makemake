@@ -1,4 +1,4 @@
-package it.beije.makemake.database;
+package it.beije.makemake.database.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -10,7 +10,8 @@ import java.util.ArrayList;
 
 import it.beije.makemake.file.rubrica.Contatto;
 
-public class DataBaseManager {	public static void main(String arg[]) {
+public class DataBaseManager {	
+	public static void main(String arg[]) {
 		Connection connection= null;
 		ArrayList<Contatto> result = null;
 		try {
