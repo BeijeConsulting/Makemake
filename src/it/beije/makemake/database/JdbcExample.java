@@ -1,4 +1,4 @@
-package it.beije.makemake.database;
+  package it.beije.makemake.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
