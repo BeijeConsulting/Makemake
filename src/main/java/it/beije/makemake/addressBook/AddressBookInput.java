@@ -9,7 +9,9 @@ public class AddressBookInput {
     private AddressBook addressBook = new AddressBook();
     Scanner sc = new Scanner(System.in);
     private static String[] optionsStrings = { "Crea da file XML",
-            "Crea da file CSV", "Stampa rubrica", "Inserisci", "Cerca", "Rimuovi", };
+            "Crea da file CSV", "Stampa rubrica", "Inserisci", "Cerca", "Rimuovi", "Carica su database", "Scarica da database",
+            "Salva in formato XML", "Salva in formato CSV"
+    };
     private static String[] dataFields = {
             "Nome", "Cognome", "Telefono", "Mail", "Indirizzo"
     };
@@ -60,6 +62,16 @@ public class AddressBookInput {
             case 6:
                 addressBook.remove(askDataInput());
                 break;
+            case 7: addressBook.insertIntoDatabase2();
+                break;
+            case 8: addressBook = AddressBook.createFromDatabase2();
+                break;
+            case 9:
+                saveToXML();
+                break;
+            case 10:
+                saveToCSV();
+                break;
         }
     }
 
@@ -85,6 +97,28 @@ public class AddressBookInput {
                 e.printStackTrace();
             }
         } while(wrongPath);
+    }
+
+    private void saveToXML() {
+        System.out.println("Inserisci percorso del file di output:");
+        try {
+            addressBook.toXMLFile(sc.nextLine());
+        } catch (Exception e) {
+            System.out.println("Salvataggio in XML fallito");
+            e.printStackTrace();
+        }
+    }
+
+    private void saveToCSV() {
+        System.out.println("Inserisci carattere di separazione:\n");
+        String delim = sc.nextLine();
+        System.out.println("Inserisci percorso del file di output:");
+        try {
+            addressBook.toFile(sc.nextLine(), delim);
+        } catch (Exception e) {
+            System.out.println("Salvataggio in CSV fallito");
+            e.printStackTrace();
+        }
     }
 
     private void searchContact() {

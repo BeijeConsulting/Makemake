@@ -1,9 +1,14 @@
 package it.beije.makemake.addressBook;
 
 import it.beije.makemake.myDatabase.SessionManager;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.ProjectionList;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
+import org.hibernate.sql.JoinType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -25,7 +30,7 @@ import java.util.List;
 public class AddressBook {
 
     private List<Contact> contactList = new ArrayList<>();
-    private Contact header;
+    private Contact header = new Contact("NOME", "COGNOME", "TELEFONO", "EMAIL");
 
     public List<Contact> getContactList() {
         return contactList;
@@ -274,8 +279,7 @@ public class AddressBook {
         AddressBook addressBook = new AddressBook();
         SessionManager sessionManager = SessionManager.getSessionManager();
         Session session = sessionManager.getSession();
-        Query<Contact> contactsQuery = session.createQuery("SELECT c FROM Contact as c");
-        List<Contact> contacts = contactsQuery.list();
+        List<Contact> contacts = session.createCriteria(Contact.class).list();
         for (Contact c :
                 contacts) {
             addressBook.addContact(c);
@@ -350,6 +354,21 @@ public class AddressBook {
         contact.setName(name);
         return removeAllAndUpdateDB(contact);
     }
+
+
+    public static AddressBook getContactsFromNameList(List<String> names) {
+        //Using Hibernate Criteria Query Language (deprecated)
+        AddressBook addressBook = new AddressBook();
+        SessionManager sessionManager = SessionManager.getSessionManager();
+        Session session = sessionManager.getSession();
+        Criteria criteria = session.createCriteria(Contact.class)
+                .add(Restrictions.in("name", names));
+        addressBook.contactList = criteria.list();
+        sessionManager.closeSession(session);
+        return addressBook;
+    }
+
+
 
 
 
