@@ -1,12 +1,10 @@
 package it.beije.makemake.database;
 
-<<<<<<< HEAD
+
 import it.beije.makemake.file.rubrica.Contatto;
 
 
-=======
-import java.io.File;
->>>>>>> origin
+
 import java.util.List;
 import java.util.Scanner;
 
