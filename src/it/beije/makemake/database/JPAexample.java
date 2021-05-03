@@ -8,7 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class JPAexample {
 
@@ -18,15 +18,15 @@ public class JPAexample {
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
-		Contatto c = entityManager.find(Contatto.class, 26);
+		ContattoRubrica c = entityManager.find(ContattoRubrica.class, 26);
 		System.out.println(c);
 		
 		//Query JPQL
-		String jpqlSelect = "SELECT c FROM Contatto as c";
+		String jpqlSelect = "SELECT c FROM ContattoRubrica as c";
 		Query query = entityManager.createQuery(jpqlSelect);
-		List<Contatto> contatti = query.getResultList();
+		List<ContattoRubrica> contatti = query.getResultList();
 
-		for (Contatto contatto : contatti) {
+		for (ContattoRubrica contatto : contatti) {
 			System.out.println("id : " + contatto.getId());
 			System.out.println("name : " + contatto.getNome());
 			System.out.println("surname : " + contatto.getCognome());

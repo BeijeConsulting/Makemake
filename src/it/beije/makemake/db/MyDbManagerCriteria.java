@@ -31,7 +31,7 @@ public class MyDbManagerCriteria {// gestione db con sessioni
 				System.out.println("email: " + cont.getEmail());
 
 			}
-			MultiSessionManager.closeSession(s);
+//			MultiSessionManager.closeSession(s);
 			return result;
 
 		} catch (TooManySessionsException e) {
@@ -139,14 +139,16 @@ public class MyDbManagerCriteria {// gestione db con sessioni
 	public static void exportToCsv(File filename) throws Exception {
 		List<ContattoRubrica> contatti = MyDbManagerCriteria.selectAll();
 		try {
-			filename=new File (ContattiManager.destDir);
+			filename=new File (ContattiManager.dest.getPath());
 			ContattiManager.writeList(contatti, filename);
+System.out.println("arriva qui");
 		} catch (IOException e) {
 			System.out.println("Errore nella scrittura del file");
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) throws TooManySessionsException {
+	
+public static void main(String[] args) throws TooManySessionsException {
 		ContattoRubrica contatt = new ContattoRubrica("Ronaldo", "cristiano", "467389032", "siiiium@mail.com");
 
 		// selectBy("nome", "pierantonio2");

@@ -32,12 +32,13 @@ public class ContattiManager {
 
 	// metodo che scriva questa lista 
 	public static void writeList(List<ContattoRubrica> contactList, File dest) throws Exception {
-		FileWriter fileWriter = new FileWriter(dest);
+		FileWriter fileWriter = new FileWriter(dest, true);
 		BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 		for (ContattoRubrica contatto : contactList) {
 			bufferedWriter.write(contatto.toCsv() + "\n");
-			bufferedWriter.flush();
-		}
+			
+//			System.out.println("succede qualcosa");
+		}bufferedWriter.flush();
 		bufferedWriter.close();
 	}
 
@@ -150,9 +151,9 @@ public class ContattiManager {
 		return false;
 	}
 
-//	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 //		File origFile = new File(rubricaDir);
-//		File copyFile = new File(destDir);
+//		File copyFile = new File(dest.getPath());
 //		//READ FROM FILE
 //		printContactList(getContactList(origFile));
 //		//COPY ON SECOND FILE:
@@ -168,5 +169,5 @@ public class ContattiManager {
 //		printContactList(searchBy(copyFile, "nome", "mario"));
 //		//FIND DUPLICATES:
 //		printContactList(findDuplicates(getContactList(copyFile)));
-//	}
+	}
 }
