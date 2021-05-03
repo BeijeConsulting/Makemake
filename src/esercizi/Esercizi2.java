@@ -1,4 +1,4 @@
-package it.beije.makemake.esercizi;
+package esercizi;
 
 import java.util.ArrayList;
 

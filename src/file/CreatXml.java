@@ -1,4 +1,4 @@
-package it.beije.makemake.xmlFile;
+package file;
 
 import java.io.File;
 

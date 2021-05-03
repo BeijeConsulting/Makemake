@@ -173,7 +173,7 @@ public class JdbcExample {
 		
 //		Class.forName("com.mysql.cj.jdbc.Driver");
 //		
-//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije");
+//		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/makemake?serverTimezone=CET", "root", "beije01");
 		
 		Connection connection = ConnectionManager.getConnection();
 		//System.out.println(connection.isClosed());

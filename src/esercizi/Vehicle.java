@@ -1,4 +1,4 @@
-package it.beije.makemake.esercizi;
+package esercizi;
 
 public interface Vehicle {
 	public void setType();

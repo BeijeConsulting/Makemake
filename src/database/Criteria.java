@@ -1,4 +1,4 @@
-package it.beije.makemake.databaseex;
+package database;
 
 import java.util.List;
 

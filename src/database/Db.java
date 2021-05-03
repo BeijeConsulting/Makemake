@@ -1,4 +1,4 @@
-package it.beije.makemake.databaseex;
+package database;
 
 import java.sql.Statement;
 import java.util.ArrayList;
