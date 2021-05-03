@@ -9,11 +9,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "rubrica")
-public class Contatto {
+public class ContattoRubrica {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@Column(name="idRubrica")
 	private int id;
 	
 	@Column(name = "nome")

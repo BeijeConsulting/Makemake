@@ -2,6 +2,7 @@ package it.beije.makemake.database;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,55 +10,65 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import java.io.File;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import it.beije.makemake.rubrica.ContattoRubrica;
+
+import it.beije.makemake.rubrica.ContattoRubrica;
+
 
 public class HDBmanager {
-
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
-		
+	public static void main(String[] args) throws Exception {
+		SessionManager.getSessionManager();
 		Session s = SessionManager.getSession();
 		
-		// Query HQL
-		Query<Contatto> query = s.createQuery("SELECT c FROM Contatto as c");// SELECT * FROM rubrica
-		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
+		System.out.println("vuoi modificare lo Database ? S/N");
+		Scanner tastiera = new Scanner(System.in);
 		
-		List<Contatto> contatti = query.list();
-
-		Contatto contatto = null;
-		for (Contatto c : contatti) {
-			System.out.println(c);
-			contatto = c;
+		
+		boolean flag= true;
+		
+		while(flag) {
+		String t = tastiera.nextLine();
+		switch(t.toUpperCase()) {
+		default:
+			System.out.println("ERRORE!!!Inserisci SI/NO: ");
+			
+			break;
+		case "NO" :
+			SessionManager.closeSession(s);
+			flag=false;
+			break;
+			
+		case "SI" :
+			System.out.println(s);
+			flag=false;
+			
+			Query<ContattoRubrica> query = s.createQuery("SELECT c FROM ContattoRubrica as c");//SELECT * FROM rubrica
+			
+			List<ContattoRubrica> contatti = query.list();
+			
+			ContattoRubrica contatto = null;
+			for (ContattoRubrica c : contatti) {
+				System.out.println(c);
+				contatto = c;
+			}
+			
+			
+			Transaction transaction = s.beginTransaction();
+			transaction.commit();
+			break;
+		
 		}
-
-		Transaction transaction = s.beginTransaction();
-//
-//		// INSERT
-//			Contatto newContatto = new Contatto();
-//			//newContatto.setId(30);
-//			newContatto.setCognome("Miglietta");
-//			newContatto.setNome("Pierantonio2");
-//			newContatto.setEmail("p.miglietta2@beije.it");
-//			System.out.println("contatto PRE : " + newContatto);
-//			session.save(newContatto);
-//			System.out.println("contatto POST : " + newContatto);
-//
-//			//UPDATE
-//			contatto.setCognome("Staibano");
-//			contatto.setNome("Andrea");		
-//			
-//			System.out.println("contatto PRE : " + contatto);
-//			session.save(contatto);
-//			System.out.println("contatto POST : " + contatto);
-//
-//			//DELETE
-//			session.remove(contatto);
-//
-//		// throw new RuntimeException();
-//
-		 transaction.commit();
-		 transaction.rollback();
-//
-		s.close();
+		}
+	
+	
 	}
-
 }

@@ -9,7 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import it.beije.makemake.rubrica.ContattoRubrica;
 
 public class HDBexample {
 	
@@ -17,7 +17,7 @@ public class HDBexample {
 		
 
 		Configuration configuration = new Configuration().configure()
-				.addAnnotatedClass(Contatto.class);
+				.addAnnotatedClass(ContattoRubrica.class);
 				//.addAnnotatedClass(Libri.class)
 
 		
@@ -28,12 +28,12 @@ public class HDBexample {
 		System.out.println(session.isOpen());
 		
 		//Query HQL
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");//SELECT * FROM rubrica
+		Query<ContattoRubrica> query = session.createQuery("SELECT c FROM ContattoRubrica as c");//SELECT * FROM rubrica
 		//Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c WHERE cognome = 'Rossi'");
-		List<Contatto> contatti = query.list();
+		List<ContattoRubrica> contatti = query.list();
 		
-		Contatto contatto = null;
-		for (Contatto c : contatti) {
+		ContattoRubrica contatto = null;
+		for (ContattoRubrica c : contatti) {
 			System.out.println(c);
 			contatto = c;
 		}
