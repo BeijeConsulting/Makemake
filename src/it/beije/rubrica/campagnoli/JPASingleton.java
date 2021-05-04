@@ -15,7 +15,7 @@ public class JPASingleton {
 		public static JPASingleton getInstance() {
 			if(instance == null) {
 				instance = new JPASingleton();
-				instance.factory = Persistence.createEntityManagerFactory("Makemake");
+				JPASingleton.factory = Persistence.createEntityManagerFactory("Makemake");
 			}
 			
 			return instance;
