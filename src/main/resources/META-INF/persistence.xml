@@ -3,6 +3,9 @@
 	<persistence-unit name="Makemake">
 		<class>it.beije.makemake.addressBook.Contact</class>
 		<class>it.beije.makemake.myDatabase.ecommerce.User</class>
+		<class>it.beije.makemake.myDatabase.ecommerce.Product</class>
+		<class>it.beije.makemake.myDatabase.ecommerce.Order</class>
+		<class>it.beije.makemake.myDatabase.ecommerce.OrderItem</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

@@ -70,6 +70,22 @@ public class User {
         this.surname = surname;
     }
 
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}' + "\n";
+    }
+
+    public String toShortString() {
+        return "Name: " + name + "\n"
+                + "Surname: " + surname + "\n";
+    }
 }
 
 /*

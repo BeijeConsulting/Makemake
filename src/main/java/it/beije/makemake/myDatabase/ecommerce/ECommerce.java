@@ -1,0 +1,145 @@
+package it.beije.makemake.myDatabase.ecommerce;
+
+import it.beije.makemake.myDatabase.JPAManager;
+
+
+import javax.lang.model.UnknownEntityException;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+public class ECommerce {
+
+    public static List<User> getUserList() {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Query query = entityManager.createQuery("SELECT u from User as u");
+        List<User> users = query.getResultList();
+        jpaManager.closeEntityManager(entityManager);
+        return users;
+    }
+
+    public static void printUserList() {
+        System.out.println(getUserList());
+    }
+
+    public static List<Product> getProductList() {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Query query = entityManager.createQuery("SELECT p from Product as p");
+        List<Product> products = query.getResultList();
+        jpaManager.closeEntityManager(entityManager);
+        return products;
+    }
+
+    public static void printProductList() {
+        System.out.println(getProductList());
+    }
+
+
+    public static void createNewOrder(int idUser, HashMap<Integer, Integer> products) {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        User user = entityManager.find(User.class, idUser);
+        if (user == null) {
+            throw new IllegalArgumentException("Id utente non valido");
+        }
+        BigDecimal total = new BigDecimal(0);
+        LocalDateTime dateTime = LocalDateTime.now();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+        entityTransaction.begin();
+        Order order = new Order();
+        order.setIdUser(idUser);
+        order.setDate(dateTime);
+        order.setStatus("ok");
+        order.setTotal(total);
+        entityManager.persist(order);
+        Integer orderId = order.getId();
+        for (Integer productId :
+                products.keySet()) {
+            Product product = entityManager.find(Product.class, productId);
+            if (product == null) {
+                throw new IllegalArgumentException("Id prodotto "+ productId + " non valido");
+            }
+            OrderItem orderItem = new OrderItem();
+            orderItem.setIdOrder(orderId);
+            orderItem.setIdProduct(productId);
+            orderItem.setQuantity(products.get(productId));
+            orderItem.setPrice(product.getPrice());
+            entityManager.persist(orderItem);
+            total = total.add(product.getPrice().multiply(BigDecimal.valueOf(products.get(productId))));
+        }
+        order.setTotal(total);
+        entityManager.merge(order);
+        entityTransaction.commit();
+        jpaManager.closeEntityManager(entityManager);
+    }
+
+    public static String getOrderDetails(Order order) {
+        StringBuilder output = new StringBuilder();
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Integer id = order.getId();
+        //append order info
+        output.append("ORDER INFO: " + "\n");
+        output.append(order.toShortString());
+        //get data about user
+        output.append("USER INFO: " + "\n");
+        User user = getUser(order.getIdUser());
+        output.append(user.toShortString());
+        //get data about products
+        output.append("PRODUCT INFO: " + "\n");
+        String selectOrderItem = "SELECT oi from OrderItem as oi WHERE oi.idOrder = :id";
+        Query query = entityManager.createQuery(selectOrderItem);
+        query.setParameter("id", id);
+        List<OrderItem> orderItems = query.getResultList();
+        for (OrderItem orderItem: orderItems) {
+            Integer productId = orderItem.getIdProduct();
+            Product product = getProduct(productId);
+            output.append(product.toShortString());
+            output.append("Ordered amount: " + orderItem.getQuantity() + "\n");
+            output.append("------------------------------\n");
+        }
+        jpaManager.closeEntityManager(entityManager);
+        return output.toString();
+    }
+
+    public static String getOrderDetails(Integer orderId) {
+        Order order = getOrder(orderId);
+        return getOrderDetails(order);
+    }
+
+    private static User getUser(Integer userId) {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        User user = entityManager.find(User.class, userId);
+        jpaManager.closeEntityManager(entityManager);
+        return user;
+    }
+
+    private static Product getProduct(Integer productId) {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Product product = entityManager.find(Product.class, productId);
+        jpaManager.closeEntityManager(entityManager);
+        return product;
+    }
+
+    private static Order getOrder(Integer orderId) {
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Order order = entityManager.find(Order.class, orderId);
+        jpaManager.closeEntityManager(entityManager);
+        return order;
+    }
+
+
+}
