@@ -16,70 +16,74 @@ public class GestoreEcommerce {
 		EntityManager e = EntityManagerMan.getEntity();
 
 		Scanner s = new Scanner(System.in);
-		// selectUsers(e);
-		// selectProduct(e);
-		// selectOrderItem(e);
-		// selectOrder(e);
-
+		
+		//printUsers(getUsers(e));
+		//printProduct(getProducts(e));
+		
 		System.out.println("Inserisci l'id dell'ordine di cui vuoi informazioni");
 		int info = s.nextInt();
-		orderDetails(e, info);
+		getorderDetails(e, info);
 
 	}
 
-	public static List<User> selectUsers(EntityManager entityManager) throws Exception {
+	public static List<User> getUsers(EntityManager entityManager) throws Exception {
 
 		String jpqlSelect = "SELECT c FROM User as c";
 		Query query = entityManager.createQuery(jpqlSelect);
 		List<User> Users = query.getResultList();
 
-		for (User c : Users) {
-			System.out.println(c);
-		}
 		return Users;
 
 	}
+	public static void printUsers(List<User> users){
+		for (User c : users) {
+			System.out.println(c);
+		}
+	}
 
-	public static List<Product> selectProduct(EntityManager entityManager) throws Exception {
+	public static List<Product> getProducts(EntityManager entityManager) throws Exception {
 
 		String jpqlSelect = "SELECT c FROM Product as c";
 		Query query = entityManager.createQuery(jpqlSelect);
 		List<Product> Product = query.getResultList();
-
+		
+		return Product;
+	}
+	public static void printProduct(List<Product> Product){
+		
 		for (Product c : Product) {
 			System.out.println(c);
 		}
-		return Product;
-
 	}
 
-	public static List<OrderItem> selectOrderItem(EntityManager entityManager) throws Exception {
+
+	public static List<OrderItem> getOrderItems(EntityManager entityManager) throws Exception {
 
 		String jpqlSelect = "SELECT c FROM OrderItem as c";
 		Query query = entityManager.createQuery(jpqlSelect);
 		List<OrderItem> OrderItem = query.getResultList();
-
-		for (OrderItem c : OrderItem) {
-			System.out.println(c);
-		}
+//
+//		for (OrderItem c : OrderItem) {
+//			System.out.println(c);
+//		}
 		return OrderItem;
 
 	}
 
-	public static List<Order> selectOrder(EntityManager entityManager) throws Exception {
+	public static List<Order> getOrders(EntityManager entityManager) throws Exception {
 
 		String jpqlSelect = "SELECT c FROM Order as c";
 		Query query = entityManager.createQuery(jpqlSelect);
 		List<Order> Order = query.getResultList();
-
-		for (Order c : Order) {
-			System.out.println(c);
-		}
+//
+//		for (Order c : Order) {
+//			System.out.println(c);
+//		}
 		return Order;
 
 	}
 
-	public static void orderDetails(EntityManager entityManager, int o) throws Exception {
+	public static void getorderDetails(EntityManager entityManager, int o) throws Exception {
 
 		String jpqlSelect = "SELECT c FROM Order as c, User as u WHERE c.id =" + o + " AND c.id_user = u.id";
 		String jpqlSelect2 = "SELECT u FROM Order as c, User as u WHERE c.id =" + o + " AND c.id_user = u.id";
