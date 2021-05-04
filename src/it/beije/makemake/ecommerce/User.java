@@ -19,11 +19,13 @@ public class User {
 	private String username;
 	
 	@Column
-	private String password;
-	
 	private String name;
 	
+	@Column
 	private String surname;
+	
+	@Column
+	private String password;
 
 	
 	public Integer getId() {
