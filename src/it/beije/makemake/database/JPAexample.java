@@ -8,7 +8,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.beije.makemake.rubrica.Contatto;
+import rubrica.Contatto;
 
 public class JPAexample {
 
@@ -31,7 +31,7 @@ public class JPAexample {
 			System.out.println("name : " + contatto.getNome());
 			System.out.println("surname : " + contatto.getCognome());
 			System.out.println("telephone : " + contatto.getTelefono());
-			System.out.println("email : " + contatto.getEmail());
+			System.out.println("email : " + contatto.getMail());
 		}
 		
 		

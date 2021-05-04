@@ -91,7 +91,7 @@ public class ListaContatti {
 	public int posContatto(String nome, String cognome) {
 
 		for (int i = 0; i < lista.size(); i++) {
-			if (lista.get(i).getNome() == nome && lista.get(i).getCognome() == cognome) {
+			if (lista.get(i).getNome().equalsIgnoreCase(nome)  && lista.get(i).getCognome().equalsIgnoreCase(cognome)) {
 				return i;
 			}
 		}
