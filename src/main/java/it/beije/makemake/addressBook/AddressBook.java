@@ -1,5 +1,6 @@
 package it.beije.makemake.addressBook;
 
+import it.beije.makemake.myDatabase.JPAManager;
 import it.beije.makemake.myDatabase.SessionManager;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -7,13 +8,15 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.query.Query;
 import org.hibernate.sql.JoinType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -289,20 +292,38 @@ public class AddressBook {
 
     }
 
+    public static AddressBook createFromDatabaseJPA() {
+        //version using JPA
+        AddressBook addressBook = new AddressBook();
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        Query contacts = entityManager.createQuery("SELECT c FROM Contact as c");
+        List<Contact> contactList = contacts.getResultList();
+        for (Contact c :
+                contactList) {
+            addressBook.addContact(c);
+        }
+        jpaManager.closeEntityManager(entityManager);
+        return addressBook;
+    }
+
+
+
 
     public void updateDB() {
         //can be called only if AddressBook is created from db
         //or if it has been uploaded to db
-        AddressBook addressBook = new AddressBook();
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSession();
+        //(Now using JPA instead of Hibernate)
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
         for (Contact c :
                 contactList) {
-            Transaction transaction = session.getTransaction();
-            session.save(c);
-            transaction.commit();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.persist(c);
+            entityTransaction.commit();
         }
-        sessionManager.closeSession(session);
+        jpaManager.closeEntityManager(entityManager);
     }
 
     
@@ -324,6 +345,26 @@ public class AddressBook {
         sessionManager.closeSession(session);
     }
 
+    public void updateNameAndDBJPA(String oldName, String newName) {
+        //can be called only if AddressBook is created from db
+        //or if it has been uploaded to db
+        //(Using JPA instead of Hibernate)
+        Contact c = new Contact();
+        c.setName(oldName);
+        List<Contact> updated = search(c);
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
+        for (Contact contact:
+                updated) {
+            contact.setName(newName);
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            entityManager.merge(contact);
+            entityTransaction.commit();
+        }
+        jpaManager.closeEntityManager(entityManager);
+    }
+
 
     public boolean removeAllAndUpdateDB(Contact c) {
         //can be called only if AddressBook is created from db
@@ -333,18 +374,23 @@ public class AddressBook {
         //This removes ALL the objects satisfying equality
         //from AddressBook and database
         //Return true if at least one contact was removed
+        //(Now using JPA instead of Hibernate)
         boolean removed = false;
         List<Contact> updated = search(c);
-        SessionManager sessionManager = SessionManager.getSessionManager();
-        Session session = sessionManager.getSession();
+        JPAManager jpaManager = JPAManager.getJPAManager();
+        EntityManager entityManager = jpaManager.getEntityManager();
         for (Contact contact:
                 updated) {
             removed = contactList.remove(contact);
-            Transaction transaction = session.beginTransaction();
-            session.delete(contact);
-            transaction.commit();
+            EntityTransaction entityTransaction = entityManager.getTransaction();
+            entityTransaction.begin();
+            //we can't write
+            //entityManager.remove(contact) because it's detached now
+            //A "clean" solution is thus to use the id
+            entityManager.remove(entityManager.find(Contact.class, contact.getId()));
+            entityTransaction.commit();
         }
-        sessionManager.closeSession(session);
+        jpaManager.closeEntityManager(entityManager);
         return removed;
     }
 
