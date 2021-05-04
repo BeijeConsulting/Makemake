@@ -8,23 +8,22 @@ import javax.persistence.Id;
 
 @Entity
 public class User {
-
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
-
+	
 	@Column
 	private String username;
 	
 	@Column
 	private String password;
 	
-	@Column
 	private String name;
 	
-	@Column
 	private String surname;
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -33,6 +32,7 @@ public class User {
 		this.id = id;
 	}
 
+	
 	public String getUsername() {
 		return username;
 	}
@@ -41,6 +41,7 @@ public class User {
 		this.username = username;
 	}
 
+	
 	public String getPassword() {
 		return password;
 	}
@@ -49,6 +50,7 @@ public class User {
 		this.password = password;
 	}
 
+	
 	public String getName() {
 		return name;
 	}
@@ -57,6 +59,7 @@ public class User {
 		this.name = name;
 	}
 
+	
 	public String getSurname() {
 		return surname;
 	}
@@ -64,5 +67,17 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
 }
+
+/*
+CREATE TABLE `makemake`.`user` (
+`id` INT NOT NULL AUTO_INCREMENT,
+`username` VARCHAR(100) NOT NULL,
+`name` VARCHAR(45) NULL,
+`surname` VARCHAR(45) NULL,
+`password` VARCHAR(45) NULL,
+PRIMARY KEY (`id`),
+UNIQUE INDEX `email_UNIQUE` (`username` ASC) VISIBLE);
+*/
+
+
