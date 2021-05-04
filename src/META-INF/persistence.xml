@@ -3,6 +3,7 @@
 	<persistence-unit name="Makemake">
 
 		<class>it.beije.makemake.file.rubrica.Contatto</class>
+		<class>it.beije.makemake.ecommerce.User</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
