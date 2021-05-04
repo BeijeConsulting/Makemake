@@ -20,9 +20,9 @@ public class User {
 	
 	@Column
 	private String password;
-	
+	@Column
 	private String name;
-	
+	@Column
 	private String surname;
 
 	
@@ -68,6 +68,12 @@ public class User {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", surname="
+				+ surname + "]";
 	}
 	
 }
