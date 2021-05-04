@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 
 import it.andrea.esercitazione.contatti.csv.CsvManager;
-import it.andrea.esercitazione.contatti.db.DBAndFileManager;
-import it.andrea.esercitazione.contatti.db.HDBManager;
+import it.andrea.esercitazione.contatti.db.hibernate.DBAndFileManager;
+import it.andrea.esercitazione.contatti.db.hibernate.HDBManager;
 import it.andrea.esercitazione.contatti.entity.Contatto;
 import it.andrea.esercitazione.contatti.entity.ContattoUtils;
 
 public class ContattiDBClient {
+	private static HDBManager hdbManager = new HDBManager();
+	
 	public static void printMenu() {
 		System.out.println("Cosa vuoi fare?");
 		System.out.println("1: Visualizza rubrica");
@@ -38,8 +40,8 @@ public class ContattiDBClient {
 
 	public static boolean addContact(Scanner scanner) {
 		Contatto contatto = createContatto(scanner);
-		if (!HDBManager.tableContains(contatto)) {
-			HDBManager.insert(contatto);
+		if (!hdbManager.tableContains(contatto)) {
+			hdbManager.insert(contatto);
 			System.out.println("Contatto aggiunto con successo!");
 			System.out.println(contatto);
 			return true;
@@ -53,7 +55,7 @@ public class ContattiDBClient {
 		System.out.println(
 				"I seguenti parametri sono opzionali, e la ricerca sarà effettuata solo in base a quelli inseriti.");
 		Contatto mask = createContatto(scanner);
-		List<Contatto> searchResult = HDBManager.getContattiByMask(mask);
+		List<Contatto> searchResult = hdbManager.getContattiByMask(mask);
 		return searchResult;
 	}
 
@@ -81,7 +83,7 @@ public class ContattiDBClient {
 		}
 		System.out.println("Inserisci ora i dati del contatto aggiornato:");
 		Contatto newContatto = createContatto(scanner);
-		HDBManager.update(oldContatto, newContatto);
+		hdbManager.update(oldContatto, newContatto);
 		System.out.println("Modifiche eseguite.");
 	}
 
@@ -107,7 +109,7 @@ public class ContattiDBClient {
 			System.out.println("Nessun contatto corrisponde ai filtri inseriti!");
 			return;
 		}
-		HDBManager.delete(greenMileContatto);
+		hdbManager.delete(greenMileContatto);
 		System.out.println("Contatto eliminato.");
 	}
 
@@ -140,7 +142,7 @@ public class ContattiDBClient {
 			selection = scanner.nextLine().toUpperCase();
 			switch (selection) {
 			case "1": // Visualizza rubrica
-				ContattoUtils.printList(HDBManager.selectAll());
+				ContattoUtils.printList(hdbManager.selectAll());
 				break;
 			case "2": // Aggiungi un contatto
 				while (!addContact(scanner)) {

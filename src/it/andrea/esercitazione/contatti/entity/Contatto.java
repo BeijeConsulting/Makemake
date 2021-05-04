@@ -44,6 +44,11 @@ public class Contatto {
 		this.email = email;
 	}
 
+	public Contatto(int id, String nome, String cognome, String telefono, String email) {
+		this(nome, cognome, telefono, email);
+		this.id = id;
+	}
+
 	public Contatto(String[] contattoCsv) {
 		this.nome = contattoCsv[0];
 		this.cognome = contattoCsv[1];

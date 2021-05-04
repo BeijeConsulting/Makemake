@@ -1,4 +1,4 @@
-package it.andrea.esercitazione.contatti.db;
+package it.andrea.esercitazione.contatti.db.hibernate;
 
 import java.util.List;
 
@@ -7,10 +7,12 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
+import it.andrea.esercitazione.contatti.db.DbManager;
+import it.andrea.esercitazione.contatti.db.TooManySessionsException;
 import it.andrea.esercitazione.contatti.entity.Contatto;
 
-public class HDBManager {
-	public static List<Contatto> selectAll() {
+public class HDBManager implements DbManager {
+	public List<Contatto> selectAll() {
 		List<Contatto> contatti;
 		try {
 			Session session = HDBConnectionManager.getSession();
@@ -26,7 +28,7 @@ public class HDBManager {
 		}
 	}
 
-	public static List<Contatto> selectBy(String filter, String value) {
+	public List<Contatto> selectBy(String filter, String value) {
 		List<Contatto> contatti;
 		try {
 			Session session = HDBConnectionManager.getSession();
@@ -50,7 +52,7 @@ public class HDBManager {
 	 * @param contatto il contatto da cercare nella tabella
 	 * @return List<Contatto>
 	 */
-	public static List<Contatto> getContattiByFullContatto(Contatto contatto) {
+	public List<Contatto> getContattiByFullContatto(Contatto contatto) {
 		List<Contatto> contatti;
 		try {
 			Session session = HDBConnectionManager.getSession();
@@ -79,7 +81,7 @@ public class HDBManager {
 	 * @param contatto il contatto da cercare nella tabella
 	 * @return List<Contatto>
 	 */
-	private static List<Contatto> getContattiByFullContatto(Contatto contatto, Session session) {
+	private List<Contatto> getContattiByFullContatto(Contatto contatto, Session session) {
 		List<Contatto> contatti;
 		Criteria criteria = session.createCriteria(Contatto.class);
 		criteria.add(Restrictions.eqOrIsNull("nome", contatto.getNome()));
@@ -90,7 +92,7 @@ public class HDBManager {
 		return contatti;
 	}
 
-	public static List<Contatto> getContattiByMask(Contatto mask) {
+	public List<Contatto> getContattiByMask(Contatto mask) {
 		List<Contatto> contatti;
 		try {
 			Session session = HDBConnectionManager.getSession();
@@ -118,14 +120,14 @@ public class HDBManager {
 		}
 	}
 
-	public static boolean tableContains(Contatto contatto) {
+	public boolean tableContains(Contatto contatto) {
 		if (getContattiByFullContatto(contatto).size() >= 1) {
 			return true;
 		}
 		return false;
 	}
 
-	public static void insert(Contatto contatto) {
+	public void insert(Contatto contatto) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			session.save(contatto);
@@ -137,7 +139,7 @@ public class HDBManager {
 		}
 	}
 
-	public static void insert(List<Contatto> contatti) {
+	public void insert(List<Contatto> contatti) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			for (Contatto contatto : contatti) {
@@ -151,7 +153,7 @@ public class HDBManager {
 		}
 	}
 
-	public static void update(Contatto oldContatto, Contatto newContatto) {
+	public void update(Contatto oldContatto, Contatto newContatto) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			Contatto oldDBContatto = getContattiByFullContatto(oldContatto, session).get(0);
@@ -168,7 +170,7 @@ public class HDBManager {
 		}
 	}
 
-	public static void delete(Contatto contatto) {
+	public void delete(Contatto contatto) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			session.remove(contatto);
@@ -180,7 +182,7 @@ public class HDBManager {
 		}
 	}
 
-	public static void delete(List<Contatto> contatti) {
+	public void delete(List<Contatto> contatti) {
 		try {
 			Session session = HDBConnectionManager.getSession();
 			for (Contatto contatto : contatti) {
