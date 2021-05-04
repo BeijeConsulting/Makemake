@@ -1,5 +1,7 @@
 package it.beije.makemake.Hibernate;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -89,7 +91,7 @@ public class JPAManager {
 	public static void update(int id,String name,String surname) {
 		EntityManager entityManager = manager.getEntityManager();
 		
-		Contatto c = findContatto(id);
+		Contatto c = entityManager.find(Contatto.class ,id);
 		
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
@@ -102,8 +104,9 @@ public class JPAManager {
 	}
 	
 	public static void remove(int id) {
-		Contatto c = findContatto(id);
+		
 		EntityManager entityManager = manager.getEntityManager();
+		Contatto c = entityManager.find(Contatto.class ,id);
 		EntityTransaction entityTransaction = entityManager.getTransaction();
 		entityTransaction.begin();
 		
@@ -111,6 +114,27 @@ public class JPAManager {
 		
 		entityTransaction.commit();
 		entityManager.close();
+	}
+	
+	public static void salvaModifiche(String path,List<Contatto> contatti) throws Exception {
+		FileWriter writer = new FileWriter(new File(path));
+		for (Contatto contatto : contatti) {
+			writer.write(contatto.getNome());
+			writer.write(';');
+			writer.write(contatto.getCognome());
+			writer.write(';');
+			writer.write(contatto.getTelefono());
+			writer.write(';');
+			if (contatto.getEmail() != null) {
+				writer.write(contatto.getEmail());
+			}
+
+			writer.write('\n');
+		}
+
+		writer.flush();
+		writer.close();
+
 	}
 	
 }

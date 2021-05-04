@@ -10,7 +10,7 @@ public class JPAMenu {
 	static List<Contatto> rubrica = new ArrayList<>();
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)  {
 		boolean ciclo = true;
 		
 		menu();
@@ -61,7 +61,18 @@ public class JPAMenu {
 				System.out.println("Choose the contact id you want to remove");
 				int inde = input.nextInt();
 				JPAManager.remove(inde);
-				
+			case 8 : 
+				System.out.println("Insert the path file where u want to save your rubrica");
+				String pathOut = input.nextLine();
+				try {
+					JPAManager.salvaModifiche(pathOut, rubrica);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				break;
+			case 9 : 
+				ciclo = false;
+				break;
 			}
 		}while(ciclo);
 
