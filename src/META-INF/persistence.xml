@@ -3,6 +3,10 @@
 	<persistence-unit name="Makemake">
 
 		<class>it.andrea.esercitazione.contatti.entity.Contatto</class>
+		<class>it.andrea.ecommerce.entity.User</class>
+		<class>it.andrea.ecommerce.entity.Order</class>
+		<class>it.andrea.ecommerce.entity.OrderItem</class>
+		<class>it.andrea.ecommerce.entity.Product</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>
