@@ -23,7 +23,7 @@ public class SessionManager {
 		return session;
 	}
 	
-	public static Session getSession() throws Exception {
+	public static Session getSession(){
 		if (config == null) { 
 			return init();
 			}

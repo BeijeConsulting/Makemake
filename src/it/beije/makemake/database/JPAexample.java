@@ -12,18 +12,15 @@ import it.beije.makemake.rubrica.Contatto;
 
 public class JPAexample {
 
-	public static void main(String[] args) {
+	public static void main(String[] args){
 		
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("Makemake");
-		
-		EntityManager entityManager = factory.createEntityManager();
-		
-		Contatto c = entityManager.find(Contatto.class, 26);
+		EntityManager e = EntityManagerMan.getEntity();
+		Contatto c = e.find(Contatto.class, 26);
 		System.out.println(c);
 		
 		//Query JPQL
 		String jpqlSelect = "SELECT c FROM Contatto as c";
-		Query query = entityManager.createQuery(jpqlSelect);
+		Query query = e.createQuery(jpqlSelect);
 		List<Contatto> contatti = query.getResultList();
 
 		for (Contatto contatto : contatti) {
@@ -36,7 +33,7 @@ public class JPAexample {
 		
 		
 		//Transaction
-		EntityTransaction entityTransaction = entityManager.getTransaction();
+		EntityTransaction entityTransaction = e.getTransaction();
 		entityTransaction.begin();
 		
 		//INSERT
@@ -59,7 +56,7 @@ public class JPAexample {
 		entityTransaction.commit();
 //		entityTransaction.rollback();
 		
-		entityManager.close();
+		e.close();
 
 	}
 

@@ -3,10 +3,17 @@ package it.beije.makemake.rubrica;
 import java.io.File;
 import java.util.List;
 import java.util.Scanner;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+
+import it.beije.makemake.database.EntityManagerMan;
 import it.beije.makemake.database.SessionManager;
 import it.beije.makemake.file.CsvManager;
 import it.beije.makemake.file.XmlManager;
@@ -14,7 +21,7 @@ import it.beije.makemake.file.XmlManager;
 public class HCriteria {
 
 	public static void main(String[] args) throws Exception {
-
+		//EntityManager e = EntityManagerMan.getEntity();
 		Session session = SessionManager.getSession();
 		// criteria.add(Restrictions.eq("nome", "carlo maria"));
 		// criteria.add(Restrictions.gt("id", 12)); //greater than = GT
@@ -29,11 +36,11 @@ public class HCriteria {
 				addContact(GestisciRubrica.leggiContatto(s), session);
 				continue;
 			case "2": // Rimuovi
-				deleteContact(new Contatto("ciao", "ciao", "ciao", "ciao"),session);
-				flag = false;
+				deleteContact(GestisciRubrica.leggiContatto(s),session);
 				continue;
 			case "3":// mostra tutti i contatti
-				selectAll(session);
+				selectAll(session);// criteria
+				//selectAllJPA(e); // JPA
 				continue;
 			case "4":
 				modifyContact(session,GestisciRubrica.leggiContatto(s),s);
@@ -50,17 +57,19 @@ public class HCriteria {
 				for(Contatto c: cont) {
 					addContact(c, session);
 				}
+				continue;
 			case "8":
 				List<Contatto> cont1= CsvManager.leggiCsv(ottieniPercorso(s, 0));
 				for(Contatto c: cont1) {
 					addContact(c, session);
 				}
-				
+				continue;
 			}
 		} while (flag);
 		System.out.println("fine");
 
 		SessionManager.close(session);
+		//EntityManagerMan.close(e);
 
 	}
 	public static String ottieniPercorso(Scanner s,int i) {
@@ -79,6 +88,7 @@ public class HCriteria {
 		return percorso;
 		
 	}
+	
 	public static String modifyContact(Session session,Contatto c,Scanner s) throws Exception {
 		if(selectContact(c, session) == null)
 			return"IL CONTATTO INSERITO NON E' IN RUBRICA";
@@ -123,26 +133,43 @@ public class HCriteria {
 		
 			
 	}
+
 	public static List<Contatto> selectAll(Session session) throws Exception {
 
 		Criteria criteria = session.createCriteria(Contatto.class);
 
 		List<Contatto> contatti = criteria.list();
-
+		
+		for(Contatto c: contatti) {
+			System.out.println(c);
+		}
 		return contatti;
 
 	}
+	
+	public static List<Contatto> selectAllJPA(EntityManager entityManager) throws Exception {
+		
+		String jpqlSelect = "SELECT c FROM Contatto as c";
+		Query query = entityManager.createQuery(jpqlSelect);
+		List<Contatto> contatti = query.getResultList();
+		
+		for(Contatto c: contatti) {
+			System.out.println(c);
+		}
+		return contatti;
+
+	}
+	
 	public static List<Contatto> selectContact(Contatto c, Session session) throws Exception {
 		
 		Criteria criteria = session.createCriteria(Contatto.class);
 		criteria.add(Restrictions.eq("nome", c.getNome())).add(Restrictions.eq("cognome", c.getCognome()))
 				.add(Restrictions.eq("email", c.getEmail())).add(Restrictions.eq("telefono", c.getTelefono()));
 		List<Contatto> contatti = criteria.list();
-//		
-//		for(Contatto c1 : contatti)
-//			System.out.println(c1);
+
 		if(contatti.size()==0)
 			return null;
+		
 		return contatti;
 
 	}
@@ -164,7 +191,7 @@ public class HCriteria {
 			
 		}
 }
-
+	
 	public static void addContact(Contatto c, Session session) throws Exception {
 		Transaction transaction = session.beginTransaction();
 		session.save(c);
