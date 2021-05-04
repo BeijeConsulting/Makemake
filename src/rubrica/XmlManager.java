@@ -24,7 +24,7 @@ import org.xml.sax.SAXException;
 public class XmlManager {
 
 	public static void main(String[] args) {
-		File file = new File("C:\\Users\\Padawan05\\Desktop\\FileJava\\rubrica.xml");
+		File file = new File("C:\\Users\\Padawan05\\Desktop\\rubrica.xml");
 		String percorsoFile = "C:\\Users\\Padawan05\\Desktop\\FileJava\\";
 
 		String fileDaScrivere = "rubricaMODXML.txt";

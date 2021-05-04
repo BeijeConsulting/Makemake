@@ -1,10 +1,10 @@
 package rubrica;
 
 import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-
 import it.beije.makemake.database.HDBSingleton;
 
 public class DBManager {
@@ -24,8 +24,8 @@ public class DBManager {
 	public static ListaContatti dbToListaContatti() {
 		listaContatti = new ListaContatti();
 		session = singleton.getSession();
-		Query<Contatto> query = session.createQuery("SELECT c FROM Contatto as c");
-		List<Contatto> contatti = query.list();
+		Criteria criteria = session.createCriteria(Contatto.class);
+		List<Contatto> contatti = criteria.list();
 		System.out.println(contatti);
 		for (Contatto c : contatti) {
 			System.out.println(c);
