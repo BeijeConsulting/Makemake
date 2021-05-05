@@ -3,16 +3,11 @@ package it.beije.makemake.myDatabase.ecommerce;
 import it.beije.makemake.myDatabase.JPAManager;
 
 
-import javax.lang.model.UnknownEntityException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -83,11 +78,11 @@ public class ECommerce {
         jpaManager.closeEntityManager(entityManager);
     }
 
-    public static String getOrderDetails(Order order) {
+    public static String getOrderDetails(Integer orderId) {
         StringBuilder output = new StringBuilder();
         JPAManager jpaManager = JPAManager.getJPAManager();
         EntityManager entityManager = jpaManager.getEntityManager();
-        Integer id = order.getId();
+        Order order = getOrder(orderId);
         //append order info
         output.append("ORDER INFO: " + "\n");
         output.append(order.toShortString());
@@ -96,25 +91,23 @@ public class ECommerce {
         User user = getUser(order.getIdUser());
         output.append(user.toShortString());
         //get data about products
-        output.append("PRODUCT INFO: " + "\n");
-        String selectOrderItem = "SELECT oi from OrderItem as oi WHERE oi.idOrder = :id";
-        Query query = entityManager.createQuery(selectOrderItem);
-        query.setParameter("id", id);
-        List<OrderItem> orderItems = query.getResultList();
-        for (OrderItem orderItem: orderItems) {
-            Integer productId = orderItem.getIdProduct();
-            Product product = getProduct(productId);
-            output.append(product.toShortString());
-            output.append("Ordered amount: " + orderItem.getQuantity() + "\n");
-            output.append("------------------------------\n");
-        }
+        List<OrderItem> orderItems = order.getOrderItems();
+        output.append(getOrderItemsInfo(orderItems));
         jpaManager.closeEntityManager(entityManager);
         return output.toString();
     }
 
-    public static String getOrderDetails(Integer orderId) {
-        Order order = getOrder(orderId);
-        return getOrderDetails(order);
+    private static String getOrderItemsInfo(List<OrderItem> orderItems) {
+        StringBuilder output = new StringBuilder();
+        for (OrderItem orderItem : orderItems) {
+            Integer productId = orderItem.getIdProduct();
+            Product product = getProduct(productId);
+            output.append(product.toShortString());
+            output.append("Price (at the time of purchase) : " + orderItem.getPrice());
+            output.append("Ordered amount: " + orderItem.getQuantity() + "\n");
+            output.append("------------------------------\n");
+        }
+        return output.toString();
     }
 
     private static User getUser(Integer userId) {

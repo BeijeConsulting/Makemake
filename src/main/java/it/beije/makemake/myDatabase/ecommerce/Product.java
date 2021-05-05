@@ -83,8 +83,8 @@ public class Product {
     }
 
     public String toShortString() {
-        return "Price: " + price + "\n"
-                + "name: " + name + "\n"
+        return
+                "name: " + name + "\n"
                 + "brand: " + brand + "\n";
     }
 }

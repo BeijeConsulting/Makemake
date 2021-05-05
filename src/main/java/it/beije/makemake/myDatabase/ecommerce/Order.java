@@ -4,6 +4,7 @@ package it.beije.makemake.myDatabase.ecommerce;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="\"Order\"")
@@ -21,6 +22,10 @@ public class Order {
     private String status;
 
     private BigDecimal total;
+
+    @OneToMany
+    @JoinColumn(name="id_order")
+    private List<OrderItem> orderItems;
 
 
     public void setId(Integer id) {
@@ -62,6 +67,14 @@ public class Order {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     public String toShortString() {

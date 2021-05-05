@@ -8,8 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import it.beije.makemake.ecommerce.Order;
-import it.beije.makemake.ecommerce.User;
+import it.beije.makemake.database.ecommerce.Order;
+import it.beije.makemake.database.ecommerce.User;
 import it.beije.makemake.rubrica.Contatto;
 
 public class JPAexample {
