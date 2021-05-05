@@ -17,8 +17,8 @@ public class Order {
 	private Integer id;
 	@Column
 	private LocalDateTime date;
-	@Column
-	private Integer id_user;
+	@Column(name = "id_user")
+	private Integer userId;
 	@Column
 	private String status;
 	@Column
@@ -40,12 +40,12 @@ public class Order {
 		this.date = date;
 	}
 
-	public Integer getId_user() {
-		return id_user;
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setId_user(Integer id_user) {
-		this.id_user = id_user;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getStatus() {
@@ -83,10 +83,10 @@ public class Order {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (id_user == null) {
-			if (other.id_user != null)
+		if (userId == null) {
+			if (other.userId != null)
 				return false;
-		} else if (!id_user.equals(other.id_user))
+		} else if (!userId.equals(other.userId))
 			return false;
 		if (status == null) {
 			if (other.status != null)
@@ -100,7 +100,7 @@ public class Order {
 
 	@Override
 	public String toString() {
-		return "Order [id=" + id + ", date=" + date + ", id_user=" + id_user + ", status=" + status + ", total=" + total
+		return "Order [id=" + id + ", date=" + date + ", userId=" + userId + ", status=" + status + ", total=" + total
 				+ "]";
 	}
 

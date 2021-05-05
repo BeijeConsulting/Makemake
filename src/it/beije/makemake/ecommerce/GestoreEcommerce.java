@@ -1,9 +1,7 @@
 package it.beije.makemake.ecommerce;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -16,13 +14,13 @@ public class GestoreEcommerce {
 		EntityManager e = EntityManagerMan.getEntity();
 
 		Scanner s = new Scanner(System.in);
-		
-		//printUsers(getUsers(e));
-		//printProduct(getProducts(e));
-		
+		// printUsers(getUsers(e));
+		// printProduct(getProducts(e));
+
 		System.out.println("Inserisci l'id dell'ordine di cui vuoi informazioni");
 		int info = s.nextInt();
 		getorderDetails(e, info);
+		EntityManagerMan.close(e);
 
 	}
 
@@ -35,7 +33,8 @@ public class GestoreEcommerce {
 		return Users;
 
 	}
-	public static void printUsers(List<User> users){
+
+	public static void printUsers(List<User> users) {
 		for (User c : users) {
 			System.out.println(c);
 		}
@@ -46,16 +45,16 @@ public class GestoreEcommerce {
 		String jpqlSelect = "SELECT c FROM Product as c";
 		Query query = entityManager.createQuery(jpqlSelect);
 		List<Product> Product = query.getResultList();
-		
+
 		return Product;
 	}
-	public static void printProduct(List<Product> Product){
-		
+
+	public static void printProduct(List<Product> Product) {
+
 		for (Product c : Product) {
 			System.out.println(c);
 		}
 	}
-
 
 	public static List<OrderItem> getOrderItems(EntityManager entityManager) throws Exception {
 
@@ -116,6 +115,5 @@ public class GestoreEcommerce {
 
 		}
 	}
-	
 
 }
