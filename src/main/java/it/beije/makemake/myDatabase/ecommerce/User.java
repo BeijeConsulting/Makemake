@@ -1,11 +1,7 @@
 package it.beije.makemake.myDatabase.ecommerce;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
+import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -24,6 +20,10 @@ public class User {
     private String name;
 
     private String surname;
+
+    @OneToMany
+    @JoinColumn(name="id_user")
+    private List<Order> orders;
 
 
     public Integer getId() {
@@ -70,6 +70,13 @@ public class User {
         this.surname = surname;
     }
 
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 
     @Override
     public String toString() {

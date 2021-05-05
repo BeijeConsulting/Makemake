@@ -1,13 +1,12 @@
 package it.beije.makemake.database.ecommerce;
 
-import java.time.LocalDateTime;
+import it.beije.makemake.myDatabase.ecommerce.OrderItem;
+import it.beije.makemake.myDatabase.ecommerce.Product;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.*;
 
 
 @Entity
@@ -30,6 +29,10 @@ public class Order {
 	
 	@Column
 	private Double total;
+
+	@OneToMany
+	@JoinColumn(name="id_order")
+	private List<OrderItem> orderItems;
 
 	
 	public Integer getId() {
