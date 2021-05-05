@@ -1,4 +1,4 @@
-package it.beije.makemake.ecommerce;
+package it.beije.makemake.myEcommerce;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,12 +90,11 @@ public class eCommerceManager {
 		Query queryOrderItem =entityManager.createQuery(jpqlSelectOrder_item);
 		List<Order_item> order_item = queryOrderItem.getResultList();
 
-
-
 		for(Order o : ordini) {
 			System.out.println("-----Dettaglio ordine-----");
 			System.out.println("Id Order : " + o.getId());
 			System.out.println("Tot Order : "+ o.getTotal());
+			
 			User u =entityManager.find(User.class, o.getUserId());
 			System.out.println("Username for Order " + u.getUsername());
 			for(int i=0;i<order_item.size();i++) {

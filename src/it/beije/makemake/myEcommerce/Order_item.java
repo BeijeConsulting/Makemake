@@ -1,4 +1,4 @@
-package it.beije.makemake.ecommerce;
+package it.beije.makemake.myEcommerce;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package it.beije.makemake.ecommerce;
+package it.beije.makemake.myEcommerce;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +19,7 @@ private Integer id;
 @Column
 private LocalDateTime date;
 
-@Column(name = "user_id")
+@Column(name = "id_user")
 private Integer userId;
 
 @Column
