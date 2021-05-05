@@ -8,6 +8,8 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import it.beije.makemake.ecommerce.Order;
+import it.beije.makemake.ecommerce.User;
 import it.beije.makemake.rubrica.Contatto;
 
 public class JPAexample {
@@ -18,20 +20,40 @@ public class JPAexample {
 		
 		EntityManager entityManager = factory.createEntityManager();
 		
-		Contatto c = entityManager.find(Contatto.class, 26);
-		System.out.println(c);
+//		Contatto c = entityManager.find(Contatto.class, 26);
+//		System.out.println(c);
 		
+//		//Query JPQL
+//		String jpqlSelect = "SELECT c FROM Contatto as c";
+//		Query query = entityManager.createQuery(jpqlSelect);
+//		List<Contatto> contatti = query.getResultList();
+//
+//		for (Contatto contatto : contatti) {
+//			System.out.println("id : " + contatto.getId());
+//			System.out.println("name : " + contatto.getNome());
+//			System.out.println("surname : " + contatto.getCognome());
+//			System.out.println("telephone : " + contatto.getTelefono());
+//			System.out.println("email : " + contatto.getEmail());
+//		}
+		
+//		//Query JPQL
+//		String jpqlSelect = "SELECT o FROM Order as o";
+//		Query query = entityManager.createQuery(jpqlSelect);
+//		List<Order> orders = query.getResultList();
+//
+//		for (Order o : orders) {
+//			System.out.println("id : " + o.getId());
+//		}
 		//Query JPQL
-		String jpqlSelect = "SELECT c FROM Contatto as c";
+		String jpqlSelect = "SELECT u FROM User as u";
 		Query query = entityManager.createQuery(jpqlSelect);
-		List<Contatto> contatti = query.getResultList();
+		List<User> users = query.getResultList();
 
-		for (Contatto contatto : contatti) {
-			System.out.println("id : " + contatto.getId());
-			System.out.println("name : " + contatto.getNome());
-			System.out.println("surname : " + contatto.getCognome());
-			System.out.println("telephone : " + contatto.getTelefono());
-			System.out.println("email : " + contatto.getEmail());
+		for (User user : users) {
+			System.out.println(user);
+			for (Order order : user.getOrders()) {
+				System.out.println(order);
+			}
 		}
 		
 		
