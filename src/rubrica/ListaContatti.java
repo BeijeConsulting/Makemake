@@ -49,7 +49,7 @@ public class ListaContatti {
 	public boolean contattoEsistente(String nome, String cognome) {
 		boolean esiste = false;
 		for (Contatto c : lista) {
-			if (c.getNome() == nome && c.getCognome() == cognome) {
+			if (c.getNome().equalsIgnoreCase(nome)  && c.getCognome().equalsIgnoreCase(cognome) ) {
 				esiste = true;
 			}
 		}
