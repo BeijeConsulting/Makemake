@@ -1,11 +1,16 @@
 package it.beije.makemake.ecommerce;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 
 
 
@@ -29,7 +34,11 @@ public class User {
 	
 	@Column(name = "surname")
 	private String surname;
-
+	
+	@OneToMany(cascade=CascadeType.ALL/*, fetch=FetchType.EAGER*/)
+	@JoinColumn(name="id_user")
+	private List<Order> orders;
+	
 	
 	public Integer getId() {
 		return id;
@@ -82,6 +91,16 @@ public class User {
 	}
 	
 	
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+
 }
 
 /*

@@ -7,6 +7,7 @@
 		<class>it.beije.makemake.ecommerce.Product</class>
 		<class>it.beije.makemake.ecommerce.Order</class>
 		<class>it.beije.makemake.ecommerce.OrderItem</class>
+
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		
 		<properties>

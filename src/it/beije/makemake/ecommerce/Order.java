@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "`order`")
 public class Order {
@@ -54,8 +55,8 @@ public class Order {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
 
+	
 	public String getStatus() {
 		return status;
 	}
@@ -72,6 +73,7 @@ public class Order {
 	public void setTotal(Double total) {
 		this.total = total;
 	}
+
 
 	@Override
 	public String toString() {
