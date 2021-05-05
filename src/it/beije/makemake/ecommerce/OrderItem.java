@@ -3,8 +3,10 @@ package it.beije.makemake.ecommerce;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="order_item")
 public class OrderItem {
 	@Id
 	private Integer id;

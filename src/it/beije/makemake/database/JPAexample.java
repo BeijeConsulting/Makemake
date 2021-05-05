@@ -84,5 +84,11 @@ public class JPAexample {
 		entityManager.close();
 
 	}
+	
+	
+	
+	
+	
+	
 
 }
