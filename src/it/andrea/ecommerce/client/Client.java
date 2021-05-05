@@ -11,17 +11,7 @@ import it.andrea.ecommerce.model.DBManager;
 public class Client {
 	private static DBManager dbManager = new DBManager();
 
-	public void createOrder(Scanner scanner) {
-		String username;
-		User user;
-		do {
-			System.out.println("Inserisci il tuo username:");
-			username = scanner.nextLine();
-			user = dbManager.getUserByUsername(username);
-			if (user == null) {
-				System.out.println("Username non registrato!");
-			}
-		} while (user == null);
+	public void createOrder(Scanner scanner, User user) {
 		System.out.println("Ecco i prodotti disponibili:");
 		System.out.println(dbManager.getAllProducts());
 		System.out.println(
@@ -44,11 +34,24 @@ public class Client {
 		dbManager.createOrder(user, orderItems);
 	}
 
+	public User login(Scanner scanner) {
+		String username;
+		User user;
+		do {
+			System.out.println("Inserisci il tuo username:");
+			username = scanner.nextLine();
+			user = dbManager.getUserByUsername(username);
+			if (user == null) {
+				System.out.println("Username non registrato!");
+			}
+		} while (user == null);
+		return user;
+	}
+
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);
-//		Client client = new Client();
-//		client.createOrder(scanner);
-		dbManager.viewOrder(8);
+		Client client = new Client();
+		User user = client.login(scanner);
 		scanner.close();
 	}
 
