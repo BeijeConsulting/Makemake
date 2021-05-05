@@ -2,11 +2,16 @@ package it.beije.makemake.esercizi.ecommerce;
 
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -18,8 +23,8 @@ public class Order {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column
-	private Integer id_user;
+	@Column (name = "id_user")
+	private Integer userId;
 	
 	@Column
 	private String status;
@@ -29,6 +34,14 @@ public class Order {
 	
 	@Column
 	private String date;
+	
+	@OneToMany(cascade=CascadeType.ALL/*, fetch=FetchType.EAGER*/)  
+	
+	
+	@JoinColumn(name="id_order") 
+	
+	
+	private List<Order_Item> orderItems;
 	
 
 	
@@ -41,11 +54,11 @@ public class Order {
 	}
 
 	public Integer getId_User() {
-		return id_user;
+		return userId;
 	}
 
 	public void setId_User(Integer id_user) {
-		this. id_user =  id_user;
+		this. userId =  id_user;
 	}
 	
 	public String getStatus() {
@@ -72,12 +85,20 @@ public class Order {
 		this. date =  date;
 	}
 	
+	public List<Order_Item> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(List<Order_Item> orderItems) {
+		this.orderItems = orderItems;
+	}
+	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(id).append(", ")
 				.append("date : ").append(date).append(", ")
-				.append("id_user : ").append(id_user).append(", ")
+				.append("id_user : ").append(userId).append(", ")
 				.append("status : ").append(status).append(", ")
 				.append("total : ").append(total).append(" }");
 		

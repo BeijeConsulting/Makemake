@@ -4,7 +4,6 @@ package it.beije.makemake.esercizi.ecommerce;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -12,8 +11,6 @@ import javax.persistence.criteria.Root;
 import javax.persistence.Query;
 
 
-
-import it.beije.makemake.esercizi.ecommerce.User;
 
 public class JPAManager {
 	
@@ -70,44 +67,90 @@ public class JPAManager {
 	}
 
 	public static void getOrderInfo(){
+//		EntityManager entityManager = manager.getEntityManager();
+//		
+//		String jpqlSelect = "SELECT o FROM Order as o";
+//		
+//		Query queryOrdini = entityManager.createQuery(jpqlSelect);
+//		List<Order> ordini = queryOrdini.getResultList();
+//		
+//		
+//		String jpqlSelectOrder_item = "SELECT ord FROM Order_Item as ord ";
+//		Query queryOrderItem =entityManager.createQuery(jpqlSelectOrder_item);
+//		List<Order_Item> order_item = queryOrderItem.getResultList();
+//		
+//	
+//		
+//		
+//		 for(Order o : ordini) {
+//			 	System.out.println("_____Dettaglio ordine_____");
+//			 	System.out.println("Id Order : " + o.getId());
+//			 	System.out.println("Tot Order : "+ o.getTotal());
+//				User u =entityManager.find(User.class, o.getId_User());
+//				System.out.println("Username for Order " + u.getUsername());
+//				for(int i=0;i<order_item.size();i++) {
+//					if(o.getId().equals(order_item.get(i).getId_Order())) {
+//						Product p = entityManager.find(Product.class, order_item.get(i).getId_Product());
+//						System.out.println("-----Elenco prodotti-----");
+//						System.out.println("Product Name : " + p.getName());
+//						System.out.println("Price " + order_item.get(i).getPrice());
+//						System.out.println("Quantita " +  order_item.get(i).getQuantity() );
+//						System.out.println();
+//						System.out.println();
+//					}
+//				}
+//			
+//			}
+//					
+//		
+//		
+//	
 		EntityManager entityManager = manager.getEntityManager();
+		String jpqlSelect = "SELECT u FROM User as u";
+		TypedQuery<User> query = entityManager.createQuery(jpqlSelect , User.class);
 		
-		String jpqlSelect = "SELECT o FROM Order as o";
+//      TypedQuery: Si avvicina al tipo di classe
 		
-		Query queryOrdini = entityManager.createQuery(jpqlSelect);
-		List<Order> ordini = queryOrdini.getResultList();
-		
-		
-		String jpqlSelectOrder_item = "SELECT ord FROM Order_Item as ord ";
-		Query queryOrderItem =entityManager.createQuery(jpqlSelectOrder_item);
-		List<Order_Item> order_item = queryOrderItem.getResultList();
-		
-	
-		
-		
-		 for(Order o : ordini) {
-			 	System.out.println("_____Dettaglio ordine_____");
-			 	System.out.println("Id Order : " + o.getId());
-			 	System.out.println("Tot Order : "+ o.getTotal());
-				User u =entityManager.find(User.class, o.getId_User());
-				System.out.println("Username for Order " + u.getUsername());
-				for(int i=0;i<order_item.size();i++) {
-					if(o.getId().equals(order_item.get(i).getId_Order())) {
-						Product p = entityManager.find(Product.class, order_item.get(i).getId_Product());
-						System.out.println("-----Elenco prodotti-----");
-						System.out.println("Product Name : " + p.getName());
-						System.out.println("Price " + order_item.get(i).getPrice());
-						System.out.println("Quantita " +  order_item.get(i).getQuantity() );
-						System.out.println();
-						System.out.println();
-					}
-				}
-			
-			}
+		List<User> users = query.getResultList();
+
+		for (User user : users) {
+			System.out.println("-----Utente-----");
+			System.out.println(user);
+			for (Order order : user.getOrders()) {
+				System.out.println("-----Ordine-----");
+				System.out.println(order);
+				for (Order_Item items : order.getOrderItems()) {
 					
+//					System.out.println(items);
+					Product p = entityManager.find(Product.class, items.getId_Product());
+					System.out.println("-----Elenco prodotti-----");
+					System.out.println("Product Name : " + p.getName());
+					System.out.println("Price " + items.getPrice());
+					System.out.println("Quantita " +  items.getQuantity() );
+					System.out.println();
+					
+					
+				}
+			}
+			System.out.println("_____________________________________________________________________");
+			System.out.println();
+		}
+	}
+		
+	 
+	public static User getUserByUsername(String username) {
+		
+		EntityManager entityManager = manager.getEntityManager();
+		String usernameCheck = "SELECT u FROM User u  WHERE u.username = :username";
+		
+		TypedQuery<User> query = entityManager.createQuery(usernameCheck, User.class);
+		
+		query.setParameter("username", username);
+		
+		User user = query.getSingleResult();
 		
 		
-	
+		return user;
 	}
 	
 

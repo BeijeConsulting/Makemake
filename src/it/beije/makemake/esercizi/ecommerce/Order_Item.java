@@ -16,11 +16,11 @@ public class Order_Item {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Column
-	private Integer id_order;
+	@Column ( name = "id_order")
+	private Integer orderId;
 	
-	@Column
-	private Integer id_product;
+	@Column ( name = "id_product")
+	private Integer productId;
 	
 	@Column
 	private Double price;
@@ -39,19 +39,19 @@ public class Order_Item {
 	}
 
 	public Integer getId_Order() {
-		return id_order;
+		return orderId;
 	}
 
 	public void setId_Order(Integer id_order) {
-		this. id_order =  id_order;
+		this. orderId =  id_order;
 	}
 	
 	public Integer getId_Product() {
-		return id_product;
+		return productId;
 	}
 
 	public void setId_Product(Integer id_product) {
-		this. id_product =  id_product;
+		this. productId =  id_product;
 	}
 	
 	public Double getPrice() {
@@ -74,8 +74,8 @@ public class Order_Item {
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
 				.append("{ id : ").append(id).append(", ")
-				.append("id_order : ").append(id_order).append(", ")
-				.append("id_product : ").append(id_product).append(", ")
+				.append("id_order : ").append(orderId).append(", ")
+				.append("id_product : ").append(productId).append(", ")
 				.append("price : ").append(price).append(", ")
 				.append("quantity : ").append(quantity).append(" }");
 		

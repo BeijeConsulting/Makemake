@@ -1,10 +1,17 @@
 package it.beije.makemake.esercizi.ecommerce;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+
 
 
 
@@ -26,6 +33,14 @@ public class User {
 	
 	@Column
 	private String surname;
+	
+	@OneToMany(cascade=CascadeType.ALL/*, fetch=FetchType.EAGER*/)  
+	//	default lazy
+	// cascata se modifico un id_user questo viene modificato anche nella tabella degli ordini
+	@JoinColumn(name="id_user") 
+	// relazione tra tabelle id della tabella User e id_user della tabella Ordini
+	
+	private List<Order> orders;
 
 	
 	public Integer getId() {
@@ -71,6 +86,16 @@ public class User {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder()
