@@ -1,10 +1,17 @@
 package it.andrea.ecommerce.entity;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
 
 @Entity
 public class User {
@@ -23,6 +30,10 @@ public class User {
 
 	@Column
 	private String surname;
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JoinColumn(name="id_user")
+	private List<Order> orders;
 
 	public Integer getId() {
 		return id;
@@ -62,6 +73,14 @@ public class User {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 
 	@Override

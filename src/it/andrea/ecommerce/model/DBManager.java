@@ -1,9 +1,7 @@
 package it.andrea.ecommerce.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -52,15 +50,14 @@ public class DBManager {
 
 			Order order = getOrderById(orderId);
 			User user = getUserById(order.getUserId());
-			List<OrderItem> orderItems = getOrderItemsByOrderId(order.getId());
-			
+
 			System.out.println("ID ordine: " + order.getId());
 			System.out.println("Spesa totale: " + order.getTotal() + "€");
 			System.out.println("Username acquirente: " + user.getUsername());
 			System.out.println("Elenco prodotti:");
-			for (OrderItem orderItem : orderItems) {
+			for (OrderItem orderItem : order.getOrderItems()) {
 				Product product = getProductById(orderItem.getProductId());
-				
+
 				System.out.println(product.getName());
 				System.out.println(product.getBrand());
 				System.out.println("Prezzo per singolo prodotto: " + product.getPrice() + "€");
@@ -159,20 +156,6 @@ public class DBManager {
 			EntityManager em = JpaConnectionManager.getEntityManager();
 			TypedQuery<Order> query = em.createQuery("SELECT o FROM Order o WHERE o.id = :id", Order.class);
 			Order result = query.setParameter("id", id).getSingleResult();
-			JpaConnectionManager.closeEntityManager(em);
-			return result;
-		} catch (TooManySessionsException e) {
-			System.out.println(TOO_MANY_EM);
-		}
-		return null;
-	}
-
-	public List<OrderItem> getOrderItemsByOrderId(int orderId) {
-		try {
-			EntityManager em = JpaConnectionManager.getEntityManager();
-			TypedQuery<OrderItem> query = em.createQuery("SELECT o FROM OrderItem o WHERE o.orderId = :orderId",
-					OrderItem.class);
-			List<OrderItem> result = query.setParameter("orderId", orderId).getResultList();
 			JpaConnectionManager.closeEntityManager(em);
 			return result;
 		} catch (TooManySessionsException e) {
