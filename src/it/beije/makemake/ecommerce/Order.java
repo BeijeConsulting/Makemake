@@ -9,26 +9,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name = "\"order\"")
+@Table(name = "`order`")
 public class Order {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column
 	private Integer id;
-
+	
 	@Column
 	private LocalDateTime date;
-
-	@Column(name= "id_user")
+	
+	@Column(name = "id_user")
 	private Integer userId;
-
+	
 	@Column
 	private String status;
-
+	
 	@Column
-	private double total;
+	private Double total;
 
+	
 	public Integer getId() {
 		return id;
 	}
@@ -37,6 +40,7 @@ public class Order {
 		this.id = id;
 	}
 
+	
 	public LocalDateTime getDate() {
 		return date;
 	}
@@ -44,6 +48,7 @@ public class Order {
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
+	
 
 	public Integer getUserId() {
 		return userId;
@@ -53,6 +58,7 @@ public class Order {
 		this.userId = userId;
 	}
 
+	
 	public String getStatus() {
 		return status;
 	}
@@ -60,19 +66,27 @@ public class Order {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	public double getTotal() {
+	
+	
+	public Double getTotal() {
 		return total;
 	}
 
-	public void setTotal(double total) {
+	public void setTotal(Double total) {
 		this.total = total;
+	}
+
+	
+	public String toString() {
+		StringBuilder builder = new StringBuilder()
+				.append("{ id : ").append(id).append(", ")
+				.append("userId : ").append(userId).append(", ")
+				.append("total : ").append(total).append(", ")
+				.append("date : ").append(date).append(", ")
+				.append("status : ").append(status).append(" }");
+		
+		return builder.toString();
 	}
 
 }
 
-/*
- * CREATE TABLE `makemake`.`order` ( `id` INT NOT NULL AUTO_INCREMENT, `date`
- * DATETIME NOT NULL, `id_user` INT NOT NULL, `status` VARCHAR(45) NOT NULL,
- * `total` DECIMAL NOT NULL, PRIMARY KEY (`id`));
- */
