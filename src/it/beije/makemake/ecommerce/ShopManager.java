@@ -1,4 +1,4 @@
-package it.beije.makemake.ecommerce;
+             package it.beije.makemake.ecommerce;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,13 +20,11 @@ public class ShopManager {
 	private EntityTransaction et = em.getTransaction();
 	private CriteriaBuilder cb = em.getCriteriaBuilder();
 	private List<User> usersList = new ArrayList<User>();
-	private User user;
 	private List<Product> productsList = new ArrayList<Product>();
-	private Product product;
 	private List<Order> ordersList = new ArrayList<Order>();
-	private Order order;
 	
 	public List<User> getUsersList() {
+		em = JPAConnection.getConnection();
 		CriteriaQuery<User> cq = cb.createQuery(User.class);
 		Root<User> r = cq.from(User.class);
 		cq.select(r);
@@ -37,6 +35,7 @@ public class ShopManager {
 	}
 	
 	public List<Product> getProductsList() {
+		em = JPAConnection.getConnection();
 		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
 		Root<Product> r = cq.from(Product.class);
 		cq.select(r);
@@ -47,31 +46,13 @@ public class ShopManager {
 	}
 	
 	public List<Order> getOrdersList(){
-		List<Integer> userID = new ArrayList<Integer>();
-		int i, j;
+		em = JPAConnection.getConnection();
 		CriteriaQuery<Order> cq = cb.createQuery(Order.class);
 		Root<Order> r = cq.from(Order.class);
 		cq.select(r);
 		TypedQuery<Order> tq = em.createQuery(cq);
 		ordersList = tq.getResultList();
-		usersList = getUsersList();
-		for(i=0; i<ordersList.size(); i++) {
-			userID.add(ordersList.get(i).getUserId());
-		}
-		for(Order o : ordersList) {
-			System.out.println("ID Ordine: " + o.getId());
-			System.out.println("Totale: " + o.getTotal());
-			for(i=0; i<userID.size(); i++) {
-				for(j=0; j<usersList.size(); j++) {
-					if(((userID.get(i)) == (usersList.get(j).getId())) && ((ordersList.get(i).getId()) == o.getId())) {
-						System.out.println("Nome del cliente: " + usersList.get(j).getName());
-						System.out.println("Cognome del cliente: " + usersList.get(j).getSurname());
-						System.out.println();
-						break;
-					}
-				}
-			}
-		}
+		em.close();
 		return ordersList;
 	}
 }

@@ -1,11 +1,16 @@
 package it.beije.makemake.ecommerce;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 
 @Entity
@@ -26,6 +31,17 @@ public class User {
 	
 	@Column
 	private String password;
+	
+	@OneToMany(cascade=CascadeType.ALL/*, fetch=FetchType.EAGER*/)
+	@JoinColumn(name="user_id")
+	private List<Order> orders;
+	
+//	@Transient
+//	private String dateOfBirth;
+	
+//	private String getFullName() {//fullName
+//		return this.name + " " + this.surname;
+//	}
 
 	
 	public Integer getId() {
@@ -72,6 +88,26 @@ public class User {
 		this.surname = surname;
 	}
 	
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+
+	public String toString() {
+		StringBuilder builder = new StringBuilder()
+				.append("{ id : ").append(id).append(", ")
+				.append("name : ").append(name).append(", ")
+				.append("surname : ").append(surname).append(", ")
+				.append("username : ").append(username).append(", ")
+				.append("password : ").append(password).append(" }");
+		
+		return builder.toString();
+	}
 }
 
 /*
