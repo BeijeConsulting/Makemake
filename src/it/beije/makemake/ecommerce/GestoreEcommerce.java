@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import it.beije.makemake.rubrica.Contatto;
+
 
 
 public class GestoreEcommerce {
@@ -38,7 +40,6 @@ public class GestoreEcommerce {
 
 		return products;
 	}
-	//___________________________________________________________________
 	//___________________________________________________________________	
 	public static List<OrderItem> SelectAllOrderItem() {
 
@@ -52,7 +53,6 @@ public class GestoreEcommerce {
 		System.out.println(orderItems);
 		return orderItems;
 	}
-	//___________________________________________________________________
 	//___________________________________________________________________
 	public static List<User> SelectAllUser() {
 
@@ -99,7 +99,7 @@ public class GestoreEcommerce {
         User user = getUser(order.getUserId());
         output.append(user.toString());
         //get data about products
-        output.append("\n\nPRODUCT INFO: " + "\n");
+        output.append("\n\nPRODUCT INFO:\n-----------------------------------------------------\n");
         String selectOrderItem = "SELECT oi from OrderItem as oi WHERE oi.orderId =: id";
         Query query = entityManager.createQuery(selectOrderItem);
         query.setParameter("id", id);
@@ -109,11 +109,53 @@ public class GestoreEcommerce {
             Product product = getProduct(productId);
             output.append(product.toString());
             output.append("\nOrdered amount: " + orderItem.getQuantity() + "\n");
-            output.append("___________________________________________________________________________________________________________\n");
+            output.append("\nPrice amount: " + orderItem.getPrice()+ "\n");
+            output.append("-----------------------------------------------------\n");
         }
         
         return output.toString();
     }
+	//___________________________________________________________________
+	public static void createNewOrder(int idUser, HashMap<Integer, Integer> products) {
+
+		EntityManager entityManager = SingletonJpa.getInstance();
+		User user = entityManager.find(User.class, idUser);
+		if (user == null) {
+			throw new IllegalArgumentException("Id utente non valido");
+		}
+		BigDecimal total = new BigDecimal(0);
+		LocalDateTime dateTime = LocalDateTime.now();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+
+		Order order = new Order();
+		order.setUserId(idUser);
+		order.setDate(dateTime);
+		order.setStatus("ok");
+		order.setTotal(total);
+		entityManager.persist(order);
+
+		Integer orderId = order.getId();
+
+		for (Integer productId : products.keySet()) {
+			Product product = entityManager.find(Product.class, productId);
+			if (product == null) {
+				throw new IllegalArgumentException("Id prodotto " + productId + " non valido");
+			}
+			OrderItem orderItem = new OrderItem();
+			orderItem.setOrderId(orderId);
+			orderItem.setProductId(productId);
+			orderItem.setQuantity(products.get(productId));
+			orderItem.setPrice(product.getPrice());
+			entityManager.persist(orderItem);
+			total = total.add(product.getPrice().multiply(BigDecimal.valueOf(products.get(productId))));
+		}
+		order.setTotal(total);
+		entityManager.merge(order);
+		entityTransaction.commit();
+
+	}
+	
 	//___________________________________________________________________
 	public static String getOrderDetails(Integer orderId) {
 		Order order = getOrder(orderId);
@@ -147,17 +189,33 @@ public class GestoreEcommerce {
 	public static void main(String[] args) {
 		
 		List<Product> products = SelectAllProduct();
+		
 		PrintListProduct(products);
 		System.out.println("___________________________________________________________________________________________________________");
+		
 		List<Order> orders = SelectAllOrder();
 		PrintListOrder(orders);
-		System.out.println("___________________________________________________________________________________________________________");
-		List<User> users = SelectAllUser();
-		PrintListUser(users);
+		
 		System.out.println("___________________________________________________________________________________________________________");
 		
-	   
-        System.out.println(getOrderDetails(2));
+		List<User> users = SelectAllUser();
+		PrintListUser(users);
+		
+		System.out.println("___________________________________________________________________________________________________________\n");
+		
+		System.out.println(getOrderDetails(3));
+		
+	
+		
+      //testing order creation
+//      HashMap<Integer, Integer> orderData = new HashMap<>();
+//      orderData.put(2,3);
+//      orderData.put(3, 5);
+//      createNewOrder(1, orderData);
+
+     
+      System.out.println("_______________________________________________FINE________________________________________________________");
+  
     }
 
 }

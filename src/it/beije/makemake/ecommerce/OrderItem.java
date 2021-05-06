@@ -1,4 +1,6 @@
 package it.beije.makemake.ecommerce;
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +22,7 @@ public class OrderItem {
 	private Integer productId;
 	
 	@Column
-	private Double price;
+	private BigDecimal price;
 	
 	@Column
 	private Integer quantity;
@@ -50,12 +52,12 @@ public class OrderItem {
 		this.productId = id_product;
 	}
 	//Price________________________________________________________
-	public Double getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 	
-	public void setPrice(Double price) {
-		this.price = price;
+	public void setPrice(BigDecimal bigDecimal) {
+		this.price = bigDecimal;
 	}
 	//Quantity________________________________________________________
 	public Integer getQuantity() {
