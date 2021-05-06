@@ -1,12 +1,16 @@
 package it.beije.makemake.myEcommerce;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -27,6 +31,14 @@ private String status;
 
 @Column
 private Double total;
+
+@OneToMany(cascade = CascadeType.ALL/*, fetch=FetchType.EAGER*/)
+@JoinColumn(name = "id_order")
+private List<Order_item> orders_item;
+
+public List<Order_item> getOrders_item() {
+	return orders_item;
+}
 
 public Integer getId() {
 	return id;
@@ -68,5 +80,14 @@ public void setTotal(Double total) {
 	this.total = total;
 }
 
-
+public String toString() {
+	StringBuilder builder = new StringBuilder()
+			.append("{ id : ").append(id).append(", ")
+			.append("userId : ").append(userId).append(", ")
+			.append("total : ").append(total).append(", ")
+			.append("date : ").append(date).append(", ")
+			.append("status : ").append(status).append(" }");
+	
+	return builder.toString();
+}
 }

@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import it.beije.makemake.Hibernate.JPASingleton;
+import it.beije.makemake.myEcommerce.User;
 
 public class eCommerceManager {
 	private static JPASingleton manager = JPASingleton.getJPASingleton();
@@ -20,25 +21,38 @@ public class eCommerceManager {
 	static List<Order_item> items = new ArrayList<>();
 
 	public static void main(String[] args) {
+		//Prende gli utenti e stampa gli utenti e i loro ordini
 		getUsers();
-		for(User u : users) {
+		/*for(User u : users) {
 			System.out.println(u.toString());
-		}
+			for(Order order : u.getOrders()) {
+				System.out.println(order.toString());
+			}
+		}*/
+		
 
 		System.out.println();
+		//prende i prodotti
 		getProducts();
 
 		for(Product p : products) {
 			System.out.println(p.toString());
 		}
+		
 		System.out.println();
+		//prende gli ordini
+		getOrder();
+		System.out.println();
+		//prendi gli oggetti presenti nell'ordine
 		getOrderItem();
-		for(Order_item p : items) {
+		/*for(Order_item p : items) {
 			System.out.println(p.toString());
-		}
+		}*/
 		System.out.println();
 
 		getDetailsOrder();
+		
+		
 
 	}
 
@@ -51,6 +65,12 @@ public class eCommerceManager {
 		TypedQuery<User> utenti = entityManager.createQuery(select);
 
 		users = utenti.getResultList();
+			for(User u : users) {
+				System.out.println(u.toString());
+				for(Order order : u.getOrders()) {
+					System.out.println(order.toString());
+				}
+			}
 		entityManager.close();
 	}
 
@@ -75,6 +95,7 @@ public class eCommerceManager {
 		TypedQuery<Order_item> lista = entityManager.createQuery(select);
 
 		items = lista.getResultList();
+		
 		entityManager.close();
 
 	}
@@ -111,5 +132,16 @@ public class eCommerceManager {
 		}
 	}
 
-
+public static void getOrder() {
+	EntityManager entityManager = manager.getEntityManager();
+	String jpqlSelect = "SELECT o FROM Order as o";
+	Query query = entityManager.createQuery(jpqlSelect);
+	List<Order> orders = query.getResultList();
+	
+	for(Order order : orders) {
+		System.out.println(order);
+		for(Order_item item : order.getOrders_item())
+			System.out.println(item.toString());
+	}
+}
 }
