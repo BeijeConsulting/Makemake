@@ -12,21 +12,18 @@ import rubrica.Contatto;
 public class JpaManager {
 	static Scanner in = new Scanner(System.in);
 
-	public static void selectAll() {
+	public static ListaContatti  selectAll() {
 		EntityManager entityManager = SingletonJpa.getInstance();
-
+		ListaContatti lista = new ListaContatti();
 		String select = "SELECT c FROM ContattoRubrica as c";
 		Query query = entityManager.createQuery(select);
+		
 		List<Contatto> contatti = query.getResultList();
 
 		for (Contatto contatto : contatti) {
-			System.out.println("id : " + contatto.getId());
-			System.out.println("nome : " + contatto.getNome());
-			System.out.println("cognome : " + contatto.getCognome());
-			System.out.println("telefono : " + contatto.getTelefono());
-			System.out.println("email : " + contatto.getMail());
+			lista.caricaLista(contatto);
 		}
-
+		return lista;
 	}
 
 	public static void selectById() {
@@ -56,9 +53,7 @@ public class JpaManager {
 	}
 
 	public static void insert() {
-		EntityManager entityManager = SingletonJpa.getInstance();
-		EntityTransaction entityTransaction = entityManager.getTransaction();
-		entityTransaction.begin();
+	
 
 		Contatto newContatto = new Contatto();
 		System.out.println("inserisci cognome: ");
@@ -73,13 +68,28 @@ public class JpaManager {
 		System.out.println("inserisci email: ");
 		String email = in.nextLine();
 		newContatto.setMail(email);
+		insert(newContatto);
 
-		System.out.println("contatto PRE : " + newContatto);
-		entityManager.persist(newContatto);
-		System.out.println("contatto POST : " + newContatto);
+	}
+	public static void insert(Contatto c) {
+		EntityManager entityManager = SingletonJpa.getInstance();
+		EntityTransaction entityTransaction = entityManager.getTransaction();
+		entityTransaction.begin();
+
+		entityManager.persist(c);
+	
 		entityTransaction.commit();
 
 		entityManager.close();
+
+	}
+	public static void insert(ListaContatti lista) {
+		ListaContatti db = selectAll();
+		for (Contatto c : lista.getLista()) {
+			if(!(db.contattoEsistente(c))){
+				insert(c);
+			}
+		}
 
 	}
 

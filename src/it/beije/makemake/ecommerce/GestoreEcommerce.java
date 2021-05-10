@@ -179,6 +179,7 @@ public class GestoreEcommerce {
 		for (Order order : listaOrder) {
 			
 		}
+		return dettagli;
 	}
 
 }

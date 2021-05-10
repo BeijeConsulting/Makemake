@@ -1,12 +1,17 @@
 package it.beije.makemake.ecommerce;
 
-import java.time.LocalDate;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -31,6 +36,10 @@ public class Order {
 	
 	@Column
 	private double total;
+	
+	@OneToMany(cascade=CascadeType.ALL/*, fetch=FetchType.EAGER*/)
+	@JoinColumn(name="id_order")
+	private List<OrderItem> ordersItem;
 	
 	public Integer getId() {
 		return id;
