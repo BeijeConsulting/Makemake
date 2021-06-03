@@ -10,8 +10,9 @@ import it.andrea.ecommerce.model.DBManager;
 
 public class Client {
 	private static DBManager dbManager = new DBManager();
+	private static Scanner scanner = new Scanner(System.in);
 
-	public void createOrder(Scanner scanner, User user) {
+	public void createOrder(User user) {
 		System.out.println("Ecco i prodotti disponibili:");
 		System.out.println(dbManager.getAllProducts());
 		System.out.println(
@@ -34,7 +35,7 @@ public class Client {
 		dbManager.createOrder(user, orderItems);
 	}
 
-	public User login(Scanner scanner) {
+	public User login() {
 		String username;
 		User user;
 		do {
@@ -49,10 +50,10 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		Scanner scanner = new Scanner(System.in);
 		Client client = new Client();
-		User user = client.login(scanner);
+		User user = client.login();
+		client.createOrder(user);
 		scanner.close();
+		dbManager.close();
 	}
-
 }
